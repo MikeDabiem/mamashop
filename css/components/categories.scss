@@ -1,0 +1,39 @@
+.categories {
+  &__items {
+    margin-top: 30px;
+    gap: 12px;
+  }
+  &__item {
+    background: $white;
+    border-radius: 6px;
+    width: calc((100% - 36px) / 4);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    @media (hover: hover) {
+      &:hover {
+        .categories__item-title {
+          background: $hover-blue;
+        }
+      }
+    }
+    .img-wrapper-contain {
+      @include flex-height(53);
+      img {
+        padding: 14px;
+      }
+    }
+    &-title {
+      background: $main-blue;
+      text-align: center;
+      padding: 10px;
+      margin-top: auto;
+      height: 66px;
+      border-radius: 6px;
+      &>h4 {
+        max-height: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+}

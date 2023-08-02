@@ -1,0 +1,193 @@
+.header {
+  position: fixed;
+  width: 100%;
+  background: $white;
+  padding-block: 10px;
+  z-index: 1020;
+  &-scrolled {
+    box-shadow: $shadow;
+  }
+  .wrapper {
+    gap: 24px;
+  }
+  &__btn {
+    width: 48px;
+    height: 48px;
+    background: $light-grey;
+  }
+  .burger {
+    &:hover {
+      background: $burger-grey;
+    }
+    &:active {
+      background: $black;
+      .burger-line,
+      .burger-line::before,
+      .burger-line::after {
+        background: $burger-grey;
+      }
+    }
+    &-line {
+      width: 24px;
+      height: 2px;
+      background: $black;
+      position: relative;
+      top: 0;
+      left: 50%;
+      border-radius: 3px;
+      transform: translateX(-50%);
+      &::before,
+      &::after {
+        content: '';
+        height: 2px;
+        left: 0;
+        background: $black;
+        position: absolute;
+        transition: inherit;
+      }
+      &::before {
+        top: -8px;
+        right: 0;
+      }
+      &::after {
+        top: 8px;
+        right: 50%;
+      }
+    }
+  }
+  &-logo {
+    width: fit-content;
+    max-width: 220px;
+    height: 48px;
+  }
+  &__catalog {
+    background: $main-blue;
+    padding: 10px 17px;
+    color: $black;
+    svg {
+      margin-right: 6px;
+      stroke: $black;
+    }
+    @media (hover: hover) {
+      &:hover {
+        background: $hover-blue;
+      }
+    }
+    &:active {
+      transition-duration: $fast-transition;
+      background: $black;
+      color: $white;
+      svg {
+        stroke: $main-blue;
+      }
+    }
+  }
+  @import "searchform";
+  &__cab {
+    gap: 12px;
+  }
+  &__fav,
+  &__profile,
+  &__cart {
+    svg {
+      stroke: $black;
+    }
+    @media (hover: hover) {
+      &:hover {
+        background: #E8E8EF;
+        svg {
+          stroke: $main-purple;
+        }
+      }
+    }
+    &:active {
+      background: $main-purple;
+      transition-duration: $fast-transition;
+      svg {
+        stroke: $white;
+      }
+    }
+  }
+  &__profile,
+  &__cart {
+    svg {
+      fill: $black;
+    }
+    @media (hover: hover) {
+      &:hover {
+        svg {
+          fill: $main-purple;
+        }
+      }
+    }
+    &:active {
+      svg {
+        fill: $white;
+      }
+    }
+  }
+  &-menu {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: $white;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 320px;
+    &-bg {
+      z-index: 1030;
+      .main-menu,
+      .catalog-menu {
+        left: -100%;
+      }
+      .cart-menu {
+        right: -100%;
+      }
+      &.active {
+        .main-menu,
+        .catalog-menu {
+          left: 0;
+        }
+        .cart-menu {
+          right: 0;
+        }
+      }
+    }
+  }
+}
+.main-menu {
+  &-logo {
+    width: fit-content;
+    max-width: 190px;
+    height: 40px;
+  }
+  &__customers {
+    margin-top: 32px;
+  }
+  &__company {
+    margin-top: 36px;
+  }
+  &__section {
+    &__links {
+      margin-top: 24px;
+      &-item {
+        &:not(:first-child) {
+          margin-top: 16px;
+        }
+        gap: 16px;
+        text-decoration: none;
+        .img-wrapper {
+          width: 40px;
+          height: 40px;
+          border-radius: 4px;
+          background: $image-grey;
+          img {
+            padding: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+@import "catalog-menu";

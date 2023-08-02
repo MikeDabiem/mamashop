@@ -1,0 +1,32 @@
+.link-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background: $main-purple;
+  margin-left: 12px;
+  svg {
+    stroke: $white;
+  }
+}
+@mixin link-arrow-hover {
+  @media (hover: hover) {
+    &:hover {
+      .link-arrow {
+        background: $hover-purple;
+        svg {
+          transform: rotate(-30deg);
+        }
+      }
+    }
+  }
+  &:active {
+    .link-arrow {
+      transition: all .1s ease-in-out;
+      background: $white;
+      svg {
+        transition: all .1s ease-in-out;
+        stroke: $main-purple;
+      }
+    }
+  }
+}

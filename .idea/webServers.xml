@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c07440e6-dc5b-4ff9-b1f0-7e022a9dff90" name="mamashop" url="http://fc480287.ftp.tools">
+        <fileTransfer rootFolder="/www/wp-content/themes/brinplshop" host="fc480287.ftp.tools" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

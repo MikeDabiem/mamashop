@@ -1,0 +1,42 @@
+.banner {
+  margin-top: 40px;
+  position: relative;
+  &__item {
+    @include flex-height(23.5);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  &__prev {
+    left: 28px;
+  }
+  &__next {
+    right: 28px;
+  }
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    li {
+      list-style: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 8px;
+      background: rgba(103, 87, 169, 0.15);
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+      &.slick-active {
+        background: $main-purple;
+        width: 28px;
+      }
+      button {
+        display: none;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .slider-arrow {
+      display: none;
+    }
+  }
+}

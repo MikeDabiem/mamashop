@@ -1,0 +1,38 @@
+$main-purple: #6757A9;
+$hover-purple: #564794;
+$main-blue: #B6ECE6;
+$hover-blue: #A0D8D1;
+$chosen-blue: #DCF1EF;
+$bg-color: #F7F7F8;
+$white: #FFFFFF;
+$black: #494558;
+$black-light: #5E5E62;
+$sort-black: #3F383A;
+$light-grey: #F1F1F6;
+$burger-grey: #D6CECF;
+$pale-grey: #B4B5B8;
+$hover-grey: #D6D4DA;
+$footer-grey: #F1F1F6;
+$image-grey: #F0ECED;
+$catalog-grey-hover: #F8F6F6;
+$catalog-grey-active: #F4F2F2;
+$price-input-grey: #B0A1A5;
+$range-track-grey: #E2E2E2;
+$filter-spoiler-grey: #F8F6F6;
+$filter-check-num-grey: #B4ADAD;
+$filter-check-name-grey: #6E6668;
+$arrow-grey: #D4CDCF;
+$yellow: #F5C039;
+
+$opacity-purple: rgba(103, 87, 169, 0.20);
+
+$fast-transition: .1s;
+$shadow: 0 2px 30px 0 rgba(223, 213, 215, 0.40);
+
+@mixin flex-height($pt) {
+  &::before {
+    content: '';
+    display: block;
+    padding-top: $pt + 0%;
+  }
+}
