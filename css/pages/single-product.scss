@@ -1,0 +1,36 @@
+.single-product-page {
+  .single-product {
+    &__info {
+      margin-top: 50px;
+    }
+    &-image {
+      background: $white;
+      @include flex-height(95);
+      cursor: pointer;
+    }
+  }
+  .info {
+    &__main {
+      gap: 20px;
+      &__col1 {
+        width: 42%;
+      }
+      &__col2 {
+        width: 53%;
+      }
+    }
+    &__advanced {
+      margin-top: 20px;
+      gap: 20px;
+      &__col1 {
+        background: $white;
+      }
+      &__col2 {
+        background: $white;
+      }
+    }
+  }
+  .top {
+    margin-top: 40px;
+  }
+}
