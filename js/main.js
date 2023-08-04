@@ -84,12 +84,15 @@ jQuery(function($) {
   }
 
   // product heart handler
-  const heart = $('.product-item__heart');
-  if (heart.length) {
-    heart.on('click', function() {
-      $(this).toggleClass('active');
-    });
+  function heartHandler() {
+    const heart = $('.product-item__heart');
+    if (heart.length) {
+      heart.on('click', function() {
+        $(this).toggleClass('active');
+      });
+    }
   }
+  heartHandler();
 
   // random product rating
   const rating = $('.rating__stars-val');
@@ -187,17 +190,26 @@ jQuery(function($) {
       priceRangeMin.on('input', slideMin);
       priceRangeMax.on('input', slideMax);
     }
+  }
 
-    // filters spoilers handler
+  // filters spoilers handler
+  function filterGroupsSpoiler() {
     const filterSpoiler = $('.product-filter__spoiler');
+    const checkedBox = $('.product-filter__check-checkbox:checked');
+    checkedBox.each(function() {
+      $(`.product-filter__spoiler[data-name="${$(this).attr('name')}"]`).removeClass('hide');
+      $(`.product-filter__spoiler__content[data-name="${$(this).attr('name')}"]`).show();
+    });
     if (filterSpoiler.length) {
       filterSpoiler.on('click', function () {
         $(this).toggleClass('hide');
         $(`.product-filter__spoiler__content[data-name="${$(this).data('name')}"]`).slideToggle(300);
       })
     }
+  }
 
-    // filters filter brands names
+  // filters filter brands names
+  function filterBrandsFilter() {
     const brandFilter = $('.brand-filter__input');
     if (brandFilter.length) {
       brandFilter.on('input', function() {
@@ -215,97 +227,129 @@ jQuery(function($) {
         }
       });
     }
+  }
+  filterBrandsFilter();
 
-    // spoil too many filters
+  // spoil too many filters
+  function spoilFilters() {
     const moreFiltersButton = $('.product-filter__spoiler__content__more');
     const notSpoiledFilterItemHeight = parseInt($('.product-filter__check').css('height')) + 16;
-    function brandInputHeight(button) {
-      if (button.siblings('.product-filter__brand-filter').length) {
-        return parseInt(button.siblings('.product-filter__brand-filter').css('height')) + 16;
-      } else {
-        return 0;
-      }
-    }
-    moreFiltersButton.each(function() {
-      $(this).parent('.product-filter__spoiler__content').css('max-height', (notSpoiledFilterItemHeight * 7 + 13) + brandInputHeight($(this)) + 'px');
-    });
-    moreFiltersButton.on('click', function() {
-      $(this).toggleClass('active');
-      if ($(this).hasClass('active')) {
-        $(this).children('.product-filter__spoiler__content__more-text').text('Згорнути');
-        $(this).parent('.product-filter__spoiler__content').animate({maxHeight: notSpoiledFilterItemHeight * $(this).siblings('.product-filter__check').length + 13 + brandInputHeight($(this)) + 'px'});
-      } else {
-        $(this).parent('.product-filter__spoiler__content').animate({maxHeight: (notSpoiledFilterItemHeight * 7 + 13) + brandInputHeight($(this)) + 'px'});
-        $(this).children('.product-filter__spoiler__content__more-text').text(`Показати ще ${$(this).siblings('.product-filter__check').length - 7}`);
-      }
-    });
-
-    // filters checkboxes handler
-    const filterCheckbox = $('.product-filter__check-checkbox');
-    const filterItems = $('.product-filter__chosen__items');
-    const filterChosen = $('.product-filter__chosen');
-    const filterHeadTitle = $('.product-filter__chosen-title');
-    const filterArr = [];
-
-    function hideChosenFiltersTitle() {
-      if ($('.product-filter__chosen-item').length) {
-        filterHeadTitle.addClass('active');
-        filterChosen.addClass('active');
-      } else {
-        filterChosen.removeClass('active');
-        setTimeout(() => {
-          filterHeadTitle.removeClass('active');
-        }, 300)
-      }
-    }
-
-    function chosenItemsHandler(checkbox) {
-      const id = checkbox.attr('id');
-      const name = $(`.product-filter__check-label[for="${id}"] > .product-filter__check-label-title`).text();
-      if (checkbox.is(':checked')) {
-        filterArr.push({name, id});
-        filterItems.append(
-          `<div class="product-filter__chosen-item d-flex align-items-center" data-name="${id}">
-              <p class="font-12-16 fw-400">${name}</p>
-              <label for="${id}" class="product-filter__chosen-item-close transition-default d-flex">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="cross"><rect width="16" height="16" rx="8" fill="#494558"/><g id="Group 2088"><path id="Vector 73" d="M4.80078 4.80078L11.2007 11.2013" stroke="#F5E4E7" stroke-width="1.5"/><path id="Vector 74" d="M11.1992 4.80078L4.79928 11.2012" stroke="#F5E4E7" stroke-width="1.5"/></g></g></svg>
-              </label>
-            </div>`
-        )
-      } else {
-        const filterId = filterItems.children(`[data-name="${id}"]`).data('name');
-        if (filterArr.length) {
-          filterItems.children()[filterArr.findIndex(el => el.id === filterId)].remove();
-          filterArr.splice(filterArr.findIndex(el => el.id === filterId), 1);
+    if (moreFiltersButton.length) {
+      function brandInputHeight(button) {
+        if (button.siblings('.product-filter__brand-filter').length) {
+          return parseInt(button.siblings('.product-filter__brand-filter').css('height')) + 16;
         } else {
-          filterItems.children().remove();
+          return 0;
         }
       }
-      hideChosenFiltersTitle();
+      moreFiltersButton.each(function() {
+        $(this).parent('.product-filter__spoiler__content').css('max-height', (notSpoiledFilterItemHeight * 7 + 13) + brandInputHeight($(this)) + 'px');
+      });
+      moreFiltersButton.on('click', function() {
+        $(this).toggleClass('active');
+        if ($(this).hasClass('active')) {
+          $(this).children('.product-filter__spoiler__content__more-text').text('Згорнути');
+          $(this).parent('.product-filter__spoiler__content').animate({maxHeight: notSpoiledFilterItemHeight * $(this).siblings('.product-filter__check').length + 13 + brandInputHeight($(this)) + 'px'});
+        } else {
+          $(this).parent('.product-filter__spoiler__content').animate({maxHeight: (notSpoiledFilterItemHeight * 7 + 13) + brandInputHeight($(this)) + 'px'});
+          $(this).children('.product-filter__spoiler__content__more-text').text(`Показати ще ${$(this).siblings('.product-filter__check').length - 7}`);
+        }
+      });
     }
+  }
+  spoilFilters();
 
+  // filters checkboxes handler
+  const filterItems = $('.product-filter__chosen__items');
+  const filterChosen = $('.product-filter__chosen');
+  const filterHeadTitle = $('.product-filter__chosen-title');
+  const filterArr = [];
+
+  function hideChosenFiltersTitle() {
+    if ($('.product-filter__chosen-item').length) {
+      filterHeadTitle.addClass('active');
+      filterChosen.addClass('active');
+    } else {
+      filterChosen.removeClass('active');
+      setTimeout(() => {
+        filterHeadTitle.removeClass('active');
+      }, 300)
+    }
+  }
+
+  function chosenItemsHandler(checkbox) {
+    const id = checkbox.attr('id');
+    const name = $(`.product-filter__check-label[for="${id}"] > .product-filter__check-label-title`).text();
+    if (checkbox.is(':checked')) {
+      filterArr.push({name, id});
+      filterItems.append(
+        `<div class="product-filter__chosen-item d-flex align-items-center" data-name="${id}">
+            <p class="font-12-16 fw-400">${name}</p>
+            <label for="${id}" class="product-filter__chosen-item-close transition-default d-flex">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="cross"><rect width="16" height="16" rx="8" fill="#494558"/><g id="Group 2088"><path id="Vector 73" d="M4.80078 4.80078L11.2007 11.2013" stroke="#F5E4E7" stroke-width="1.5"/><path id="Vector 74" d="M11.1992 4.80078L4.79928 11.2012" stroke="#F5E4E7" stroke-width="1.5"/></g></g></svg>
+            </label>
+          </div>`
+      )
+    } else {
+      const filterId = filterItems.children(`[data-name="${id}"]`).data('name');
+      if (filterArr.length) {
+        filterItems.children()[filterArr.findIndex(el => el.id === filterId)].remove();
+        filterArr.splice(filterArr.findIndex(el => el.id === filterId), 1);
+      } else {
+        filterItems.children().remove();
+      }
+    }
+    hideChosenFiltersTitle();
+  }
+
+  function checkActiveFilters() {
+    if (filterItems.length) {
+      filterItems.children().each(function() {
+        const checkbox = $(`#${$(this).data('name')}`);
+        checkbox.prop('checked', true);
+      });
+    }
+  }
+
+  const filterSiblings = [];
+  function filterCheckboxListener() {
+    const filterCheckbox = $('.product-filter__check-checkbox');
     if (filterCheckbox.length) {
       filterCheckbox.on('change', function() {
         chosenItemsHandler($(this));
+        if ($(this).is(':checked') || filterSiblings.length > 1) {
+          filterSiblings.length = 0;
+          if ($(this).parent().siblings('.product-filter__brand-filter').length) {
+            filterSiblings.push($('.product-filter__brand-filter'));
+          }
+          filterSiblings.push($(this).parent());
+          $(this).closest('.product-filter__check').siblings('.product-filter__check').each(function() {
+            if (!filterSiblings.includes($(this))) {
+              filterSiblings.push($(this));
+            }
+          });
+          if ($(this).closest('.product-filter__check').siblings('.product-filter__spoiler__content__more').length) {
+            filterSiblings.push($('.product-filter__spoiler__content__more--pad'));
+            filterSiblings.push($('.product-filter__spoiler__content__more'));
+          }
+        }
       });
     }
+  }
+  filterCheckboxListener();
 
-    // clear filter form
-    const clearFilters = $('.product-filter-clear');
-    if (clearFilters.length) {
-      clearFilters.on('click', function () {
-        productFilter.trigger('reset');
-        priceFilter.trigger('reset');
-        filterArr.length = 0;
-        filterItems.children().remove();
-        hideChosenFiltersTitle();
-        slideMin();
-        slideMax();
-        productFilter.trigger('change');
-        priceFilter.trigger('change');
-        window.location.search = `s=${Object.fromEntries(new URLSearchParams(window.location.search)).s}`;
-      });
+  function notHideFilters() {
+    if (filterSiblings.length > 1) {
+      $(`.product-filter__spoiler__content[data-name="${filterSiblings[1].children('.product-filter__check-checkbox').attr('name')}"]`).empty().append(filterSiblings);
     }
+  }
+
+  // clear filter form
+  const clearFilters = $('.product-filter-clear');
+  if (clearFilters.length) {
+    clearFilters.on('click', function () {
+      window.location.search = `s=${Object.fromEntries(new URLSearchParams(window.location.search)).s}`;
+    });
   }
 
   // sort menu handler
@@ -344,9 +388,12 @@ jQuery(function($) {
    // AJAX //
   //////////
 
+
+
   const searchParams = window.location.search;
   const urlParams = Object.fromEntries(new URLSearchParams(searchParams));
   const searchResults = $('.search-page__results');
+  const productFilterParent = $('.product-filter');
 
   let sortBy = urlParams.sort ? urlParams.sort : null;
   let priceData = urlParams.price ? {price: urlParams.price} : {};
@@ -361,6 +408,7 @@ jQuery(function($) {
 
   function sendAJAX(ajaxData) {
     searchResults.animate({opacity: .5}, 300);
+    productFilterParent.animate({opacity: .5}, 300);
     const data = {...defaultData, ...ajaxData};
     const getParams = new URLSearchParams({...urlParams, ...ajaxData});
     getParams.delete('s');
@@ -368,18 +416,18 @@ jQuery(function($) {
     const pageNum = page ? `&page=${page}` : null;
     window.history.pushState(null, '', `?s=${defaultData.s + pageNum}&${decodeURIComponent(getParams.toString())}`);
     $.get(ajaxurl.url, data, function(response) {
-      searchResults.empty();
-      searchResults.append(response);
-      searchResults.animate({opacity: 1}, 300);
-      // const response = JSON.stringify(resp);
-      // console.log('response: ' + response);
-      // console.log($('.array').text());
-      const array = $('.array').text().trim().split('; ');
-      $('.product-filter__check-label-quant').text(0);
-      array.forEach(item => {
-        const keyValue = item.split(': ');
-        $(`label[for=${keyValue[0]}]`).children('.product-filter__check-label-quant').text(keyValue[1].replace(';', ''));
-      });
+      searchResults.empty().append(response).animate({opacity: 1}, 300);
+      heartHandler();
+    });
+    $.get(ajaxurl.url, {...data, action: 'hide_filters'}, function(response) {
+      productFilter.empty().append(response);
+      productFilterParent.animate({opacity: 1}, 300);
+      notHideFilters();
+      checkActiveFilters();
+      filterCheckboxListener();
+      spoilFilters();
+      filterGroupsSpoiler();
+      filterBrandsFilter();
     });
   }
 
@@ -494,6 +542,8 @@ jQuery(function($) {
       sendAJAX(data);
     }
   }
+  checkActiveFilters();
+  filterGroupsSpoiler();
 });
 
 // script to function, ajax returns filters, run script function
