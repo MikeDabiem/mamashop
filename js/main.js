@@ -382,6 +382,30 @@ jQuery(function($) {
     }
   });
 
+  // single-product gallery
+  const gallery = $('.single-product__image');
+  if (gallery.length) {
+    const mainImage = $('.single-product__image-main > img');
+    const galleryImage = $('.single-product__image__gallery > img');
+    galleryImage.on('click', function() {
+      galleryImage.removeClass('d-none');
+      $(this).addClass('d-none');
+      mainImage.attr('src', $(this).attr('src'));
+      mainImage.attr('alt', $(this).attr('alt'));
+    })
+  }
+
+  // single-product tabs
+  const tabButton = $('.tab-button');
+  if (tabButton.length) {
+    const tabButtonBorder = $('.tab-button--border');
+    tabButton.on('click', function() {
+      tabButton.removeClass('active');
+      $(this).addClass('active');
+      tabButtonBorder.width($(this).outerWidth()).css({left: $(this).position().left - 2})
+    });
+  }
+
 
 
     //////////

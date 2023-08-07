@@ -157,21 +157,6 @@
     }
     &__send {
       margin-top: 18px;
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 4px;
-      background: $opacity-purple;
-      color: $main-purple;
-      @media (hover: hover) {
-        &:hover {
-          background: rgba(103, 87, 169, 0.30);
-        }
-      }
-      &:active {
-        background: rgba(103, 87, 169, 0.50);
-        color: $white;
-      }
     }
   }
   &__brand-filter {

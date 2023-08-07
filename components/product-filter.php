@@ -41,7 +41,7 @@
                         <input type="range" min="<?= $minPrice; ?>" max="<?= $maxPrice; ?>" value="<?= $minPrice; ?>" id="price-range-min">
                         <input type="range" min="<?= $minPrice; ?>" max="<?= $maxPrice; ?>" value="<?= $maxPrice; ?>" id="price-range-max">
                     </div>
-                    <button type="button" class="product-filter__price__send font-15-24 fw-600 transition-default">Застосувати</button>
+                    <button type="button" class="product-filter__price__send pale-purple-btn font-15-24 fw-600 transition-default">Застосувати</button>
                 <?php } ?>
             </div>
         </form>

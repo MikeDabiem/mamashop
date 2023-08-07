@@ -2,31 +2,262 @@
   .single-product {
     &__info {
       margin-top: 50px;
+      .info {
+        &__main {
+          gap: 20px;
+          &__col1 {
+            width: 42%;
+          }
+          &__col2 {
+            width: 53%;
+          }
+          &-subtitle {
+            margin-top: 8px;
+            gap: 10px;
+            .rating__value {
+              color: $black;
+            }
+            .sku {
+              &>span {
+                color: $grey;
+              }
+            }
+          }
+          &-in-stock {
+            margin-top: 20px;
+            color: $green;
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 8px;
+              height: 8px;
+              margin: 0 8px 1px 2px;
+              background: $green;
+              border-radius: 8px;
+            }
+          }
+          &-out-stock {
+            margin-top: 20px;
+            padding-left: 18px;
+            color: $red;
+            position: relative;
+            &::before,
+            &::after {
+              content: '';
+              display: block;
+              width: 10px;
+              height: 2px;
+              position: absolute;
+              top: 6px;
+              left: 2px;
+              background: $red;
+            }
+            &::before {
+              transform: rotate(45deg);
+            }
+            &::after {
+              transform: rotate(-45deg);
+            }
+          }
+          &__price {
+            margin-top: 32px;
+            gap: 8px;
+            align-items: baseline;
+            &-disc {
+              color: $grey;
+            }
+          }
+          &__buttons {
+            margin-top: 12px;
+            gap: 12px;
+            .single-product-fav {
+              width: 52px;
+              height: 52px;
+              background: $light-grey;
+              svg {
+                stroke: $black;
+              }
+              @media (hover: hover) {
+                &:hover {
+                  background: #E8E8EF;
+                  svg {
+                    stroke: $main-purple;
+                  }
+                }
+              }
+              &:active {
+                background: $main-purple;
+                transition-duration: $fast-transition;
+                svg {
+                  stroke: $white;
+                }
+              }
+            }
+          }
+          &__buy-btn {
+            min-width: 243px;
+          }
+          &__specs {
+            &-title {
+              margin-top: 32px;
+            }
+            &__items {
+                margin-top: 20px;
+            }
+            &__item {
+              &:not(:first-child) {
+                margin-top: 12px;
+              }
+              &-title {
+                color: $specs-grey;
+              }
+              &-value {
+                color: inherit;
+                text-decoration: none;
+                @media (hover: hover) {
+                  &:hover {
+                    color: $main-purple;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    &-image {
+    &__image {
+      position: relative;
       background: $white;
-      @include flex-height(95);
-      cursor: pointer;
+      border-radius: 6px;
+      .sale-val {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: $yellow;
+        color: $white;
+        padding: 5px 10px;
+        border-radius: 3px;
+        z-index: 1;
+      }
+      &-main {
+        @include flex-height(95);
+      }
+      &__gallery {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        height: 60px;
+        gap: 12px;
+        overflow: auto;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        &>img {
+          width: 60px;
+          height: 60px;
+          object-fit: contain;
+          border-radius: 4px;
+          flex: 0 0 auto;
+          background: $white;
+          border: 1px solid transparent;
+          cursor: pointer;
+          &:hover {
+            border-color: $main-purple;
+          }
+        }
+      }
     }
   }
   .info {
-    &__main {
-      gap: 20px;
-      &__col1 {
-        width: 42%;
-      }
-      &__col2 {
-        width: 53%;
-      }
-    }
     &__advanced {
       margin-top: 20px;
       gap: 20px;
       &__col1 {
+        width: 68%;
         background: $white;
+        padding: 28px 40px 50px;
+        border-radius: 6px;
+        &__heading {
+          gap: 2px;
+          padding-bottom: 28px;
+          border-bottom: 1px solid rgba(180, 173, 173, 0.30);
+          margin-bottom: 28px;
+          position: relative;
+          .tab-button {
+            padding: 11px 23px;
+            border: none;
+            background: $white;
+            border-radius: 30px;
+            &:hover {
+              color: $main-purple;
+            }
+            &--border {
+              width: 121px;
+              position: absolute;
+              top: 0;
+              left: -2px;
+              bottom: 28px;
+              border: 2px solid $main-purple;
+              border-radius: 30px;
+            }
+          }
+        }
+      }
+      &__description {
+        &-title {
+          &:not(:first-child) {
+            margin-top: 28px;
+          }
+        }
+        &-text {
+          margin-top: 12px;
+          color: $black-light;
+          line-height: 170%;
+        }
       }
       &__col2 {
+        width: 30%;
         background: $white;
+        padding: 24px 20px;
+        border-radius: 6px;
+        .info__rating {
+          &-title {
+            text-align: center;
+          }
+          &-subtitle {
+            margin-top: 4px;
+            text-align: center;
+          }
+          &__percents {
+            margin-top: 20px;
+            padding: 20px;
+            background: $bg-color;
+            border-radius: 4px;
+            gap: 12px;
+            &-value {
+              font-size: 31px;
+              line-height: 103%;
+              color: $main-purple;
+            }
+            &-text {
+              max-width: 167px;
+            }
+          }
+        }
+        .rating__stars {
+          margin-top: 12px;
+          transform: scale(1.5);
+          margin-inline: auto;
+        }
+      }
+      &-make-review {
+        margin-top: 20px;
+        width: 100%;
+      }
+      &-make-question {
+        margin-top: 12px;
+        width: 100%;
       }
     }
   }
