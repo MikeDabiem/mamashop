@@ -96,9 +96,29 @@ jQuery(function($) {
 
   // random product rating
   const rating = $('.rating__stars-val');
-  rating.each(function() {
-    $(this).css('width', Math.floor(Math.random() * (100 - 10 + 1) + 10) + "%");
-  });
+  const infoRating = $('.info__rating-title');
+  if (infoRating.length) {
+    const randomValue = Math.floor(Math.random() * (100 - 10 + 1) + 10);
+    if (randomValue < 20) {
+      infoRating.text('0.0');
+      rating.each(function() {
+        $(this).css('width', 0 + "%");
+      });
+      $('.info__rating__percents-value').addClass('d-none');
+      $('.info__rating__percents-text').css('maxWidth', 'none').addClass('text-center').text('Допоможіть іншим користувачам з вибором - будьте першим, хто поділиться своєю думкою про цей товар.');
+      $('.rating__value').text('0 Відгуків');
+    } else {
+      infoRating.text(randomValue / 20);
+      rating.each(function() {
+        $(this).css('width', randomValue + "%");
+      });
+      $('.info__rating__percents-value').text(randomValue + '%');
+    }
+  } else {
+    rating.each(function() {
+      $(this).css('width', Math.floor(Math.random() * (100 - 10 + 1) + 10) + "%");
+    });
+  }
 
   // show category children
   const catalogCategories = $('.catalog__categories');
@@ -383,10 +403,10 @@ jQuery(function($) {
   });
 
   // single-product gallery
-  const gallery = $('.single-product__image');
+  const gallery = $('.info__main__image');
   if (gallery.length) {
-    const mainImage = $('.single-product__image-main > img');
-    const galleryImage = $('.single-product__image__gallery > img');
+    const mainImage = $('.info__main__image-main > img');
+    const galleryImage = $('.info__main__image__gallery > img');
     galleryImage.on('click', function() {
       galleryImage.removeClass('d-none');
       $(this).addClass('d-none');
@@ -400,15 +420,95 @@ jQuery(function($) {
   if (tabButton.length) {
     const tabButtonBorder = $('.tab-button--border');
     tabButton.on('click', function() {
+      const id = $(this).attr('id');
       tabButton.removeClass('active');
       $(this).addClass('active');
-      tabButtonBorder.width($(this).outerWidth()).css({left: $(this).position().left - 2})
+      tabButtonBorder.width($(this).outerWidth()).css({left: $(this).position().left - 2});
+      $('.info__advanced__tab').animate({opacity: 0}, 200, function () {
+        $(this).removeClass('active');
+        $(`.info__advanced__tab[data-name="${id}"]`)
+          .addClass('active')
+          .animate({opacity: 1}, 200);
+      });
     });
   }
 
+  // review stars handler
+  if ($('.std-form__stars').length) {
+    const star = $('.std-form__stars-image');
+    let starsValue = 0;
+    function starsHandler(it) {
+      star.each((i, item) => {
+        if (i + 1 <= it.data('star')) {
+          $(item).addClass('active');
+        } else {
+          $(item).removeClass('active');
+        }
+      });
+    }
+    star.on('mouseenter', function() {
+      if (!starsValue) {
+        starsHandler($(this));
+      }
+    });
+    star.on('mouseleave', function() {
+      if (!starsValue) {
+        star.removeClass('active');
+      }
+    });
+    star.on('click', function() {
+      starsValue = $(this).data('star');
+      starsHandler($(this));
+    });
+  }
+
+  // make review button
+  const makeReviewBtn = $('#make-review__btn');
+  const askQuestionBtn = $('#ask-question__btn');
+  const reviewForm = $('.review__form');
+  const questionForm = $('.question__form');
+  const reviewSuccessMsg = $('.review-success');
+  const questionSuccessMsg = $('.question-success');
+
+  if(makeReviewBtn.length) {
+    makeReviewBtn.on('click', () => {
+      $('.make-review').addClass('active');
+      body.addClass('overflow-hidden');
+    });
+  }
+
+  if (askQuestionBtn.length) {
+    askQuestionBtn.on('click', () => {
+      $('.ask-question').addClass('active');
+      body.addClass('overflow-hidden');
+    });
+  }
+
+  const successBtn = $('.success-button');
+  if (reviewForm.length) {
+    reviewForm.on('submit', function(e) {
+      e.preventDefault();
+      $(this).addClass('d-none');
+      reviewSuccessMsg.removeClass('d-none');
+    });
+    successBtn.on('click', () => {
+      blurBG.trigger('click');
+    })
+  }
+
+  if (questionForm.length) {
+    questionForm.on('submit', function(e) {
+      e.preventDefault();
+      $(this).addClass('d-none');
+      questionSuccessMsg.removeClass('d-none');
+    });
+    successBtn.on('click', () => {
+      blurBG.trigger('click');
+    })
+  }
 
 
-    //////////
+  //////////
    // AJAX //
   //////////
 

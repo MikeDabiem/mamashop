@@ -1,0 +1,56 @@
+.info__advanced {
+  margin-top: 20px;
+  gap: 20px;
+  &__col1 {
+    width: 68%;
+    background: $white;
+    padding: 28px 40px 50px;
+    border-radius: 6px;
+    align-self: stretch;
+    &__heading {
+      gap: 2px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(180, 173, 173, 0.30);
+      margin-bottom: 28px;
+      position: relative;
+      .tab-button {
+        padding: 11px 23px;
+        border: none;
+        background: $white;
+        border-radius: 30px;
+        &:hover {
+          color: $main-purple;
+        }
+        &--border {
+          width: 121px;
+          position: absolute;
+          top: 0;
+          left: -2px;
+          bottom: 28px;
+          border: 2px solid $main-purple;
+          border-radius: 30px;
+        }
+      }
+    }
+  }
+  &__tab {
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+  &__description {
+    .description {
+      &-title {
+        &:not(:first-child) {
+          margin-top: 28px;
+        }
+      }
+      &-text {
+        margin-top: 12px;
+        color: $black-light;
+        line-height: 170%;
+      }
+    }
+  }
+}

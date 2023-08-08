@@ -286,4 +286,96 @@ h1, h2, h3, h4, h5, h6, p {
   &__title {
     margin-top: 16px;
   }
+  &__text {
+    margin-top: 12px;
+    color: $black-light;
+  }
+}
+
+.std-form {
+  width: 100%;
+  max-width: 590px;
+  background: $white;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  &__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    &:hover {
+      transform: rotate(360deg);
+    }
+  }
+  &__main-subtitle {
+    margin-top: 8px;
+    color: $specs-grey;
+  }
+  &__title {
+    margin-top: 20px;
+  }
+  &__stars {
+    margin-top: 5px;
+    &-image {
+      cursor: pointer;
+      svg {
+        fill: #E7E4DE;
+      }
+      &.active {
+        svg {
+          fill: $yellow;
+        }
+      }
+    }
+  }
+  &__textarea {
+    margin-top: 12px;
+    width: 100%;
+    height: 160px;
+    padding: 16px;
+    resize: none;
+    background: $bg-color;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    &::placeholder {
+      color: $grey;
+    }
+    &:focus {
+      border-color: $main-purple;
+      background: $white;
+    }
+  }
+  &__submit {
+    margin-top: 20px;
+    width: 100%;
+  }
+  &__success {
+    width: 100%;
+    max-width: 360px;
+    background: $white;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+    .img-wrapper-contain {
+      width: 120px;
+      height: 120px;
+      margin: 30px auto 0;
+    }
+    .success {
+      &-title {
+        margin-top: 20px;
+      }
+      &-text {
+        margin-top: 12px;
+        color: $black-light;
+      }
+      &-button {
+        margin-top: 20px;
+        width: 100%;
+      }
+    }
+  }
 }

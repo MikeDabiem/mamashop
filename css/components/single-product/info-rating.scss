@@ -1,0 +1,41 @@
+.info__rating {
+  width: 30%;
+  background: $white;
+  padding: 24px 20px;
+  border-radius: 6px;
+    &-title {
+      text-align: center;
+    }
+    &-subtitle {
+      margin-top: 4px;
+      text-align: center;
+    }
+    &__percents {
+      margin-top: 20px;
+      padding: 20px;
+      background: $bg-color;
+      border-radius: 4px;
+      gap: 12px;
+      &-value {
+        font-size: 31px;
+        line-height: 103%;
+        color: $main-purple;
+      }
+      &-text {
+        max-width: 167px;
+      }
+    }
+  .rating__stars {
+    margin-top: 12px;
+    transform: scale(1.5);
+    margin-inline: auto;
+  }
+  &-make-review {
+    margin-top: 20px;
+    width: 100%;
+  }
+  &-make-question {
+    margin-top: 12px;
+    width: 100%;
+  }
+}

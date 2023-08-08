@@ -11,11 +11,11 @@ $sale_val = get_post_meta($id, '_discount_value', true);
     <main class="single-product__info">
         <div class="info__main d-flex justify-content-between">
             <div class="info__main__col1">
-                <div class="single-product__image">
+                <div class="info__main__image">
                     <?php if ($sale_val) { ?>
                         <span class="sale-val font-16-22 fw-600">-<?= $sale_val; ?>%</span>
                     <?php } ?>
-                    <div class="single-product__image-main img-wrapper-contain">
+                    <div class="info__main__image-main img-wrapper-contain">
                         <?php
                         $thumb = get_the_post_thumbnail_url($id, "medium_large");
                         if ($thumb) {
@@ -29,8 +29,8 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <?php if ($thumb) {
                         $gallery_ids = $product->get_gallery_image_ids();
                         if (!empty($gallery_ids)) { ?>
-                            <div class="single-product__image__gallery d-flex">
-                                <img class="single-product__image-main--mini transition-default d-none" src="<?= $thumb; ?>" alt="<?= $alt; ?>">
+                            <div class="info__main__image__gallery d-flex">
+                                <img class="info__main__image-main--mini transition-default d-none" src="<?= $thumb; ?>" alt="<?= $alt; ?>">
                                 <?php foreach($gallery_ids as $gallery_id) {
                                     $image_link = wp_get_attachment_url($gallery_id);
                                     $image_alt = get_post_meta($gallery_id, '_wp_attachment_image_alt', TRUE); ?>
@@ -105,23 +105,119 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <button id="questions" class="tab-button font-14-20 fw-500 transition-default">Питання</button>
                     <div class="tab-button--border transition-default"></div>
                 </div>
-                <div class="info__advanced__description active">
+                <div class="info__advanced__description info__advanced__tab active" data-name="about">
                     <?php $description = $product->get_description();
                     $how_to_use = $product->get_short_description();
                     if ($description || $how_to_use) {
                         if ($description) { ?>
-                            <h3 class="info__advanced__description-title font-18-22 fw-500">Опис:</h3>
-                            <p class="info__advanced__description-text font-13-16 fw-400"><?= $description; ?></p>
+                            <h3 class="description-title font-18-22 fw-500">Опис:</h3>
+                            <p class="description-text font-13-16 fw-400"><?= $description; ?></p>
                         <?php }
                         if ($how_to_use) { ?>
-                            <h3 class="info__advanced__description-title font-18-22 fw-500">Спосіб застосування:</h3>
-                            <p class="info__advanced__description-text font-13-16 fw-400"><?= $how_to_use; ?></p>
+                            <h3 class="description-title font-18-22 fw-500">Спосіб застосування:</h3>
+                            <p class="description-text font-13-16 fw-400"><?= $how_to_use; ?></p>
                         <?php }
                     } else { ?>
                         <div class="no-info__image img-wrapper-cover">
                             <img src="<?php bloginfo('template_url'); ?>/images/noinfo.png" alt="no info">
                         </div>
                         <h3 class="no-info__title font-20-24 fw-600 text-center">Нажаль більш детальної інформації по цьому товару немає</h3>
+                    <?php } ?>
+                </div>
+                <div class="info__advanced__reviews info__advanced__tab" data-name="reviews">
+                    <?php $reviews = [
+                        [
+                            'name' => 'Наталля Шевченко',
+                            'date' => '10.06.2023',
+                            'stars' => 4,
+                            'text' => 'Нещодавно купляла цей засіб. Дуже задоволена. Вистачає його на довго, миє посуд дуже гарно. Що ще потрібно від гелю? :)'
+                        ]
+                    ];
+                    if (!empty($reviews)) { ?>
+                        <h3 class="reviews-title font-18-22 fw-500">Відгуки про товар</h3>
+                        <div class="reviews__items">
+                            <?php foreach ($reviews as $review) { ?>
+                                <div class="reviews__item">
+                                    <div class="reviews__item-head d-flex justify-content-between">
+                                        <h4 class="reviews__item-name font-15-18 fw-500"><?= $review['name']; ?></h4>
+                                        <time class="reviews__item-date font-11-13 fw-400"><?= $review['date']; ?></time>
+                                    </div>
+                                    <div class="reviews__item__stars">
+                                        <?php $stars = $review['stars'];
+                                        for ($i = 0; $i < 5; $i++) {
+                                            if ($i < $stars) { ?>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                                    <path d="M1.94498 9.33606C1.68393 9.09465 1.82573 8.65824 2.17882 8.61637L7.18183 8.0232C7.32574 8.00614 7.45073 7.91547 7.51143 7.78388L9.62163 3.20897C9.77055 2.8861 10.2295 2.88606 10.3785 3.20893L12.4887 7.78395C12.5494 7.91554 12.6736 8.00615 12.8175 8.02321L17.8207 8.61637C18.1738 8.65824 18.3155 9.09468 18.0545 9.33608L14.3559 12.7567C14.2495 12.8551 14.202 13.0018 14.2302 13.1439L15.2119 18.0854C15.2812 18.4342 14.9101 18.7039 14.5998 18.5302L10.2036 16.0694C10.0772 15.9986 9.92316 15.9985 9.79671 16.0693L5.40011 18.5302C5.08985 18.7039 4.71832 18.4342 4.78761 18.0855L5.76952 13.1438C5.79776 13.0017 5.75032 12.8552 5.64393 12.7568L1.94498 9.33606Z" fill="#F5C039"/>
+                                                </svg>
+                                            <?php } else { ?>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                                    <path d="M1.94537 9.33606C1.68433 9.09465 1.82613 8.65824 2.17921 8.61637L7.18223 8.0232C7.32613 8.00614 7.45113 7.91547 7.51182 7.78388L9.62203 3.20897C9.77095 2.8861 10.2299 2.88606 10.3789 3.20893L12.4891 7.78395C12.5498 7.91554 12.674 8.00615 12.8179 8.02321L17.8211 8.61637C18.1742 8.65824 18.3159 9.09468 18.0549 9.33608L14.3563 12.7567C14.2499 12.8551 14.2024 13.0018 14.2306 13.1439L15.2123 18.0854C15.2816 18.4342 14.9105 18.7039 14.6002 18.5302L10.204 16.0694C10.0776 15.9986 9.92356 15.9985 9.79711 16.0693L5.40051 18.5302C5.09025 18.7039 4.71871 18.4342 4.78801 18.0855L5.76991 13.1438C5.79816 13.0017 5.75072 12.8552 5.64433 12.7568L1.94537 9.33606Z" fill="#E7E4DE"/>
+                                                </svg>
+                                            <?php }
+                                        } ?>
+                                    </div>
+                                    <p class="reviews__item-text font-13-16 fw-400"><?= $review['text']; ?></p>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600">Показати ще</button>
+                    <?php } else { ?>
+                        <div class="no-info__image img-wrapper-cover">
+                            <img src="<?php bloginfo('template_url'); ?>/images/noinfo.png" alt="no info">
+                        </div>
+                        <h3 class="no-info__title font-20-24 fw-600 text-center">У цього товару поки що немає відгуків</h3>
+                        <p class="no-info__text font-14-20 fw-400 text-center">Станьте першим та поділіться своїм враженням!</p>
+                    <?php } ?>
+                </div>
+                <div class="info__advanced__questions info__advanced__tab" data-name="questions">
+                    <?php $questions = [
+                        [
+                            'q' => [
+                                'name' => 'Наталля Шевченко',
+                                'date' => '10.06.2023',
+                                'status' => 'Покупець',
+                                'q' => 'Чи можна замовити 1 штуку?'
+                            ],
+                            'a' => [
+                                'name' => 'Представник Mamashop',
+                                'date' => '11.06.2023',
+                                'status' => 'Відповідь',
+                                'a' => 'Так, звичайно!'
+                            ]
+                        ]
+                    ];
+                    if (!empty($questions)) { ?>
+                        <h3 class="questions-title font-18-22 fw-500">Запитання про товар</h3>
+                        <div class="questions__items">
+                            <?php foreach ($questions as $question_arr) {
+                                $question = $question_arr['q'];
+                                $answer = $question_arr['a']; ?>
+                                <div class="questions__item">
+                                    <div class="questions__item-head d-flex justify-content-between">
+                                        <h4 class="questions__item-name font-15-18 fw-500"><?= $question['name']; ?></h4>
+                                        <time class="questions__item-date font-11-13 fw-400"><?= $question['date']; ?></time>
+                                    </div>
+                                    <p class="questions__item-status font-11-13 fw-400"><?= $question['status']; ?></p>
+                                    <p class="questions__item-text font-13-16 fw-400"><?= $question['q']; ?></p>
+                                    <div class="questions__item__answer">
+                                        <div class="answer__head d-flex justify-content-between">
+                                            <div class="answer__head__text d-flex align-items-baseline">
+                                                <h5 class="answer-name font-13-16 fw-500"><?= $answer['name']; ?></h5>
+                                                <span class="answer-status font-11-13 fw-400"><?= $answer['status']; ?></span>
+                                            </div>
+                                            <time class="questions__item-date font-11-13 fw-400"><?= $answer['date']; ?></time>
+                                        </div>
+                                        <p class="answer-text font-13-16 fw-400"><?= $answer['a']; ?></p>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    <?php } else { ?>
+                        <div class="no-info__image img-wrapper-cover">
+                            <img src="<?php bloginfo('template_url'); ?>/images/noinfo.png" alt="no info">
+                        </div>
+                        <h3 class="no-info__title font-20-24 fw-600 text-center">Питань поки що немає</h3>
+                        <p class="no-info__text font-14-20 fw-400 text-center">Станьте першим та отримайте відповідь</p>
                     <?php } ?>
                 </div>
             </div>
@@ -136,8 +232,8 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <p class="info__rating__percents-value fw-500">98%</p>
                     <p class="info__rating__percents-text font-14-20 fw-400">покупців рекомендують цей товар</p>
                 </div>
-                <button class="info__advanced-make-review std-btn purple-btn font-16-22 fw-600">Залишити відгук</button>
-                <button class="info__advanced-make-question std-btn pale-purple-btn font-16-22 fw-600">Запитати</button>
+                <button id="make-review__btn" class="info__rating-make-review std-btn purple-btn font-16-22 fw-600">Залишити відгук</button>
+                <button id="ask-question__btn" class="info__rating-make-question std-btn pale-purple-btn font-16-22 fw-600">Запитати</button>
             </div>
         </div>
     </main>
@@ -157,5 +253,54 @@ $sale_val = get_post_meta($id, '_discount_value', true);
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
         </button>
     </section>
+    <div class="make-review blur-bg d-flex justify-content-center align-items-center">
+        <form action="" id="review-form" class="review__form std-form">
+            <svg class="std-form__close close-menu transition-default" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 6L21.9993 21" stroke="#D9D9D9" stroke-width="2"/><path d="M22 6L7 20.9993" stroke="#D9D9D9" stroke-width="2"/></svg>
+            <h2 class="std-form__main-title font-20-24 fw-600">Залиште свій відгук</h2>
+            <h4 class="std-form__title font-16-22 fw-500">Оцініть товар</h4>
+            <div class="std-form__stars d-flex">
+                <input type="radio" id="0-stars" name="stars" class="d-none" value="0" checked>
+                <?php for ($i = 0; $i < 5; $i++) { ?>
+                    <label for="<?= ($i + 1); ?>-stars" class="std-form__stars-image transition-default" data-star="<?= ($i + 1); ?>">
+                        <svg class="transition-default" xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M1.94537 9.33606C1.68433 9.09465 1.82613 8.65824 2.17921 8.61637L7.18223 8.0232C7.32613 8.00614 7.45113 7.91547 7.51182 7.78388L9.62203 3.20897C9.77095 2.8861 10.2299 2.88606 10.3789 3.20893L12.4891 7.78395C12.5498 7.91554 12.674 8.00615 12.8179 8.02321L17.8211 8.61637C18.1742 8.65824 18.3159 9.09468 18.0549 9.33608L14.3563 12.7567C14.2499 12.8551 14.2024 13.0018 14.2306 13.1439L15.2123 18.0854C15.2816 18.4342 14.9105 18.7039 14.6002 18.5302L10.204 16.0694C10.0776 15.9986 9.92356 15.9985 9.79711 16.0693L5.40051 18.5302C5.09025 18.7039 4.71871 18.4342 4.78801 18.0855L5.76991 13.1438C5.79816 13.0017 5.75072 12.8552 5.64433 12.7568L1.94537 9.33606Z"/>
+                        </svg>
+                    </label>
+                    <input type="radio" id="<?= ($i + 1); ?>-stars" name="stars" class="form-stars d-none" value="<?= ($i + 1); ?>">
+                <?php } ?>
+            </div>
+            <h4 class="std-form__title font-16-22 fw-500">Ваш відгук</h4>
+            <textarea name="review-text" id="review-text" class="std-form__textarea font-12-16 fw-500 transition-default d-block" placeholder="Наприклад: Мені дуже сподобався цей товар!"></textarea>
+            <button type="submit" class="std-form__submit std-btn purple-btn">Надіслати відгук</button>
+        </form>
+        <div class="std-form__success review-success d-none">
+            <svg class="std-form__close close-menu transition-default" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 6L21.9993 21" stroke="#D9D9D9" stroke-width="2"/><path d="M22 6L7 20.9993" stroke="#D9D9D9" stroke-width="2"/></svg>
+            <div class="img-wrapper-contain">
+                <img src="<?php bloginfo('template_url'); ?>/images/shield.png" alt="success">
+            </div>
+            <h2 class="success-title font-20-24 fw-600">Дякуємо за відгук!</h2>
+            <p class="success-text font-14-20 fw-400">Ваш відгук буде опублікований одразу після проходження модерації.</p>
+            <button class="success-button std-btn purple-btn">Зрозуміло</button>
+        </div>
+    </div>
+    <div class="ask-question blur-bg d-flex justify-content-center align-items-center">
+        <form action="" id="question-form" class="question__form std-form">
+            <svg class="std-form__close close-menu transition-default" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 6L21.9993 21" stroke="#D9D9D9" stroke-width="2"/><path d="M22 6L7 20.9993" stroke="#D9D9D9" stroke-width="2"/></svg>
+            <h2 class="std-form__main-title font-20-24 fw-600">Напишіть своє питання</h2>
+            <p class="std-form__main-subtitle font-14-20 fw-400">Ми відповімо вам найближчим часом</p>
+            <h4 class="std-form__title font-16-22 fw-500">Ваше питання</h4>
+            <textarea name="question-text" id="question-text" class="std-form__textarea font-12-16 fw-500 transition-default d-block" placeholder="Наприклад: Можу я замовити 1 товар?"></textarea>
+            <button type="submit" class="std-form__submit std-btn purple-btn">Надіслати питання</button>
+        </form>
+        <div class="std-form__success question-success d-none">
+            <svg class="std-form__close close-menu transition-default" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 6L21.9993 21" stroke="#D9D9D9" stroke-width="2"/><path d="M22 6L7 20.9993" stroke="#D9D9D9" stroke-width="2"/></svg>
+            <div class="img-wrapper-contain">
+                <img src="<?php bloginfo('template_url'); ?>/images/shield.png" alt="success">
+            </div>
+            <h2 class="success-title font-20-24 fw-600">Дякуємо!</h2>
+            <p class="success-text font-14-20 fw-400">Ваше питання опубліковано. Ми якомога швидше дамо на нього відповідь.</p>
+            <button class="success-button std-btn purple-btn">Зрозуміло</button>
+        </div>
+    </div>
 </div>
 <?php get_footer();
