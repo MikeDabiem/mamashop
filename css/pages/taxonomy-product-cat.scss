@@ -1,0 +1,45 @@
+.category-page {
+  .section-title {
+    margin-top: 24px;
+  }
+  .subcategory {
+    &__items {
+      margin-top: 30px;
+      gap: 16px;
+    }
+    &__item {
+      width: calc((100% - 80px) / 6);
+      padding: 12px 12px 24px;
+      border-radius: 6px;
+      background: $white;
+      text-decoration: none;
+      &-image {
+        width: 100%;
+        @include flex-height(64);
+        background: $light-grey;
+        border-radius: 4px;
+      }
+      &-title {
+        margin-top: 10px;
+        text-align: center;
+        color: $black;
+      }
+      @media (hover: hover) {
+        &:hover {
+          .subcategory__item-title {
+            color: $hover-purple;
+          }
+        }
+      }
+    }
+  }
+  .top {
+    margin-top: 40px;
+  }
+  .products-count {
+    color: $grey;
+  }
+  .banner {
+    margin-top: 20px;
+  }
+}

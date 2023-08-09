@@ -126,5 +126,6 @@ function hide_filters() {
         ]);
         require "product-filter-content.php";
     endif;
+    wp_reset_postdata();
     wp_die();
 }

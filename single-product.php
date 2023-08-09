@@ -106,18 +106,10 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <div class="tab-button--border transition-default"></div>
                 </div>
                 <div class="info__advanced__description info__advanced__tab active" data-name="about">
-                    <?php $description = $product->get_description();
-                    $how_to_use = $product->get_short_description();
-                    if ($description || $how_to_use) {
-                        if ($description) { ?>
-                            <h3 class="description-title font-18-22 fw-500">Опис:</h3>
-                            <p class="description-text font-13-16 fw-400"><?= $description; ?></p>
-                        <?php }
-                        if ($how_to_use) { ?>
-                            <h3 class="description-title font-18-22 fw-500">Спосіб застосування:</h3>
-                            <p class="description-text font-13-16 fw-400"><?= $how_to_use; ?></p>
-                        <?php }
-                    } else { ?>
+                    <?php $description = get_the_content();
+                    if ($description) { ?>
+                        <div class="description-text wysiwyg-styles"><?php the_content(); ?></div>
+                    <?php } else { ?>
                         <div class="no-info__image img-wrapper-cover">
                             <img src="<?php bloginfo('template_url'); ?>/images/noinfo.png" alt="no info">
                         </div>

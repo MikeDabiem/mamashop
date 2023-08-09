@@ -379,3 +379,133 @@ h1, h2, h3, h4, h5, h6, p {
     }
   }
 }
+
+.wysiwyg-styles {
+  & > img {
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    margin-bottom: 24px;
+  }
+  & > p {
+    font-size: 13px;
+    line-height: 170%;
+    margin-top: 12px;
+    color: $black-light;
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+    }
+    .alignleft,
+    .alignright {
+      max-width: 50% !important;
+      max-height: 500px !important;
+      height: auto !important;
+      object-fit: cover !important;
+    }
+    .alignleft {
+      float: left;
+      margin: 0 30px 30px 0;
+    }
+    .alignright {
+      float: right;
+      margin: 0 0 30px 30px;
+    }
+  }
+  & > ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    li {
+      display: table;
+      background-repeat: no-repeat;
+      background-image: url("../images/dot.svg");
+      background-size: 12px 12px;
+      background-position: 0 6px;
+      padding-left: 30px;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+  & > h3 {
+    font-size: 18px;
+    line-height: 130%;
+    font-weight: 500;
+    &:not(:first-child) {
+      margin-top: 28px;
+    }
+  }
+  & > h4 {
+    font-size: 16px;
+    line-height: 135%;
+    font-weight: 500;
+    &:not(:first-child) {
+      margin-top: 28px;
+    }
+  }
+  & > *:last-child {
+    margin-bottom: 0 !important;
+  }
+  a {
+    color: $main-purple;
+    &:hover {
+      color: $hover-purple;
+    }
+  }
+}
+.video-wysiwyg {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 30px;
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+  }
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+.wysiwyg-gallery {
+  margin: 0 0 15px;
+  .single-gallery-element {
+    width: calc((100% - 30px) / 3);
+    margin: 0 15px 15px 0;
+    &:nth-of-type(3n),
+    &:nth-last-of-type(1) {
+      margin: 0 0 15px;
+    }
+    &:before {
+      content: "";
+      display: block;
+      padding-top: 56%;
+    }
+    .gallery-image {
+      transform: perspective(1000px);
+      -webkit-transform: perspective(1000px);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      perspective: 1000px;
+      -webkit-perspective: 1000px;
+    }
+    .additional-number {
+      font-size: 30px;
+      right: 15px;
+      bottom: 15px;
+      color: $white;
+    }
+    &:hover {
+      .gallery-image {
+        transform: scale(1.05) perspective(1000px);
+        -webkit-transform: scale(1.05) perspective(1000px);
+      }
+    }
+  }
+}

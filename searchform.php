@@ -50,7 +50,8 @@
                             <p class="search-popular__item__info-price font-14-20 fw-500"><?= $salePrice ? $salePrice : $price; ?> грн</p>
                         </div>
                     </a>
-                <?php endwhile; endif; ?>
+                <?php endwhile; endif;
+                wp_reset_postdata(); ?>
             </div>
         </section>
     </div>
