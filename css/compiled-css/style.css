@@ -592,6 +592,10 @@ h1, h2, h3, h4, h5, h6, p {
   -webkit-transform: scale(1.05) perspective(1000px);
 }
 
+.products-count {
+  color: #B2B2B7;
+}
+
 .header {
   position: fixed;
   width: 100%;
@@ -1098,13 +1102,37 @@ h1, h2, h3, h4, h5, h6, p {
   stroke: #FFFFFF;
 }
 
+.brands__items {
+  margin-top: 30px;
+  gap: 16px 12px;
+}
+.brands__link {
+  background: rgba(236, 236, 240, 0.8);
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .brands__link:hover .link-arrow {
+    background: #564794;
+  }
+  .brands__link:hover .link-arrow svg {
+    transform: rotate(-30deg);
+  }
+}
+.brands__link:active .link-arrow {
+  transition: all 0.1s ease-in-out;
+  background: #FFFFFF;
+}
+.brands__link:active .link-arrow svg {
+  transition: all 0.1s ease-in-out;
+  stroke: #6757A9;
+}
 .brands-item {
   width: 203px;
   height: 80px;
   border: 1px solid transparent;
   border-radius: 60px;
   background: #FFFFFF;
-  padding: 10px;
+  padding: 9px 25px;
 }
 @media (hover: hover) {
   .brands-item:hover {
@@ -1483,6 +1511,59 @@ h1, h2, h3, h4, h5, h6, p {
   opacity: 0;
 }
 
+.promo__item {
+  width: calc((100% - 36px) / 4);
+  padding: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(236, 236, 240, 0.8);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.promo__item::before {
+  content: "";
+  display: block;
+  padding-top: 50%;
+}
+@media (hover: hover) {
+  .promo__item:hover .link-arrow {
+    background: #564794;
+  }
+  .promo__item:hover .link-arrow svg {
+    transform: rotate(-30deg);
+  }
+}
+.promo__item:active .link-arrow {
+  transition: all 0.1s ease-in-out;
+  background: #FFFFFF;
+}
+.promo__item:active .link-arrow svg {
+  transition: all 0.1s ease-in-out;
+  stroke: #6757A9;
+}
+@media (hover: hover) {
+  .promo__item:hover {
+    border-color: rgba(103, 87, 169, 0.3);
+  }
+}
+.promo__item:active {
+  border-color: #564794;
+}
+.promo__item__content {
+  padding: 10px 15px 30px;
+  border-radius: 5px;
+  background: rgba(203, 204, 208, 0.5);
+  backdrop-filter: blur(14.5px);
+  z-index: 1;
+}
+.promo__item-title {
+  color: #FFFFFF;
+}
+.promo__item-text {
+  margin-top: 4px;
+  color: #FFFFFF;
+}
+
 .footer {
   background: #F1F1F6;
   padding-top: 50px;
@@ -1582,84 +1663,8 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 30px;
   gap: 12px;
 }
-.homepage .promo__item {
-  width: calc((100% - 36px) / 4);
-  background: rgba(236, 236, 240, 0.8);
-  border-radius: 6px;
-  text-decoration: none;
-  border: 1px solid transparent;
-}
-.homepage .promo__item::before {
-  content: "";
-  display: block;
-  padding-top: 90%;
-}
-@media (hover: hover) {
-  .homepage .promo__item:hover .link-arrow {
-    background: #564794;
-  }
-  .homepage .promo__item:hover .link-arrow svg {
-    transform: rotate(-30deg);
-  }
-}
-.homepage .promo__item:active .link-arrow {
-  transition: all 0.1s ease-in-out;
-  background: #FFFFFF;
-}
-.homepage .promo__item:active .link-arrow svg {
-  transition: all 0.1s ease-in-out;
-  stroke: #6757A9;
-}
-@media (hover: hover) {
-  .homepage .promo__item:hover {
-    border-color: rgba(103, 87, 169, 0.3);
-  }
-}
-.homepage .promo__item:active {
-  border-color: #564794;
-}
-.homepage .promo__item-text {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  right: 12px;
-  padding: 10px;
-  border-radius: 7px;
-  background: rgba(203, 204, 208, 0.5);
-  backdrop-filter: blur(15px);
-  color: #FFFFFF;
-  min-height: 96px;
-}
-.homepage .promo__item-subtitle {
-  margin-top: 4px;
-  color: inherit;
-}
 .homepage .promo__item-all {
   color: #494558;
-}
-.homepage .brands__items {
-  margin-top: 30px;
-  gap: 16px 12px;
-}
-.homepage .brands__link {
-  background: rgba(236, 236, 240, 0.8);
-  text-decoration: none;
-}
-@media (hover: hover) {
-  .homepage .brands__link:hover .link-arrow {
-    background: #564794;
-  }
-  .homepage .brands__link:hover .link-arrow svg {
-    transform: rotate(-30deg);
-  }
-}
-.homepage .brands__link:active .link-arrow {
-  transition: all 0.1s ease-in-out;
-  background: #FFFFFF;
-}
-.homepage .brands__link:active .link-arrow svg {
-  transition: all 0.1s ease-in-out;
-  stroke: #6757A9;
 }
 .homepage .top,
 .homepage .categories,
@@ -2103,11 +2108,20 @@ h1, h2, h3, h4, h5, h6, p {
 .category-page .top {
   margin-top: 40px;
 }
-.category-page .products-count {
-  color: #B2B2B7;
-}
 .category-page .banner {
   margin-top: 20px;
+}
+
+.brands-page .section-title {
+  margin-top: 24px;
+}
+
+.promo-page .section-title {
+  margin-top: 24px;
+}
+.promo-page__items {
+  margin-top: 32px;
+  gap: 16px 12px;
 }
 
 /*# sourceMappingURL=style.css.map */

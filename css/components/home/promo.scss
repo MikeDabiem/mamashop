@@ -3,40 +3,7 @@
     margin-top: 30px;
     gap: 12px;
   }
-  &__item {
-    width: calc((100% - 36px) / 4);
-    @include flex-height(90);
-    background: rgba(236, 236, 240, 0.80);
-    border-radius: 6px;
-    text-decoration: none;
-    border: 1px solid transparent;
-    @include link-arrow-hover();
-    @media (hover: hover) {
-      &:hover {
-        border-color: rgba(103, 87, 169, 0.30);
-      }
-    }
-    &:active {
-      border-color: $hover-purple;
-    }
-    &-text {
-      position: absolute;
-      left: 12px;
-      bottom: 12px;
-      right: 12px;
-      padding: 10px;
-      border-radius: 7px;
-      background: rgba(203, 204, 208, 0.50);
-      backdrop-filter: blur(15px);
-      color: $white;
-      min-height: 96px;
-    }
-    &-subtitle {
-      margin-top: 4px;
-      color: inherit;
-    }
-    &-all {
-      color: $black;
-    }
+  &__item-all {
+    color: $black;
   }
 }

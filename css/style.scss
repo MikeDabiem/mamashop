@@ -6,13 +6,16 @@
 @import "components/banner";
 @import 'components/product-item';
 @import 'components/link-arrow';
-@import 'components/brands-item';
+@import "components/brands";
 @import "components/categories";
 @import "components/product-filter";
 @import "components/product-filter-head";
+@import "components/promo-item";
 @import 'components/footer';
 
 @import 'pages/home';
 @import 'pages/search';
 @import 'pages/single-product';
 @import 'pages/taxonomy-product-cat';
+@import 'pages/brands';
+@import 'pages/promo';

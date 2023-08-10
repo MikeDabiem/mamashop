@@ -34,32 +34,32 @@ get_header(); ?>
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
         </button>
     </section>
-    <section class="promo">
-        <h2 class="section-title">Акції</h2>
-        <div class="promo__items d-flex">
-            <?php for ($p = 0; $p < 3; $p++) { ?>
-                <a href="#" class="promo__item transition-default d-block">
-                    <div class="img-wrapper-cover">
-                        <div class="promo__item-text">
-                            <h3 class="promo__item-title font-22-26 fw-600">Шалена економія -50%</h3>
-                            <p class="promo__item-subtitle font-14-20 fw-500">На будь-який засіб для прання</p>
-                        </div>
-                    </div>
+    <?php $promos = new WP_Query(['post_type' => 'promo', 'posts_per_page' => 3]);
+    $promos_link = get_field('promos_page', 'options');
+    if ($promos->have_posts()): ?>
+        <section class="promo">
+            <h2 class="section-title">Акції</h2>
+            <div class="promo__items d-flex">
+                <?php while ($promos->have_posts()): $promos->the_post();
+                    require 'components/promo-item.php';
+                endwhile; ?>
+                <a href="<?= $promos_link; ?>" class="promo__item transition-default d-flex justify-content-center align-items-center">
+                    <p class="promo__item-all font-15-24 fw-600">Усі акції</p>
+                    <?php require "components/link-arrow.php"; ?>
                 </a>
-            <?php } ?>
-            <a href="#" class="promo__item transition-default d-flex justify-content-center align-items-center">
-                <p class="promo__item-all font-15-24 fw-600">Усі акції</p>
-                <?php require "components/link-arrow.php"; ?>
-            </a>
-        </div>
-    </section>
+            </div>
+        </section>
+    <?php endif; ?>
     <section class="brands">
         <h2 class="section-title">Бренди</h2>
         <div class="brands__items d-flex flex-wrap">
-            <?php for ($b = 0; $b < 11; $b++) {
+            <?php $brands = get_field('brands', 'options');
+            $brands_link = get_field('brands_page', 'options');
+            for ($b = 0; $b < 11; $b++) {
+                $brand = $brands[$b];
                 require "components/brands-item.php";
             } ?>
-            <a href="#" class="brands-item brands__link transition-default d-flex justify-content-center align-items-center">
+            <a href="<?= $brands_link; ?>" class="brands-item brands__link transition-default d-flex justify-content-center align-items-center">
                 <p class="brands__link-all font-15-24 fw-600">Усі бренди</p>
                 <?php require "components/link-arrow.php"; ?>
             </a>

@@ -1,0 +1,32 @@
+.brands {
+  &__items {
+    margin-top: 30px;
+    gap: 16px 12px;
+  }
+  &__link {
+    background: rgba(236, 236, 240, 0.80);
+    text-decoration: none;
+    @include link-arrow-hover();
+  }
+  &-item {
+    width: 203px;
+    height: 80px;
+    border: 1px solid transparent;
+    border-radius: 60px;
+    background: $white;
+    padding: 9px 25px;
+    @media (hover: hover) {
+      &:hover {
+        border-color: $hover-grey;
+      }
+    }
+    &:active {
+      border-color: $black-light;
+    }
+    &>img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

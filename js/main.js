@@ -233,7 +233,7 @@ jQuery(function($) {
     const brandFilter = $('.brand-filter__input');
     if (brandFilter.length) {
       brandFilter.on('input', function() {
-        const brandsParent = $(`.product-filter__spoiler__content[data-name="pa_brend"]`);
+        const brandsParent = $(`.product-filter__spoiler__content[data-name="pa_brand"]`);
         if (brandFilter.val() === ' ') {
           brandFilter.val('');
         }

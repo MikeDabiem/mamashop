@@ -39,6 +39,7 @@ add_action("wp_enqueue_scripts", "load_style_script");
 /*END Load styles and scripts*/
 
 add_theme_support('woocommerce');
+add_theme_support('menus');
 
 require 'components/ajax.php';
 
@@ -95,3 +96,50 @@ function true_wordform($num, $form_for_1, $form_for_2, $form_for_5) {
         return $form_for_1;
     return $form_for_5;
 }
+
+// Hide/remove content editor
+function hide_editor()
+{
+    $template_file = basename(get_page_template());
+    $templatesArray = ['brands.php'];
+    if (in_array($template_file, $templatesArray)) remove_post_type_support('page', 'editor');
+}
+add_action('admin_head', 'hide_editor');
+
+// Make ACF Options
+if (function_exists('acf_add_options_page')) {
+    $args = ['page_title' => 'Options', 'menu_title' => 'Options'];
+    acf_add_options_page($args);
+}
+
+// SVG Through admin-panel
+function cc_mime_types($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter('upload_mimes', 'cc_mime_types');
+
+// register promo post type
+function promo_post_type() {
+    $args = [
+        'labels' => [
+            'name' => 'Акції',
+            'singular_name' => 'Акція',
+            'add_new' => 'Додати Акцію',
+            'edit_item' => 'Редагувати Акцію',
+            'view_item' => 'Переглянути Акцію',
+            'menu_name' => 'Акції'
+        ],
+        'public' => true,
+        'exclude_from_search' => true,
+        'show_in_nav_menus' => false,
+        'menu_icon' => 'dashicons-chart-line',
+        'supports' => [
+            'title',
+            'editor',
+            'thumbnail'
+        ]
+    ];
+    register_post_type( 'promo', $args );
+}
+add_action( 'init', 'promo_post_type' );

@@ -1,0 +1,33 @@
+.promo__item {
+  width: calc((100% - 36px) / 4);
+  @include flex-height(50);
+  padding: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: $opacity-grey;
+  text-decoration: none;
+  border: 1px solid transparent;
+  @include link-arrow-hover();
+  @media (hover: hover) {
+    &:hover {
+      border-color: rgba(103, 87, 169, 0.30);
+    }
+  }
+  &:active {
+    border-color: $hover-purple;
+  }
+  &__content {
+    padding: 10px 15px 30px;
+    border-radius: 5px;
+    background: rgba(203, 204, 208, 0.50);
+    backdrop-filter: blur(14.5px);
+    z-index: 1;
+  }
+  &-title {
+    color: $white;
+  }
+  &-text {
+    margin-top: 4px;
+    color: $white;
+  }
+}

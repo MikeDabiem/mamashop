@@ -22,7 +22,7 @@
                     $id = get_the_ID();
                     $title = get_the_title();
                     $product = wc_get_product();
-                    $brand = $product->get_attribute('brend');
+                    $brand = $product->get_attribute('brand');
                     $price = $product->get_regular_price();
                     $salePrice = $product->get_sale_price();
                     $productLink = get_permalink();

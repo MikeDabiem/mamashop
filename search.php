@@ -18,6 +18,9 @@ $search = new WP_Query([
     <h2 class="search-page-title section-title">Результати пошуку «<?= get_search_query(); ?>»</h2>
     <?php if ($search->have_posts()):
         require 'shop.php';
+        echo '<pre>';
+        print_r(get_term_link('denkmit', 'pa_brand'));
+        echo '</pre>';
     else: ?>
         <div class="search-page__not-found d-flex justify-content-between">
             <div class="search-page__not-found__col1 d-flex">
