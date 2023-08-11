@@ -1,0 +1,127 @@
+.info-page {
+  &__content {
+    margin-top: 30px;
+    gap: 20px;
+    &__col1 {
+      width: 26%;
+    }
+    &__col2 {
+      width: 72%;
+    }
+    &__item {
+      &:first-child {
+        margin-top: 20px;
+      }
+      &:not(:first-child) {
+        margin-top: 12px;
+      }
+      padding: 32px;
+      border-radius: 8px;
+      background: $white;
+      .item {
+        &__icontext {
+          gap: 12px;
+          &-icon {
+            padding: 8px;
+            border-radius: 4px;
+            background: $opacity-purple;
+          }
+          &-text {
+            margin-top: 24px;
+          }
+        }
+        &__additional {
+          margin-top: 24px;
+          padding: 12px 16px;
+          border-radius: 4px;
+          background: $opacity-purple;
+          gap: 10px;
+          &-text {
+            color: $main-purple;
+          }
+        }
+        &__num-list {
+          margin: 24px 0 0;
+          padding-left: 18px;
+        }
+        &__dot-list {
+          padding-left: 4px;
+          &>li {
+            list-style: disc;
+          }
+        }
+      }
+      .contacts {
+        &__icontext {
+          gap: 12px;
+          &:first-child {
+            margin-top: 16px;
+          }
+          &:not(:first-child) {
+            margin-top: 12px;
+          }
+          &>a {
+            text-decoration: none;
+            color: $black-light;
+            @media (hover: hover) {
+              &:hover {
+                color: $main-purple;
+              }
+            }
+          }
+        }
+        &-additional {
+          margin-top: 24px;
+          color: $black-light;
+          &::before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background: $black-light;
+            border-radius: 5px;
+            margin: 2px 12px;
+          }
+        }
+      }
+    }
+  }
+  &__menu {
+    padding: 12px;
+    background: $white;
+    border-radius: 8px;
+    &>ul {
+      margin: 0;
+      padding: 0;
+      &>li {
+        list-style: none;
+        color: $black-light;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: all .3s ease-in-out;
+        &:not(:first-child) {
+          margin-top: 4px;
+        }
+        @media (hover: hover) {
+          &:hover {
+            color: $main-purple;
+            border-color: $opacity-purple;
+          }
+        }
+        &.current-menu-item {
+          background: $opacity-purple;
+          color: $main-purple;
+        }
+        &>a {
+          display: block;
+          text-decoration: none;
+          color: inherit;
+          font-size: 16px;
+          line-height: 135%;
+          font-weight: 500;
+          padding: 16px 17px;
+        }
+      }
+    }
+  }
+}

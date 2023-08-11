@@ -172,19 +172,31 @@
     &__links {
       margin-top: 24px;
       &-item {
-        &:not(:first-child) {
-          margin-top: 16px;
-        }
+        padding: 8px;
+        border-radius: 4px;
         gap: 16px;
         text-decoration: none;
+        &:not(:first-child) {
+          margin-top: 4px;
+        }
+        @media (hover: hover) {
+          &:hover {
+            background: $catalog-grey-hover;
+            p {
+              color: $main-purple;
+            }
+            svg {
+              path {
+                fill: $main-purple;
+              }
+            }
+          }
+        }
         .img-wrapper {
           width: 40px;
           height: 40px;
           border-radius: 4px;
           background: $image-grey;
-          img {
-            padding: 8px;
-          }
         }
       }
     }

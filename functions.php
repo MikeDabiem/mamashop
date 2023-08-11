@@ -98,8 +98,7 @@ function true_wordform($num, $form_for_1, $form_for_2, $form_for_5) {
 }
 
 // Hide/remove content editor
-function hide_editor()
-{
+function hide_editor() {
     $template_file = basename(get_page_template());
     $templatesArray = ['brands.php'];
     if (in_array($template_file, $templatesArray)) remove_post_type_support('page', 'editor');
