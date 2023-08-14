@@ -102,6 +102,27 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
+.blue-btn {
+  background: $main-blue;
+  color: $black;
+  svg {
+    stroke: $black;
+  }
+  @media (hover: hover) {
+    &:hover {
+      background: $hover-blue;
+    }
+  }
+  &:active {
+    transition-duration: $fast-transition;
+    background: $black;
+    color: $white;
+    svg {
+      stroke: $main-blue;
+    }
+  }
+}
+
 .slider-arrow {
   display: flex;
   justify-content: center;
@@ -511,4 +532,9 @@ h1, h2, h3, h4, h5, h6, p {
 
 .products-count {
   color: $grey;
+}
+
+.disabled-link {
+  opacity: .8;
+  pointer-events: none;
 }

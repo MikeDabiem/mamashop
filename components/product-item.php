@@ -34,5 +34,5 @@
             <p class="product-item__price-disc font-12-16 fw-500"><?= $price; ?> грн</p>
         <?php } ?>
     </div>
-    <button type="button" class="product-item__button std-btn purple-btn font-16-22 fw-600 transition-default d-block">Купити</button>
+    <?php require 'buy-button.php'; ?>
 </div>

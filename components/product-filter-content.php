@@ -49,4 +49,4 @@ foreach ($attributes_arr as $attr_id => $options) {
             </div>
         <?php } ?>
     </div>
-<?php }
+<?php } ?>

@@ -40,6 +40,7 @@ add_action("wp_enqueue_scripts", "load_style_script");
 
 add_theme_support('woocommerce');
 add_theme_support('menus');
+add_theme_support('widgets');
 
 require 'components/ajax.php';
 
@@ -142,3 +143,19 @@ function promo_post_type() {
     register_post_type( 'promo', $args );
 }
 add_action( 'init', 'promo_post_type' );
+
+add_filter( 'woocommerce_add_to_cart_fragments', 'cart_products_count' );
+function cart_products_count( $fragments ) {
+    $cart_items_count = absint(WC()->cart->get_cart_contents_count());
+    $fragments[ '.cart-menu__value' ] = `<p class="cart-menu__value font-14-20 fw-500">` . $cart_items_count . ' ' . true_wordform($cart_items_count, 'товар', 'товари', 'товарів') . `</p>`;
+    return $fragments;
+}
+
+//function register_filters_sidebar() {
+//    register_sidebar(
+//        array(
+//            'id' => 'filters',
+//        )
+//    );
+//}
+//add_action( 'widgets_init', 'register_filters_sidebar' );

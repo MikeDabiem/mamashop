@@ -1,0 +1,15 @@
+.buy-button {
+  padding: 15px;
+  text-decoration: none;
+  gap: 10px;
+  &--cart {
+    svg {
+      fill: $black;
+    }
+    &:active {
+      svg {
+        fill: $main-blue;
+      }
+    }
+  }
+}

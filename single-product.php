@@ -69,11 +69,7 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <?php } ?>
                 </div>
                 <div class="info__main__buttons d-flex">
-                    <?php if ($product->is_in_stock()) { ?>
-                        <button class="info__main__buy-btn std-btn purple-btn font-16-22 fw-600 transition-default">Купити</button>
-                    <?php } else { ?>
-                        <button class="info__main__buy-btn std-btn purple-btn font-16-22 fw-600 transition-default">Повідомити про появу</button>
-                    <?php } ?>
+                    <?php require 'components/buy-button.php'; ?>
                     <button class="single-product-fav std-btn d-flex justify-content-center align-items-center transition-default">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-linecap="round" stroke-width="2" d="M22.166 10.24a5.188 5.188 0 0 0-1.336-2.175c-.522-.517-1.063-.859-1.606-1.065m-7.092-2.163c-1.952-1.239-5.106-2.41-7.829.367C-2.162 11.797 8.924 24.5 14 24.5c5.075 0 16.16-12.703 9.696-19.296-2.723-2.777-5.876-1.606-7.829-.367-1.103.7-2.632.7-3.735 0Z"/></svg>
                     </button>
@@ -128,13 +124,16 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     if (!empty($reviews)) { ?>
                         <h3 class="reviews-title font-18-22 fw-500">Відгуки про товар</h3>
                         <div class="reviews__items">
+                            <?php // woocommerce_review_display_meta();
+//                            woocommerce_review_display_rating();
+//                            woocommerce_review_display_comment_text(); ?>
                             <?php foreach ($reviews as $review) { ?>
                                 <div class="reviews__item">
                                     <div class="reviews__item-head d-flex justify-content-between">
                                         <h4 class="reviews__item-name font-15-18 fw-500"><?= $review['name']; ?></h4>
                                         <time class="reviews__item-date font-11-13 fw-400"><?= $review['date']; ?></time>
                                     </div>
-                                    <div class="reviews__item__stars">
+                                    <div class="reviews__item__stars d-flex">
                                         <?php $stars = $review['stars'];
                                         for ($i = 0; $i < 5; $i++) {
                                             if ($i < $stars) { ?>

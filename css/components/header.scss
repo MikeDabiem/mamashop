@@ -61,25 +61,9 @@
     height: 48px;
   }
   &__catalog {
-    background: $main-blue;
     padding: 10px 17px;
-    color: $black;
     svg {
       margin-right: 6px;
-      stroke: $black;
-    }
-    @media (hover: hover) {
-      &:hover {
-        background: $hover-blue;
-      }
-    }
-    &:active {
-      transition-duration: $fast-transition;
-      background: $black;
-      color: $white;
-      svg {
-        stroke: $main-blue;
-      }
     }
   }
   @import "searchform";
@@ -203,3 +187,4 @@
   }
 }
 @import "catalog-menu";
+@import "cart-menu";

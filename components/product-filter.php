@@ -49,4 +49,4 @@
             <?php require "product-filter-content.php"; ?>
         </form>
     </div>
-<?php endif; ?>
+<?php endif;
