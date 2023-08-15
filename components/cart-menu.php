@@ -65,7 +65,7 @@
             </div>
         <?php } ?>
     </div>
-    <a href="#" class="cart-menu__order std-btn font-15-18 fw-600 transition-default d-flex">
+    <a href="<?= wc_get_checkout_url(); ?>" class="cart-menu__order std-btn font-15-18 fw-600 transition-default d-flex">
         <p class="cart-menu__order-text text-center">Оформити замовлення</p>
         <div class="cart-menu__order-price d-flex align-items-center">
             <p><?= WC()->cart->get_cart_total(); ?> грн</p>

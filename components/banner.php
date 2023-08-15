@@ -1,8 +1,9 @@
+<?php $promos_link = get_field('promos_page', 'options'); ?>
 <section class="banner">
     <h2 class="d-none">Акції</h2>
     <div class="banner__items">
         <?php for ($i = 0; $i < 4; $i++) { ?>
-            <a href="#" class="banner__item img-wrapper-contain">
+            <a href="<?= $promos_link; ?>" class="banner__item img-wrapper-contain">
                 <img src="<?php bloginfo("template_url"); ?>/images/promo.jpg" alt="">
             </a>
         <?php } ?>

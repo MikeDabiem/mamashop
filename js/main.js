@@ -507,6 +507,13 @@ jQuery(function($) {
     })
   }
 
+  const buyButtonCart = $('.buy-button--cart');
+  if (buyButtonCart.length) {
+    buyButtonCart.on('click', function(e) {
+      showMenu($('.cart-menu'));
+    });
+  }
+
 
   //////////
    // AJAX //
