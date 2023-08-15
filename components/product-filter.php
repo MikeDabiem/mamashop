@@ -1,6 +1,6 @@
 <?php if (isset($filters) && $filters->have_posts()): ?>
     <div class="product-filter">
-        <button type="button" class="product-filter-clear font-11-13 fw-400">Очистити всі фільтри</button>
+        <button type="button" class="product-filter-clear font-11-13 fw-400 transition-default">Очистити всі фільтри</button>
         <form class="product-filter__price" type="get">
             <div class="product-filter__spoiler transition-default d-flex justify-content-between align-items-center" data-name="price">
                 <h5 class="product-filter__spoiler-title font-14-20 fw-500">Ціна</h5>

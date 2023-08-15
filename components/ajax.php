@@ -3,6 +3,10 @@
     add_action( 'wp_ajax_nopriv_filter', 'products_filter' );
     add_action( 'wp_ajax_hide_filters', 'hide_filters' );
     add_action( 'wp_ajax_nopriv_hide_filters', 'hide_filters' );
+    add_action( 'wp_ajax_del_cart_item', 'del_cart_item' );
+    add_action( 'wp_ajax_nopriv_del_cart_item', 'del_cart_item' );
+    add_action( 'wp_ajax_change_qty', 'change_qty' );
+    add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
 }
 
 function fetch_data($posts_per_page, $tax_relation) {
@@ -127,5 +131,32 @@ function hide_filters() {
         require "product-filter-content.php";
     endif;
     wp_reset_postdata();
+    wp_die();
+}
+
+function del_cart_item() {
+    if ($_POST['key']) {
+        WC()->cart->remove_cart_item($_POST['key']);
+        get_template_part('components/cart-menu');
+    }
+    wp_die();
+}
+
+function change_qty() {
+    if ($_POST['act'] === 'plus') {
+        WC()->cart->set_quantity($_POST['key'], $_POST['value'] + 1);
+    } else {
+        WC()->cart->set_quantity($_POST['key'], $_POST['value'] - 1);
+    }
+    $cart_items_count = absint(WC()->cart->get_cart_contents_count());
+    $cart_all_count = $cart_items_count . ' ' . true_wordform($cart_items_count, 'товар', 'товари', 'товарів');
+    $cart_item_qty = WC()->cart->get_cart_item($_POST['key'])['quantity'];
+    $total = WC()->cart->get_cart_total();
+    $response = [
+        'allCount' => $cart_all_count,
+        'itemCount' => $cart_item_qty,
+        'total' => $total . ' ' . 'грн'
+    ];
+    echo json_encode($response);
     wp_die();
 }

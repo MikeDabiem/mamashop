@@ -17,7 +17,7 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <?php } ?>
                     <div class="info__main__image-main img-wrapper-contain">
                         <?php
-                        $thumb = get_the_post_thumbnail_url($id, "medium_large");
+                        $thumb = get_the_post_thumbnail_url($id, "large");
                         if ($thumb) {
                             $thumb_id = get_post_thumbnail_id($id);
                             $alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true); ?>

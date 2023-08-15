@@ -159,3 +159,5 @@ function cart_products_count( $fragments ) {
 //    );
 //}
 //add_action( 'widgets_init', 'register_filters_sidebar' );
+
+add_filter('woocommerce_currency_symbol', function() {return false;});

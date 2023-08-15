@@ -29,6 +29,22 @@
   }
   &__products {
     margin-top: 20px;
+    max-height: calc(100vh - 180px);
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #EEEDED;
+      border-radius: 0 4px 4px 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #E1DEDF;
+      border-radius: 4px;
+      &:hover {
+        background-color: $burger-grey;
+      }
+    }
     &__item {
       padding: 8px;
       border-radius: 6px;
@@ -42,6 +58,7 @@
       .item {
         &-image {
           width: 18%;
+          height: fit-content;
           @include flex-height(129);
           background: $white;
           flex-shrink: 0;
@@ -49,20 +66,38 @@
         }
         &__info {
           flex-grow: 1;
-          .delete-item {
+          &__top {
+            gap: 12px;
+          }
+          .delete-cart-item {
             background: transparent;
             border: none;
+            &:hover {
+              filter: invert(42%) sepia(59%) saturate(4172%) hue-rotate(338deg) brightness(83%) contrast(124%);
+            }
           }
         }
         &__name {
           &-title {
+            width: fit-content;
             text-decoration: none;
             color: inherit;
+            @media (hover: hover) {
+              &:hover {
+                color: $main-purple;
+              }
+            }
           }
           &-subtitle {
+            width: fit-content;
             margin-top: 4px;
             text-decoration: none;
             color: $grey;
+            @media (hover: hover) {
+              &:hover {
+                color: $black-light;
+              }
+            }
           }
         }
         &__qty {
@@ -89,7 +124,7 @@
               height: 3px;
               width: 16px;
             }
-            &#qty_plus::after {
+            &.qty_plus::after {
               content: '';
               height: 16px;
               width: 3px;
@@ -97,11 +132,17 @@
             &:disabled {
               background: $hover-grey;
             }
+            &:not(:disabled) {
+              &:active {
+                background: $black;
+              }
+            }
           }
           &-num {
             width: 30px;
             text-align: center;
             border: none;
+            background: transparent;
             &::-webkit-outer-spin-button,
             &::-webkit-inner-spin-button {
               display: none;
@@ -109,6 +150,7 @@
           }
         }
         &__price {
+          align-self: end;
           &__discount {
             &-value {
               color: $grey;
@@ -149,6 +191,9 @@
       background: $hover-purple;
       flex-shrink: 0;
       color: inherit;
+      * {
+        color: inherit;
+      }
     }
 
   }
