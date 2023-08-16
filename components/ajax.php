@@ -3,8 +3,8 @@
     add_action( 'wp_ajax_nopriv_filter', 'products_filter' );
     add_action( 'wp_ajax_hide_filters', 'hide_filters' );
     add_action( 'wp_ajax_nopriv_hide_filters', 'hide_filters' );
-    add_action( 'wp_ajax_del_cart_item', 'del_cart_item' );
-    add_action( 'wp_ajax_nopriv_del_cart_item', 'del_cart_item' );
+    add_action( 'wp_ajax_handle_cart_item', 'handle_cart_item' );
+    add_action( 'wp_ajax_nopriv_handle_cart_item', 'handle_cart_item' );
     add_action( 'wp_ajax_change_qty', 'change_qty' );
     add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
 }
@@ -134,11 +134,13 @@ function hide_filters() {
     wp_die();
 }
 
-function del_cart_item() {
+function handle_cart_item() {
     if ($_POST['key']) {
         WC()->cart->remove_cart_item($_POST['key']);
-        get_template_part('components/cart-menu');
+    } elseif ($_POST['id']) {
+        WC()->cart->add_to_cart($_POST['id']);
     }
+    get_template_part('components/cart-menu');
     wp_die();
 }
 

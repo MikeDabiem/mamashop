@@ -151,13 +151,5 @@ function cart_products_count( $fragments ) {
     return $fragments;
 }
 
-//function register_filters_sidebar() {
-//    register_sidebar(
-//        array(
-//            'id' => 'filters',
-//        )
-//    );
-//}
-//add_action( 'widgets_init', 'register_filters_sidebar' );
-
+// remove currency symbol
 add_filter('woocommerce_currency_symbol', function() {return false;});

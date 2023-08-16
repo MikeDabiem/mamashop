@@ -1306,6 +1306,7 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 15px;
   text-decoration: none;
   gap: 10px;
+  line-height: 24px;
 }
 .buy-button--cart svg {
   fill: #494558;
