@@ -43,6 +43,7 @@ add_theme_support('menus');
 add_theme_support('widgets');
 
 require 'components/ajax.php';
+require 'components/checkout-settings.php';
 
 //add views count meta to new products
 add_action('woocommerce_new_product', 'initialize_total_views_count');

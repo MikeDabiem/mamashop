@@ -1,0 +1,134 @@
+.checkout-header {
+  margin-top: 30px;
+}
+.checkout-page {
+  .woocommerce {
+    &-notices-wrapper,
+    &-form-coupon-toggle {
+      display: none;
+    }
+    &-checkout {
+      .col-2 {
+        display: none;
+      }
+      &-review-order,
+      &-review-order-table {
+        display: none;
+      }
+      h3 {
+        display: none;
+      }
+    }
+    &-billing-fields__field-wrapper {
+      display: none;
+    }
+  }
+  &.filler {
+    padding-top: 36px;
+  }
+  &__body {
+    margin-top: 36px;
+    gap: 12px;
+    &__col1 {
+      width: calc(75% - 6px);
+    }
+    &__col2 {
+      width: calc(25% - 6px);
+    }
+  }
+  &__section {
+    padding: 24px;
+    background: $white;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    opacity: .5;
+    &:not(:first-child) {
+      margin-top: 12px;
+    }
+    &__body {
+      display: none;
+    }
+    &.active {
+      border-color: $hover-grey;
+      opacity: 1;
+      .checkout-page__section__body {
+        display: block;
+      }
+    }
+    &-title {
+      gap: 12px;
+      & > span {
+        width: 28px;
+        height: 28px;
+        border-radius: 24px;
+        background: $main-purple;
+        color: $white;
+      }
+    }
+    &__body {
+      margin-top: 32px;
+    }
+  }
+  .checkout {
+    &__inputs {
+      gap: 16px 24px;
+    }
+    &__input {
+      width: calc((100% - 24px) / 2);
+      label {
+        color: $black-light;
+      }
+      &-item {
+        margin-top: 8px;
+        width: 100%;
+        background: $bg-color;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        padding: 17px 16px;
+        outline: none;
+        &:focus {
+          background: $white;
+          border-color: $main-purple;
+        }
+      }
+    }
+    &-next-button {
+      margin-top: 28px;
+    }
+  }
+  &__total,
+  &__coupon {
+    opacity: 1;
+  }
+  .total {
+    &-items {
+      color: $grey;
+    }
+    &__body {
+      margin-top: 32px;
+      &__item {
+        &:not(:first-child) {
+          margin-top: 12px;
+        }
+        &-title {
+          color: $grey;
+        }
+      }
+    }
+    &__to_pay {
+      margin-top: 32px;
+    }
+  }
+  .coupon {
+    &__head {
+      &-button {
+        background: none;
+        color: $main-purple;
+        border: none;
+      }
+    }
+    &__body {
+      display: none;
+    }
+  }
+}

@@ -83,6 +83,11 @@
   line-height: 120%;
 }
 
+.font-28-36 {
+  font-size: 28px;
+  line-height: 130%;
+}
+
 .font-32-45 {
   font-size: 32px;
   line-height: 140%;
@@ -2488,6 +2493,123 @@ h1, h2, h3, h4, h5, h6, p {
   line-height: 135%;
   font-weight: 500;
   padding: 16px 17px;
+}
+
+.checkout-header {
+  margin-top: 30px;
+}
+
+.checkout-page .woocommerce-notices-wrapper, .checkout-page .woocommerce-form-coupon-toggle {
+  display: none;
+}
+.checkout-page .woocommerce-checkout .col-2 {
+  display: none;
+}
+.checkout-page .woocommerce-checkout-review-order, .checkout-page .woocommerce-checkout-review-order-table {
+  display: none;
+}
+.checkout-page .woocommerce-checkout h3 {
+  display: none;
+}
+.checkout-page .woocommerce-billing-fields__field-wrapper {
+  display: none;
+}
+.checkout-page.filler {
+  padding-top: 36px;
+}
+.checkout-page__body {
+  margin-top: 36px;
+  gap: 12px;
+}
+.checkout-page__body__col1 {
+  width: calc(75% - 6px);
+}
+.checkout-page__body__col2 {
+  width: calc(25% - 6px);
+}
+.checkout-page__section {
+  padding: 24px;
+  background: #FFFFFF;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  opacity: 0.5;
+}
+.checkout-page__section:not(:first-child) {
+  margin-top: 12px;
+}
+.checkout-page__section__body {
+  display: none;
+}
+.checkout-page__section.active {
+  border-color: #D6D4DA;
+  opacity: 1;
+}
+.checkout-page__section.active .checkout-page__section__body {
+  display: block;
+}
+.checkout-page__section-title {
+  gap: 12px;
+}
+.checkout-page__section-title > span {
+  width: 28px;
+  height: 28px;
+  border-radius: 24px;
+  background: #6757A9;
+  color: #FFFFFF;
+}
+.checkout-page__section__body {
+  margin-top: 32px;
+}
+.checkout-page .checkout__inputs {
+  gap: 16px 24px;
+}
+.checkout-page .checkout__input {
+  width: calc((100% - 24px) / 2);
+}
+.checkout-page .checkout__input label {
+  color: #5E5E62;
+}
+.checkout-page .checkout__input-item {
+  margin-top: 8px;
+  width: 100%;
+  background: #F7F7F8;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 17px 16px;
+  outline: none;
+}
+.checkout-page .checkout__input-item:focus {
+  background: #FFFFFF;
+  border-color: #6757A9;
+}
+.checkout-page .checkout-next-button {
+  margin-top: 28px;
+}
+.checkout-page__total, .checkout-page__coupon {
+  opacity: 1;
+}
+.checkout-page .total-items {
+  color: #B2B2B7;
+}
+.checkout-page .total__body {
+  margin-top: 32px;
+}
+.checkout-page .total__body__item:not(:first-child) {
+  margin-top: 12px;
+}
+.checkout-page .total__body__item-title {
+  color: #B2B2B7;
+}
+.checkout-page .total__to_pay {
+  margin-top: 32px;
+}
+.checkout-page .coupon__head-button {
+  background: none;
+  color: #6757A9;
+  border: none;
+}
+.checkout-page .coupon__body {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
