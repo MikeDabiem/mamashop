@@ -1,26 +1,95 @@
-<?php $attributes_arr = [];
-while ($filters->have_posts()): $filters->the_post();
+<?php
+
+$attributes_arr = [];
+
+while ($filters->have_posts()):
+    $filters->the_post();
     $product = wc_get_product();
     $attributes = $product->get_attributes();
     foreach ($attributes as $attribute) {
         $attr_id = $attribute->get_id();
+
+        if (!isset($attributes_arr[$attr_id])) {
+            $attributes_arr[$attr_id] = [
+                'name' => wc_get_attribute($attr_id)->name,
+                'slug' => wc_get_attribute($attr_id)->slug,
+                'options' => [],
+            ];
+        }
+
         foreach ($attribute['options'] as $option_id) {
-            if (!in_array($option_id, $attributes_arr)) {
-                $attributes_arr[$attr_id][] = $option_id;
-            }
+            $attributes_arr[$attr_id]['options'][] = $option_id;
         }
     }
 endwhile;
 ksort($attributes_arr, SORT_NATURAL);
-foreach ($attributes_arr as $attr_id => $options) {
-    $attr_name = wc_get_attribute($attr_id)->name;
-    $attr_slug = wc_get_attribute($attr_id)->slug; ?>
-    <div class="product-filter__spoiler transition-default d-flex justify-content-between align-items-center  <?php $attr_name !== 'Бренд' ? print 'hide' : null ?>" data-name="<?= $attr_slug; ?>">
-        <h5 class="product-filter__spoiler-title font-14-20 fw-500"><?= $attr_name; ?></h5>
+
+$attributes_arr_filtered = [];
+
+foreach ($attributes_arr as $attr_id => $attr) {
+    $args = $_GET;
+
+    unset($args['page']);
+    unset($args['action']);
+    unset($args['sort']);
+    unset($args[$attr['slug']]);
+
+    $filter_args = [
+        'tax_query' => [
+            'relation' => 'AND'
+        ]
+    ];
+    foreach (array_keys($args) as $key) {
+        if (str_contains($key, 'pa_')) {
+            $filter_args['tax_query'][] = [
+                'taxonomy' => $key,
+                'field' => 'slug',
+                'terms' => explode(',', $args[$key])
+            ];
+        }
+    }
+
+    $args['s'] = get_search_query();
+    $args['post_type'] = 'product';
+    $args['posts_per_page'] = -1;
+
+    $products = new WP_Query(array_merge($args, $filter_args));
+
+    while ($products->have_posts()) {
+        $products->the_post();
+        $product = wc_get_product();
+        $attributes = $product->get_attributes();
+
+        if (!isset($attributes[$attr['slug']])) {
+            continue;
+        }
+
+        $attribute = $attributes[$attr['slug']];
+        $attr_id = $attribute->get_id();
+
+        if (!isset($attributes_arr_filtered[$attr_id])) {
+            $attributes_arr_filtered[$attr_id] = [
+                'name' => wc_get_attribute($attr_id)->name,
+                'slug' => wc_get_attribute($attr_id)->slug,
+                'options' => [],
+            ];
+        }
+
+        foreach ($attribute['options'] as $option_id) {
+            $attributes_arr_filtered[$attr_id]['options'][] = $option_id;
+        }
+    }
+}
+ksort($attributes_arr_filtered, SORT_NATURAL);
+
+foreach ($attributes_arr_filtered as $attr_id => $attr) {
+    ?>
+    <div class="product-filter__spoiler transition-default d-flex justify-content-between align-items-center  <?php $attr['name'] !== 'Бренд' ? print 'hide' : null ?>" data-name="<?= $attr['slug']; ?>">
+        <h5 class="product-filter__spoiler-title font-14-20 fw-500"><?= $attr['name']; ?></h5>
         <svg class="transition-default" xmlns="http://www.w3.org/2000/svg" width="13" height="8" fill="none"><path stroke="#3F383A" stroke-width="2" d="m11.3 1.1-5 5-5-5"/></svg>
     </div>
-    <div class="product-filter__spoiler__content" data-name="<?= $attr_slug; ?>" <?php $attr_name !== 'Бренд' ? print 'style="display: none;"' : null ?>>
-        <?php if ($attr_name === 'Бренд') { ?>
+    <div class="product-filter__spoiler__content" data-name="<?= $attr['slug']; ?>" <?php $attr['name'] !== 'Бренд' ? print 'style="display: none;"' : null ?>>
+        <?php if ($attr['name'] === 'Бренд') { ?>
             <div class="product-filter__brand-filter d-flex">
                 <input type="text" class="brand-filter__input font-12-16 fw-400" placeholder="Назва бренду">
                 <button type="button" class="brand-filter__button">
@@ -28,8 +97,8 @@ foreach ($attributes_arr as $attr_id => $options) {
                 </button>
             </div>
         <?php }
-        $count = array_count_values($options);
-        foreach (array_unique($options) as $option_id) {
+        $count = array_count_values($attr['options']);
+        foreach (array_unique($attr['options']) as $option_id) {
             $term_name = get_term($option_id)->name;
             $term_slug = get_term($option_id)->slug;
             $term_tax = get_term($option_id)->taxonomy; ?>

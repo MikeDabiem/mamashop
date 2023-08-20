@@ -613,7 +613,7 @@ jQuery(function($) {
     });
   }
 
-  if (Object.keys(urlParams).length === 1 && !'s' in urlParams || Object.keys(urlParams).length > 1) {
+  /*if (Object.keys(urlParams).length === 1 && !'s' in urlParams || Object.keys(urlParams).length > 1) {
     Object.values(urlParams).forEach(item => {
       item.split(',').forEach(item => {
         $(`input[value="${item}"]`).prop('checked', true);
@@ -645,7 +645,7 @@ jQuery(function($) {
     } else {
       sendAJAX(data);
     }
-  }
+  }*/
   checkActiveFilters();
   filterGroupsSpoiler();
 
