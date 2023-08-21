@@ -5,6 +5,7 @@ jQuery(function($) {
     };
   });
   const body = $('body');
+  const ajaxURL = ajaxurl;
 
   // header scroll event
   const header = $(".header");
@@ -209,22 +210,10 @@ jQuery(function($) {
     }
   }
 
-  // ???
-  // filters spoilers handler
-  function filterGroupsSpoiler() {
-    const filterSpoiler = $('.product-filter__spoiler');
-    const checkedBox = $('.product-filter__check-checkbox:checked');
-    checkedBox.each(function() {
-      $(`.product-filter__spoiler[data-name="${$(this).attr('name')}"]`).removeClass('hide');
-      $(`.product-filter__spoiler__content[data-name="${$(this).attr('name')}"]`).show();
-    });
-    if (filterSpoiler.length) {
-      filterSpoiler.on('click', function () {
-        $(this).toggleClass('hide');
-        $(`.product-filter__spoiler__content[data-name="${$(this).data('name')}"]`).slideToggle(300);
-      })
-    }
-  }
+  body.on('click', '.product-filter__spoiler', function () {
+    $(this).toggleClass('hide');
+    $(`.product-filter__spoiler__content[data-name="${$(this).data('name')}"]`).slideToggle(300);
+  });
 
   // filters filter brands names
   if ($('.brand-filter__input').length) {
@@ -245,6 +234,7 @@ jQuery(function($) {
   }
 
   // spoil too many filters
+  const notSpoilArr = [];
   function spoilFilters() {
     const moreFiltersButton = $('.product-filter__spoiler__content__more');
     const notSpoiledFilterItemHeight = parseInt($('.product-filter__check').css('height')) + 16;
@@ -258,13 +248,22 @@ jQuery(function($) {
       }
       moreFiltersButton.each(function() {
         $(this).parent('.product-filter__spoiler__content').css('max-height', (notSpoiledFilterItemHeight * 7 + 13) + brandInputHeight($(this)) + 'px');
+        if ($.inArray($(this).parent().data('name'), notSpoilArr) >= 0) {
+          $(this).children('.product-filter__spoiler__content__more-text').text('Згорнути');
+          $(this).parent('.product-filter__spoiler__content').css({maxHeight: notSpoiledFilterItemHeight * $(this).siblings('.product-filter__check').length + 13 + brandInputHeight($(this)) + 'px'});
+          $(this).addClass('active');
+        }
       });
       moreFiltersButton.on('click', function() {
         $(this).toggleClass('active');
         if ($(this).hasClass('active')) {
+          if ($.inArray($(this).parent().data('name'), notSpoilArr) < 0) {
+            notSpoilArr.push($(this).parent().data('name'));
+          }
           $(this).children('.product-filter__spoiler__content__more-text').text('Згорнути');
           $(this).parent('.product-filter__spoiler__content').animate({maxHeight: notSpoiledFilterItemHeight * $(this).siblings('.product-filter__check').length + 13 + brandInputHeight($(this)) + 'px'});
         } else {
+          notSpoilArr.splice($.inArray($(this).parent().data('name'), notSpoilArr),1)
           $(this).parent('.product-filter__spoiler__content').animate({maxHeight: (notSpoiledFilterItemHeight * 7 + 13) + brandInputHeight($(this)) + 'px'});
           $(this).children('.product-filter__spoiler__content__more-text').text(`Показати ще ${$(this).siblings('.product-filter__check').length - 7}`);
         }
@@ -277,7 +276,6 @@ jQuery(function($) {
   const filterItems = $('.product-filter__chosen__items');
   const filterChosen = $('.product-filter__chosen');
   const filterHeadTitle = $('.product-filter__chosen-title');
-  const filterArr = [];
 
   // show/hide product filter head with chosen filters
   function hideChosenFiltersTitle() {
@@ -291,59 +289,33 @@ jQuery(function($) {
       }, 300)
     }
   }
+  hideChosenFiltersTitle();
 
   // add/remove chosen filters in filter head
-  function chosenItemsHandler(checkbox) {
-    const id = checkbox.attr('id');
+  body.on('change', '.product-filter__check-checkbox', function() {
+    const id = $(this).attr('id');
     const name = $(`.product-filter__check-label[for="${id}"] > .product-filter__check-label-title`).text();
-    if (checkbox.is(':checked')) {
-      filterArr.push({name, id});
+    if ($(this).is(':checked')) {
       filterItems.append(
         `<div class="product-filter__chosen-item d-flex align-items-center" data-name="${id}">
-            <p class="font-12-16 fw-400">${name}</p>
-            <label for="${id}" class="product-filter__chosen-item-close transition-default d-flex">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="cross"><rect width="16" height="16" rx="8" fill="#494558"/><g id="Group 2088"><path id="Vector 73" d="M4.80078 4.80078L11.2007 11.2013" stroke="#F5E4E7" stroke-width="1.5"/><path id="Vector 74" d="M11.1992 4.80078L4.79928 11.2012" stroke="#F5E4E7" stroke-width="1.5"/></g></g></svg>
-            </label>
-          </div>`
+        <p class="font-12-16 fw-400">${name}</p>
+        <label for="${id}" class="product-filter__chosen-item-close transition-default d-flex">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="cross"><rect width="16" height="16" rx="8" fill="#494558"/><g id="Group 2088"><path id="Vector 73" d="M4.80078 4.80078L11.2007 11.2013" stroke="#F5E4E7" stroke-width="1.5"/><path id="Vector 74" d="M11.1992 4.80078L4.79928 11.2012" stroke="#F5E4E7" stroke-width="1.5"/></g></g></svg>
+        </label>
+      </div>`
       )
     } else {
-      const filterId = filterItems.children(`[data-name="${id}"]`).data('name');
-      if (filterArr.length) {
-        filterItems.children()[filterArr.findIndex(el => el.id === filterId)].remove();
-        filterArr.splice(filterArr.findIndex(el => el.id === filterId), 1);
-      } else {
-        filterItems.children().remove();
-      }
+      filterItems.children(`[data-name=${id}]`).remove();
     }
     hideChosenFiltersTitle();
-  }
-
-  // ???
-  function checkActiveFilters() {
-    if (filterItems.length) {
-      filterItems.children().each(function() {
-        const checkbox = $(`#${$(this).data('name')}`);
-        checkbox.prop('checked', true);
-      });
-    }
-  }
-
-  function filterCheckboxListener() {
-    const filterCheckbox = $('.product-filter__check-checkbox');
-    if (filterCheckbox.length) {
-      filterCheckbox.on('change', function() {
-        chosenItemsHandler($(this));
-      });
-    }
-  }
-  filterCheckboxListener();
+  });
 
   // clear filter form
   const clearFilters = $('.product-filter-clear');
   if (clearFilters.length) {
     clearFilters.on('click', function () {
       const searchParams = Object.fromEntries(new URLSearchParams(window.location.search)).s;
-      if (searchParams && searchParams !== 'undefined') {
+      if (searchParams) {
         window.location.search = `s=${searchParams}`;
       } else {
         window.location.href = window.location.origin + window.location.pathname;
@@ -486,7 +458,7 @@ jQuery(function($) {
     })
   }
 
-  body.on('click', '.buy-button--cart', function(e) {
+  body.on('click', '.buy-button--cart', function() {
     showMenu($('.cart-menu'));
   });
 
@@ -506,10 +478,11 @@ jQuery(function($) {
   let priceData = urlParams.price ? {price: urlParams.price} : {};
   let formData = {};
   let page = urlParams.page || '1';
+  const searchString = urlParams.s ? {s: urlParams.s} : {};
 
   const defaultData = {
     action: 'filter',
-    s: urlParams.s,
+    ...searchString,
     page
   }
 
@@ -517,21 +490,16 @@ jQuery(function($) {
     searchResults.animate({opacity: .5}, 300);
     productFilterParent.animate({opacity: .5}, 300);
     const data = {...defaultData, ...ajaxData};
-    const getParams = new URLSearchParams({...urlParams, ...ajaxData});
-    getParams.delete('s');
-    getParams.delete('page');
-    const pageNum = page ? `&page=${page}` : null;
-    window.history.pushState(null, '', `?s=${defaultData.s + pageNum}&${decodeURIComponent(getParams.toString())}`);
-    $.get(ajaxurl.url, data, function(response) {
+    const getParams = new URLSearchParams(ajaxData);
+    const search = searchString.s ? `s=${searchString.s}` : '';
+    window.history.pushState(null, '', `?${search}&${decodeURIComponent(getParams.toString())}`);
+    $.get(ajaxURL.url, data, function(response) {
       searchResults.empty().append(response).animate({opacity: 1}, 300);
     });
-    $.get(ajaxurl.url, {...data, action: 'hide_filters'}, function(response) {
+    $.get(ajaxURL.url, {...data, action: 'hide_filters'}, function(response) {
       productFilter.empty().append(response);
       productFilterParent.animate({opacity: 1}, 300);
-      checkActiveFilters();
-      filterCheckboxListener();
       spoilFilters();
-      filterGroupsSpoiler();
     });
   }
 
@@ -613,42 +581,6 @@ jQuery(function($) {
     });
   }
 
-  /*if (Object.keys(urlParams).length === 1 && !'s' in urlParams || Object.keys(urlParams).length > 1) {
-    Object.values(urlParams).forEach(item => {
-      item.split(',').forEach(item => {
-        $(`input[value="${item}"]`).prop('checked', true);
-      })
-    });
-    if (urlParams.price) {
-      const price = urlParams.price.split('-');
-      priceRangeMin.val(price[0]);
-      priceRangeMax.val(price[1]);
-      slideMin();
-      slideMax();
-    }
-    if (urlParams.sort) {
-      const sortMenuVal = $(`.sort__menu__item[data-value="${urlParams.sort}"]`);
-      $('.sort__select-chosen').text(sortMenuVal.children('.sort__menu__item-title').text());
-      $('.sort__menu__item').removeClass('active');
-      sortMenuVal.addClass('active');
-      $('.sort__select-input').val(urlParams.sort);
-    }
-    const data = {
-      ...urlParams,
-    }
-    const checkedBox = $('.product-filter__check-checkbox:checked');
-    if (checkedBox.length) {
-      productFilter.trigger('change');
-      checkedBox.each(function() {
-        chosenItemsHandler($(this));
-      })
-    } else {
-      sendAJAX(data);
-    }
-  }*/
-  checkActiveFilters();
-  filterGroupsSpoiler();
-
   // handle cart item
   body.on('click', '.buy-button--buy', function () {
     const id = $(this).data('id');
@@ -656,7 +588,7 @@ jQuery(function($) {
       action: 'handle_cart_item',
       id
     }
-    $.post(ajaxurl.url, data, function (response) {
+    $.post(ajaxURL.url, data, function (response) {
       $(`button[data-id="${id}"]`).replaceWith(
         `<button data-id="${id}" class="buy-button buy-button--cart std-btn blue-btn font-16-22 fw-600 transition-default d-flex justify-content-center align-items-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -676,7 +608,7 @@ jQuery(function($) {
       action: 'handle_cart_item',
       key: $(this).data('key')
     }
-    $.post(ajaxurl.url, data, function(response) {
+    $.post(ajaxURL.url, data, function(response) {
       $('.cart-menu__body').empty().html(response);
       $(`button[data-id="${id}"]`).replaceWith(
         `<button data-id="${id}" class="buy-button buy-button--buy std-btn purple-btn font-16-22 fw-600 transition-default d-block">Купити</button>`
@@ -699,7 +631,7 @@ jQuery(function($) {
       act,
       value: input.val()
     }
-    $.post(ajaxurl.url, data, function (resp) {
+    $.post(ajaxURL.url, data, function (resp) {
       const response = JSON.parse(resp);
       $('.cart-menu__value').text(response.allCount);
       input.val(+response.itemCount);

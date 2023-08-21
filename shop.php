@@ -1,13 +1,13 @@
-<?php require 'components/product-filter-head.php'; ?>
+<?php $filters = new WP_Query([
+    's' => get_search_query(),
+    'post_type' => 'product',
+    'posts_per_page' => -1,
+    'paged' => $page
+]);
+require 'components/product-filter-head.php'; ?>
 <div class="search-page__content d-flex align-items-start">
     <div class="search-page__filter">
-        <?php $filters = new WP_Query([
-            's' => get_search_query(),
-            'post_type' => 'product',
-            'posts_per_page' => -1,
-            'paged' => $page
-        ]);
-        require 'components/product-filter.php';
+        <?php require 'components/product-filter.php';
         wp_reset_postdata(); ?>
     </div>
     <div class="search-page__results d-flex flex-column">

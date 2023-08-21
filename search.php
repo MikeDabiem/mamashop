@@ -1,14 +1,6 @@
 <?php get_header();
 $page = get_query_var('page', 1);
-$search = new WP_Query([
-    's' => get_search_query(),
-    'post_type'      => 'product',
-    'posts_per_page' => 16,
-    'paged'          => $page,
-    'orderby'        => 'meta_value_num',
-    'order'          => 'DESC',
-    'meta_key'       => '_total_views_count',
-]); ?>
+$search = fetch_data(16); ?>
 <section class="search-page wrapper filler">
     <div class="breadcrumbs font-11-13 fw-400">
         <?php if ( function_exists('yoast_breadcrumb') ) {

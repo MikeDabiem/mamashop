@@ -7,7 +7,7 @@
         </div>
         <h4 class="empty-cart-title font-20-24 fw-600">Ваш кошик порожній</h4>
         <div class="empty-cart-subtitle font-14-20 fw-400">Додайте свій перший товар</div>
-        <a href="<?= get_home_url(); ?>" class="empty-cart__button std-btn purple-btn d-block">За покупками</a>
+        <a href="<?= get_home_url(); ?>/shop/" class="empty-cart__button std-btn purple-btn d-block">За покупками</a>
     </div>
 <?php } else { ?>
     <div class="cart-menu__products">

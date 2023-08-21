@@ -9,9 +9,9 @@
     add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
 }
 
-function fetch_data($posts_per_page, $tax_relation) {
+function fetch_data($posts_per_page) {
     $sort_args = [];
-    if ($_GET['sort']) {
+    if (isset($_GET['sort'])) {
         $orderby_value = wc_clean($_GET['sort']);
         $sort_args = match ($orderby_value) {
             'new' => [
@@ -46,7 +46,7 @@ function fetch_data($posts_per_page, $tax_relation) {
         };
     }
     $price_args = [];
-    if ($_GET['price']) {
+    if (isset($_GET['price'])) {
         $price_args = [
             'meta_query' => [
                 [
@@ -60,7 +60,7 @@ function fetch_data($posts_per_page, $tax_relation) {
     }
     $filter_args = [
         'tax_query' => [
-            'relation' => $tax_relation
+            'relation' => 'AND'
         ]
     ];
     foreach (array_keys($_GET) as $key) {
@@ -76,15 +76,17 @@ function fetch_data($posts_per_page, $tax_relation) {
         'post_type' => 'product',
         'posts_per_page' => $posts_per_page,
         'taxonomy' => 'product_cat',
-        's' => $_GET['s'] ?: '',
-        'paged' => $_GET['page'] ?: 1
+        'paged' => isset($_GET['page']) ?? 1
     ];
+    if (isset($_GET['s'])) {
+        $args['s'] = $_GET['s'];
+    }
     return new WP_Query(array_merge($args, $sort_args, $price_args, $filter_args));
 }
 
 function products_filter() {
     if ($_GET) {
-        $query = fetch_data(16, 'AND');
+        $query = fetch_data(16);
         if ($query->have_posts()): ?>
             <div class="search-page__results__items d-flex flex-wrap">
                 <?php while ($query->have_posts()): $query->the_post();
@@ -117,10 +119,10 @@ function hide_filters() {
 //    if (count(preg_grep("/pa_/", array_keys($_GET))) > 1) {
 //        $filters = fetch_data(-1, 'AND');
 //    } else {
-        $filters = fetch_data(-1, 'AND');
+        $filters = fetch_data(-1);
 //    }
     if ($filters->have_posts()):
-        require "product-filter-content.php";
+        require "product-filter-attr.php";
     else:
         $filters = new WP_Query([
             's' => get_search_query(),
@@ -128,7 +130,7 @@ function hide_filters() {
             'posts_per_page' => -1,
             'paged' => $_GET['page'] ?: 1
         ]);
-        require "product-filter-content.php";
+        require "product-filter-attr.php";
     endif;
     wp_reset_postdata();
     wp_die();

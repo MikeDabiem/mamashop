@@ -29,6 +29,9 @@
                     $maxPrice = get_post_meta($getMaxPrice->posts[0]->ID, '_price', true);
                 endif;
                 wp_reset_postdata();
+                if (array_key_exists('price', $_GET)) {
+                    $current_prices = wc_clean(explode('-', $_GET['price']));
+                }
                 if (isset($minPrice) && isset($maxPrice)) { ?>
                     <div class="product-filter__price__inputs d-flex align-items-center">
                         <label for="price-val-min" class="product-filter__price-label font-13-16 fw-500">Від</label>
@@ -38,15 +41,15 @@
                     </div>
                     <div class="product-filter__price__range">
                         <div class="product-filter__price__range-track"></div>
-                        <input type="range" min="<?= $minPrice; ?>" max="<?= $maxPrice; ?>" value="<?= $minPrice; ?>" id="price-range-min">
-                        <input type="range" min="<?= $minPrice; ?>" max="<?= $maxPrice; ?>" value="<?= $maxPrice; ?>" id="price-range-max">
+                        <input type="range" min="<?= $minPrice; ?>" max="<?= $maxPrice; ?>" value="<?php isset($current_prices) ? print $current_prices[0] : print $minPrice; ?>" id="price-range-min">
+                        <input type="range" min="<?= $minPrice; ?>" max="<?= $maxPrice; ?>" value="<?php isset($current_prices) ? print $current_prices[1] : print $maxPrice; ?>" id="price-range-max">
                     </div>
                     <button type="button" class="product-filter__price__send pale-purple-btn font-15-24 fw-600 transition-default">Застосувати</button>
                 <?php } ?>
             </div>
         </form>
         <form class="product-filter__filter" type="get">
-            <?php require "product-filter-content.php"; ?>
+            <?php require "product-filter-attr.php"; ?>
         </form>
     </div>
 <?php endif;
