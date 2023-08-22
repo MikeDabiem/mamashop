@@ -168,6 +168,12 @@ h1, h2, h3, h4, h5, h6, p {
   flex: 0 0 auto;
 }
 
+.transparent-btn {
+  background: none;
+  color: #6757A9;
+  border: none;
+}
+
 .purple-btn {
   background: #6757A9;
   color: #FFFFFF;
@@ -624,6 +630,17 @@ h1, h2, h3, h4, h5, h6, p {
 .disabled-link {
   opacity: 0.8;
   pointer-events: none;
+}
+
+.input-wrapper {
+  position: relative;
+}
+.input-error {
+  display: none;
+  position: absolute;
+  left: 4px;
+  bottom: -12px;
+  color: #E91F1F;
 }
 
 .header {
@@ -2557,8 +2574,24 @@ h1, h2, h3, h4, h5, h6, p {
   background: #6757A9;
   color: #FFFFFF;
 }
-.checkout-page__section__body {
+.checkout-page__section__body, .checkout-page__section__ready {
   margin-top: 32px;
+}
+.checkout-page__section__ready {
+  display: none;
+}
+.checkout-page__section__ready .ready__item:not(:first-child) {
+  margin-top: 12px;
+}
+.checkout-page__section__ready .ready__item .icon-wrapper {
+  margin-right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  background: #F7F7F8;
 }
 .checkout-page .checkout__inputs {
   gap: 16px 24px;
@@ -2582,8 +2615,49 @@ h1, h2, h3, h4, h5, h6, p {
   background: #FFFFFF;
   border-color: #6757A9;
 }
+.checkout-page .checkout-change-button {
+  display: none;
+}
 .checkout-page .checkout-next-button {
   margin-top: 28px;
+}
+.checkout-page__comment {
+  opacity: 1;
+  cursor: pointer;
+}
+.checkout-page__comment.active .comment-title::after {
+  transform: rotate(0deg);
+}
+.checkout-page__comment.active .comment-title::before {
+  transform: rotate(180deg);
+}
+.checkout-page__comment .comment-title {
+  padding-left: 36px;
+  color: #6757A9;
+  position: relative;
+  user-select: none;
+}
+.checkout-page__comment .comment-title::before, .checkout-page__comment .comment-title::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 3px);
+  left: 4px;
+  width: 16px;
+  height: 3px;
+  background: #6757A9;
+}
+.checkout-page__comment .comment-title::after {
+  transform: rotate(-270deg);
+}
+.checkout-page__comment .comment-textarea {
+  width: 100%;
+  height: 110px;
+  padding: 17px 16px;
+  background: #F7F7F8;
+  resize: none;
+  outline: none;
+  border-color: transparent;
+  border-radius: 4px;
 }
 .checkout-page__total, .checkout-page__coupon {
   opacity: 1;
@@ -2602,11 +2676,6 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .checkout-page .total__to_pay {
   margin-top: 32px;
-}
-.checkout-page .coupon__head-button {
-  background: none;
-  color: #6757A9;
-  border: none;
 }
 .checkout-page .coupon__body {
   display: none;

@@ -65,8 +65,27 @@
         color: $white;
       }
     }
-    &__body {
+    &__body,
+    &__ready {
       margin-top: 32px;
+    }
+    &__ready {
+      display: none;
+      .ready__item {
+        &:not(:first-child) {
+          margin-top: 12px;
+        }
+        .icon-wrapper {
+          margin-right: 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 32px;
+          height: 32px;
+          border-radius: 2px;
+          background: $bg-color;
+        }
+      }
     }
   }
   .checkout {
@@ -92,8 +111,54 @@
         }
       }
     }
+    &-change-button {
+      display: none;
+    }
     &-next-button {
       margin-top: 28px;
+    }
+  }
+  &__comment {
+    opacity: 1;
+    cursor: pointer;
+    &.active {
+      .comment-title::after {
+        transform: rotate(0deg);
+      }
+      .comment-title::before {
+        transform: rotate(180deg);
+      }
+    }
+    .comment {
+      &-title {
+        padding-left: 36px;
+        color: $main-purple;
+        position: relative;
+        user-select: none;
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          top: calc(50% - 3px);
+          left: 4px;
+          width: 16px;
+          height: 3px;
+          background: $main-purple;
+        }
+        &::after {
+          transform: rotate(-270deg);
+        }
+      }
+      &-textarea {
+        width: 100%;
+        height: 110px;
+        padding: 17px 16px;
+        background: $bg-color;
+        resize: none;
+        outline: none;
+        border-color: transparent;
+        border-radius: 4px;
+      }
     }
   }
   &__total,
@@ -120,13 +185,6 @@
     }
   }
   .coupon {
-    &__head {
-      &-button {
-        background: none;
-        color: $main-purple;
-        border: none;
-      }
-    }
     &__body {
       display: none;
     }

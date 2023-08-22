@@ -69,6 +69,12 @@ h1, h2, h3, h4, h5, h6, p {
   flex: 0 0 auto;
 }
 
+.transparent-btn {
+  background: none;
+  color: #6757A9;
+  border: none;
+}
+
 .purple-btn {
   background: $main-purple;
   color: $white;
@@ -537,4 +543,17 @@ h1, h2, h3, h4, h5, h6, p {
 .disabled-link {
   opacity: .8;
   pointer-events: none;
+}
+
+.input {
+  &-wrapper {
+    position: relative;
+  }
+  &-error {
+    display: none;
+    position: absolute;
+    left: 4px;
+    bottom: -12px;
+    color: $red;
+  }
 }

@@ -462,6 +462,54 @@ jQuery(function($) {
     showMenu($('.cart-menu'));
   });
 
+  const checkoutComment = $('.checkout-page__comment');
+  if (checkoutComment.length) {
+    const checkoutCommentTitle = $('.comment-title');
+    const checkoutCommentBody = $('.comment__body');
+    checkoutComment.on('click', function(e) {
+      if (e.target.closest('.comment__body')) {
+        return false;
+      }
+      if (!$(this).hasClass('active')) {
+        $(this).addClass('active');
+        checkoutCommentTitle.text('Згорунти');
+        checkoutCommentBody.slideDown(300);
+      } else {
+        $(this).removeClass('active');
+        checkoutCommentTitle.text('Додати коментар до замовлення');
+        checkoutCommentBody.slideUp(300);
+      }
+    });
+  }
+
+  const checkoutNextButton = $('.checkout-next-button');
+  if (checkoutNextButton.length) {
+    const checkoutChangeButton = $('.checkout-change-button');
+    let errorsCount = 0;
+    checkoutNextButton.on('click', function() {
+      if (!errorsCount) {
+        $(this).parent().slideUp(300);
+        $(this).parent().siblings('.checkout-page__section__ready').slideDown(300);
+        checkoutChangeButton.fadeIn(300);
+        $(this).parent().siblings('.checkout-page__section__head').children('.checkout-page__section-title').children('span')
+          .fadeOut(200)
+          .queue(function() {
+            $(this).html(
+              `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                <path d="M5 9.5L9 13.5L16 6.5" stroke="white" stroke-width="2"/>
+              </svg>`
+            )
+          })
+          .fadeIn(200);
+      }
+    });
+    checkoutChangeButton.on('click', function() {
+      $(this).parent().siblings('.checkout-page__section__body').slideDown(300);
+      $(this).parent().siblings('.checkout-page__section__ready').slideUp(300);
+      $(this).fadeOut(300);
+    })
+  }
+
 
   //////////
   // AJAX //
