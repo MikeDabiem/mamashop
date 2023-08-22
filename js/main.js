@@ -482,15 +482,65 @@ jQuery(function($) {
     });
   }
 
+  // toggle checkout tabs
   const checkoutNextButton = $('.checkout-next-button');
   if (checkoutNextButton.length) {
     const checkoutChangeButton = $('.checkout-change-button');
-    let errorsCount = 0;
+
+    // forbid change value to space
+    $('.checkout__input-item').on('input', function() {
+      if ($(this).val() === ' ') {
+        $(this).val('');
+      }
+    });
+
+    // click "Продовжити" button
     checkoutNextButton.on('click', function() {
+      // errors check
+      let errorsCount = 0;
+      $(this).siblings('.checkout__inputs').find('.checkout__input-item').each(function() {
+        if (
+          $(this).is('[required]') &&
+          $(this).val().length < 2
+          ||
+          $(this).is('#customer-email') &&
+          $(this).val() && !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+        ) {
+          $(this).addClass('input--error');
+          $(this).siblings('.input--error-text').fadeIn(300);
+          errorsCount++;
+        }
+        if ($(this).is('#customer-email') && !$(this).val()) {
+          $('.ready__item__email').addClass('d-none');
+        }
+        // remove error after focusing input
+        $(this).on('focus', function() {
+          $(this).removeClass('input--error');
+          $(this).siblings('.input--error-text').fadeOut(300);
+          errorsCount = 0;
+          if ($(this).is('#customer-email')) {
+            $('.ready__item__email').removeClass('d-none');
+          }
+        });
+      });
+
+      // toggle to next tab
       if (!errorsCount) {
+        if ($(this).parent().hasClass('contacts__body')) {
+          $('.ready__item--name').text($('#customer-lastname').val() + ' ' + $('#customer-name').val());
+          $('.ready__item--phone').text($('#customer-phone').val());
+          $('.ready__item--email').text($('#customer-email').val());
+          $('.products__body')
+            .slideDown(300)
+            .parent().addClass('active')
+            .find('.checkout-cart-button').addClass('show');
+        }
+        if ($(this).parent().hasClass('products__body')) {
+          $('.checkout-cart-button').removeClass('show');
+        }
         $(this).parent().slideUp(300);
         $(this).parent().siblings('.checkout-page__section__ready').slideDown(300);
-        checkoutChangeButton.fadeIn(300);
+        $(this).parent().siblings('.checkout-page__section__head').children('.checkout-change-button').fadeIn(300);
         $(this).parent().siblings('.checkout-page__section__head').children('.checkout-page__section-title').children('span')
           .fadeOut(200)
           .queue(function() {
@@ -503,10 +553,15 @@ jQuery(function($) {
           .fadeIn(200);
       }
     });
+    // click "Змінити" button
     checkoutChangeButton.on('click', function() {
       $(this).parent().siblings('.checkout-page__section__body').slideDown(300);
       $(this).parent().siblings('.checkout-page__section__ready').slideUp(300);
       $(this).fadeOut(300);
+      if ($(this).siblings('.checkout-cart-button').length) {
+        $(this).hide();
+        $(this).siblings('.checkout-cart-button').addClass('show');
+      }
     })
   }
 

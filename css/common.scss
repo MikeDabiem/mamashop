@@ -546,14 +546,17 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .input {
-  &-wrapper {
+  &__wrapper {
     position: relative;
   }
-  &-error {
-    display: none;
-    position: absolute;
-    left: 4px;
-    bottom: -12px;
-    color: $red;
+  &--error {
+    border-color: $red !important;
+    &-text {
+      display: none;
+      position: absolute;
+      left: 3px;
+      bottom: -12px;
+      color: $red;
+    }
   }
 }

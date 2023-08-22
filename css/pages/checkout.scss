@@ -51,9 +51,9 @@
     &.active {
       border-color: $hover-grey;
       opacity: 1;
-      .checkout-page__section__body {
-        display: block;
-      }
+    }
+    .contacts__body {
+      display: block;
     }
     &-title {
       gap: 12px;
@@ -114,18 +114,28 @@
     &-change-button {
       display: none;
     }
+    &-cart-button {
+      display: none;
+      text-decoration: none;
+      &.show {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
     &-next-button {
       margin-top: 28px;
     }
   }
+  @import "../components/checkout/checkout-products";
   &__comment {
     opacity: 1;
     cursor: pointer;
     &.active {
-      .comment-title::after {
-        transform: rotate(0deg);
-      }
       .comment-title::before {
+        transform: rotate(180deg);
+      }
+      .comment-title::after {
         transform: rotate(180deg);
       }
     }
@@ -146,7 +156,7 @@
           background: $main-purple;
         }
         &::after {
-          transform: rotate(-270deg);
+          transform: rotate(90deg);
         }
       }
       &-textarea {

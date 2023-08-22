@@ -17,47 +17,47 @@ get_header(); ?>
                         $user_lastname = $_COOKIE['user_lastname'] ?? '';
                         $user_email = $_COOKIE['user_email'] ?? wp_get_current_user()->user_email;
                         $user_phone = $_COOKIE['user_phone'] ?? ''; ?>
-                        <div class="checkout__input input-wrapper">
+                        <div class="checkout__input input__wrapper">
                             <label for="customer-name" class="font-13-16 fw-500 d-block">Ім’я*</label>
-                            <input type="text" name="customer-name" id="customer-name" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть своє ім’я" value="<?= $user_name; ?>">
-                            <p class="input-error font-9-11 fw-400">Заповніть будь ласка поле</p>
+                            <input type="text" name="customer-name" id="customer-name" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть своє ім’я" value="<?= $user_name; ?>" required>
+                            <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
                         </div>
-                        <div class="checkout__input input-wrapper">
+                        <div class="checkout__input input__wrapper">
                             <label for="customer-lastname" class="font-13-16 fw-500 d-block">Прізвище*</label>
-                            <input type="text" name="customer-lastname" id="customer-lastname" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть своє прізвище" value="<?= $user_lastname; ?>">
-                            <p class="input-error font-9-11 fw-400">Заповніть будь ласка поле</p>
+                            <input type="text" name="customer-lastname" id="customer-lastname" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть своє прізвище" value="<?= $user_lastname; ?>" required>
+                            <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
                         </div>
-                        <div class="checkout__input input-wrapper">
+                        <div class="checkout__input input__wrapper">
                             <label for="customer-phone" class="font-13-16 fw-500 d-block">Телефон*</label>
-                            <input type="text" name="customer-phone" id="customer-phone" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть номер телефону" value="<?= $user_phone; ?>">
-                            <p class="input-error font-9-11 fw-400">Заповніть будь ласка поле</p>
+                            <input type="text" name="customer-phone" id="customer-phone" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть номер телефону" value="<?= $user_phone; ?>" required>
+                            <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
                         </div>
-                        <div class="checkout__input input-wrapper">
+                        <div class="checkout__input input__wrapper">
                             <label for="customer-email" class="font-13-16 fw-500 d-block">Електронна пошта</label>
                             <input type="text" name="customer-email" id="customer-email" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть електронну пошту" value="<?= $user_email; ?>">
-                            <p class="input-error font-9-11 fw-400">Невірний формат електронної пошти</p>
+                            <p class="input--error-text font-9-11 fw-400">Невірний формат адреси електронної пошти</p>
                         </div>
                     </div>
                     <button type="button" id="contacts-next" class="checkout-next-button std-btn purple-btn">Продовжити</button>
                 </div>
                 <div class="checkout-page__section__ready">
-                    <div class="ready__item ready__item--name d-flex">
+                    <div class="ready__item d-flex align-items-center">
                         <div class="ready__item-icon icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
                                 <path d="M6.25227 4.52693C6.25227 2.73283 7.71129 1.2738 9.50539 1.2738C11.2995 1.2738 12.7585 2.73283 12.7585 4.52693C12.7585 6.32103 11.2995 7.78005 9.50539 7.78005C7.71129 7.78005 6.25227 6.32103 6.25227 4.52693ZM11.1246 9.40662H7.87148C4.56956 9.40662 3.39844 11.8245 3.39844 13.8952C3.39844 15.747 4.38336 16.7261 6.2474 16.7261H12.7487C14.6127 16.7261 15.5977 15.747 15.5977 13.8952C15.5977 11.8245 14.4265 9.40662 11.1246 9.40662Z" fill="#494558"/>
                             </svg>
                         </div>
-                        <p class="ready__item-text font-14-20 fw-500"></p>
+                        <p class="ready__item-text ready__item--name font-14-20 fw-500"></p>
                     </div>
-                    <div class="ready__item ready__item--phone d-flex">
+                    <div class="ready__item d-flex align-items-center">
                         <div class="ready__item-icon icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
                                 <path d="M16.4303 12.7051V12.8011C16.4175 12.8331 16.4047 12.865 16.3983 12.9034C16.3727 13.2936 16.2128 13.6198 15.9442 13.8948C15.4773 14.3745 14.9976 14.8478 14.5242 15.3211C14.294 15.5513 14.0253 15.7176 13.7119 15.8136C13.0467 16.0183 12.3815 15.9479 11.7291 15.788C10.5394 15.5002 9.46478 14.9373 8.44138 14.2849C7.22609 13.5046 6.11314 12.5836 5.08974 11.5667C3.625 10.1148 2.35214 8.51578 1.43108 6.66095C0.970548 5.73353 0.612357 4.76774 0.573979 3.7124C0.541998 2.98966 0.714697 2.33727 1.27117 1.8192C1.63576 1.48021 1.98116 1.12843 2.32656 0.770256C2.63997 0.437665 2.97258 0.149846 3.4395 0.0603027H3.90643C4.19426 0.14345 4.4757 0.232994 4.71236 0.431269C4.75074 0.463249 4.78272 0.488833 4.8147 0.520813C5.53108 1.23716 6.24746 1.94711 6.96384 2.66986C7.48834 3.20073 7.57789 3.92987 7.2069 4.54388C7.0406 4.81251 6.81033 5.00439 6.51611 5.11312C6.07476 5.27302 5.72937 5.53525 5.53748 5.97658C5.41595 6.2644 5.39036 6.55222 5.47352 6.85283C5.70378 7.72268 6.1899 8.43263 6.78475 9.08502C7.39879 9.7566 8.08959 10.3322 8.9147 10.7352C9.28569 10.9143 9.66946 11.0742 10.098 11.0102C10.6289 10.9335 11.0255 10.6712 11.2685 10.1851C11.3773 9.96127 11.4732 9.71183 11.6331 9.53274C12.1576 8.93791 13.0723 8.88675 13.6799 9.41122C13.9166 9.61589 14.1341 9.84614 14.3579 10.07C14.8696 10.5753 15.3685 11.087 15.8802 11.5922C16.1745 11.8865 16.3855 12.2127 16.4047 12.6412C16.4047 12.6604 16.4175 12.686 16.4303 12.7051Z" fill="#494558"/>
                             </svg>
                         </div>
-                        <p class="ready__item-text font-14-20 fw-500"></p>
+                        <p class="ready__item-text ready__item--phone font-14-20 fw-500"></p>
                     </div>
-                    <div class="ready__item ready__item--email d-flex">
+                    <div class="ready__item ready__item__email d-flex align-items-center">
                         <div class="ready__item-icon icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
                                 <path d="M1.2942 0.932791L1.2941 0.932691C1.16986 0.808463 1.25991 0.594084 1.43315 0.594084H15.543C15.721 0.594084 15.808 0.80672 15.682 0.932691L10.6438 5.97058L8.60527 8.00903C8.58329 8.03102 8.54628 8.06801 8.51138 8.10029C8.50206 8.10891 8.49322 8.11688 8.48513 8.12394C8.47768 8.11774 8.46957 8.1107 8.46099 8.103C8.42761 8.07305 8.39289 8.03836 8.37084 8.01631L8.37014 8.01561C6.01145 5.65706 3.65282 3.29856 1.2942 0.932791Z" fill="#494558" stroke="#F7F7F8" stroke-width="0.183286"/>
@@ -66,12 +66,73 @@ get_header(); ?>
                                 <path d="M14.2473 9.88006L11.3563 6.98919C12.9172 5.43545 14.492 3.86071 16.0238 2.32907L16.5691 1.78378C16.6952 1.66366 16.9084 1.75145 16.9084 1.92938V12.0634C16.9084 12.2414 16.6958 12.3284 16.5698 12.2024L14.2473 9.88006Z" fill="#494558" stroke="#F7F7F8" stroke-width="0.183286"/>
                             </svg>
                         </div>
-                        <p class="ready__item-text font-14-20 fw-500"></p>
+                        <p class="ready__item-text ready__item--email font-14-20 fw-500"></p>
                     </div>
                 </div>
             </section>
             <section class="checkout-page__section checkout-page__products">
-                <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">2</span>Товари для оформлення</h4>
+                <div class="checkout-page__section__head d-flex justify-content-between">
+                    <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">2</span>Товари для оформлення</h4>
+                    <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
+                    <a href="#" class="checkout-cart-button transparent-btn font-14-20 fw-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                            <path d="M16.9583 12.5V15C16.9583 17.015 15.8483 18.125 13.8333 18.125H5.5C3.485 18.125 2.375 17.015 2.375 15V6.66667C2.375 4.65167 3.485 3.54167 5.5 3.54167H8C8.345 3.54167 8.625 3.82167 8.625 4.16667C8.625 4.51167 8.345 4.79167 8 4.79167H5.5C4.18583 4.79167 3.625 5.3525 3.625 6.66667V15C3.625 16.3142 4.18583 16.875 5.5 16.875H13.8333C15.1475 16.875 15.7083 16.3142 15.7083 15V12.5C15.7083 12.155 15.9883 11.875 16.3333 11.875C16.6783 11.875 16.9583 12.155 16.9583 12.5ZM18.625 5.04667C18.6242 5.53583 18.4333 5.995 18.0867 6.34L10.6175 13.7758C10.5 13.8925 10.3417 13.9583 10.1767 13.9583H7.16667C6.82167 13.9583 6.54167 13.6783 6.54167 13.3333V10.3242C6.54167 10.1592 6.60666 9.99999 6.72416 9.88332L14.16 2.41333C14.5042 2.06666 14.9641 1.87583 15.4533 1.875C15.4541 1.875 15.455 1.875 15.4559 1.875C15.9442 1.875 16.4034 2.065 16.7492 2.41084L18.09 3.75168C18.435 4.09751 18.6258 4.5575 18.625 5.04667ZM15.1808 7.46918L13.0308 5.31916L7.79167 10.5825V12.7092H9.91834L15.1808 7.46918ZM17.375 5.04499C17.375 4.88999 17.315 4.74418 17.2058 4.63501L15.865 3.29417C15.7558 3.185 15.61 3.125 15.4559 3.125H15.455C15.3 3.125 15.155 3.18584 15.0458 3.29501L13.9133 4.4325L16.0675 6.58666L17.205 5.45418C17.3142 5.34584 17.3742 5.19999 17.375 5.04499Z" fill="#6757A9"/>
+                        </svg>
+                        Редагувати замовлення
+                    </a>
+                </div>
+                <div class="checkout-page__section__body products__body">
+                    <table class="products__table caption-top">
+                        <caption class="products-title font-15-24 fw-600 p-0">Ваше замовлення</caption>
+                        <thead>
+                            <tr class="products__table__head font-12-16 fw-400">
+                                <th class="table-num"> </th>
+                                <th class="table-name">Товар</th>
+                                <th class="table-col">Вартість</th>
+                                <th class="table-col">Кількість</th>
+                                <th class="table-col">Сума</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                                $prod_num = 1;
+                                $id = $cart_item['data']->id;
+                                $product = wc_get_product($id);
+                                $product_url = get_permalink($id);
+                                $name = $cart_item['data']->name;
+                                $brand = $product->get_attribute('pa_brand');
+                                $quantity = $cart_item['quantity'];
+                                $price = $cart_item['data']->regular_price;
+                                $sale_price = $cart_item['data']->sale_price;
+                                $sale_val = get_post_meta($id, '_discount_value', true);
+                                $image_id = $cart_item['data']->image_id;
+                                $image_url = wp_get_attachment_image_url($image_id);
+                                $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true); ?>
+                                <tr class="products__table__item font-13-16 fw-500">
+                                    <td class="products__table__item-count"><?= $prod_num; ?></td>
+                                    <td class="products__table__item-info d-flex align-items-center">
+                                        <div class="products__table__item-image img-wrapper-contain">
+                                            <?php if ($image_url) { ?>
+                                                <img src="<?= $image_url; ?>" alt="<?= $alt; ?>">
+                                            <?php } else { ?>
+                                                <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image">
+                                            <?php } ?>
+                                        </div>
+                                        <div class="products__table__item__text">
+                                            <p class="products__table__item-name"><?= $name; ?></p>
+                                            <p class="products__table__item-brand font-12-16"><?= $brand; ?></p>
+                                        </div>
+                                    </td>
+                                    <td><?= $sale_price ?: $price; ?> грн</td>
+                                    <td><?= $quantity; ?> шт.</td>
+                                    <td><?= $sale_price ? $sale_price * $quantity : $price * $quantity; ?> грн</td>
+                                </tr>
+                                <?php $prod_num++;
+                            } ?>
+                        </tbody>
+                    </table>
+                    <button type="button" id="contacts-next" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                </div>
             </section>
             <section class="checkout-page__section checkout-page__delivery">
                 <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">3</span>Доставка</h4>
