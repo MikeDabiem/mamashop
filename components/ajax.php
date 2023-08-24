@@ -155,7 +155,7 @@ function change_qty() {
     $cart_items_count = absint(WC()->cart->get_cart_contents_count());
     $cart_all_count = $cart_items_count . ' ' . true_wordform($cart_items_count, 'товар', 'товари', 'товарів');
     $cart_item_qty = WC()->cart->get_cart_item($_POST['key'])['quantity'];
-    $total = WC()->cart->get_cart_total();
+    $total = WC()->cart->get_cart_contents_total();
     $response = [
         'allCount' => $cart_all_count,
         'itemCount' => $cart_item_qty,

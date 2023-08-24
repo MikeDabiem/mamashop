@@ -74,19 +74,13 @@ get_header(); ?>
                 <div class="checkout-page__section__head d-flex justify-content-between">
                     <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">2</span>Товари для оформлення</h4>
                     <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
-                    <a href="#" class="checkout-cart-button transparent-btn font-14-20 fw-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                            <path d="M16.9583 12.5V15C16.9583 17.015 15.8483 18.125 13.8333 18.125H5.5C3.485 18.125 2.375 17.015 2.375 15V6.66667C2.375 4.65167 3.485 3.54167 5.5 3.54167H8C8.345 3.54167 8.625 3.82167 8.625 4.16667C8.625 4.51167 8.345 4.79167 8 4.79167H5.5C4.18583 4.79167 3.625 5.3525 3.625 6.66667V15C3.625 16.3142 4.18583 16.875 5.5 16.875H13.8333C15.1475 16.875 15.7083 16.3142 15.7083 15V12.5C15.7083 12.155 15.9883 11.875 16.3333 11.875C16.6783 11.875 16.9583 12.155 16.9583 12.5ZM18.625 5.04667C18.6242 5.53583 18.4333 5.995 18.0867 6.34L10.6175 13.7758C10.5 13.8925 10.3417 13.9583 10.1767 13.9583H7.16667C6.82167 13.9583 6.54167 13.6783 6.54167 13.3333V10.3242C6.54167 10.1592 6.60666 9.99999 6.72416 9.88332L14.16 2.41333C14.5042 2.06666 14.9641 1.87583 15.4533 1.875C15.4541 1.875 15.455 1.875 15.4559 1.875C15.9442 1.875 16.4034 2.065 16.7492 2.41084L18.09 3.75168C18.435 4.09751 18.6258 4.5575 18.625 5.04667ZM15.1808 7.46918L13.0308 5.31916L7.79167 10.5825V12.7092H9.91834L15.1808 7.46918ZM17.375 5.04499C17.375 4.88999 17.315 4.74418 17.2058 4.63501L15.865 3.29417C15.7558 3.185 15.61 3.125 15.4559 3.125H15.455C15.3 3.125 15.155 3.18584 15.0458 3.29501L13.9133 4.4325L16.0675 6.58666L17.205 5.45418C17.3142 5.34584 17.3742 5.19999 17.375 5.04499Z" fill="#6757A9"/>
-                        </svg>
-                        Редагувати замовлення
-                    </a>
                 </div>
                 <div class="checkout-page__section__body products__body">
                     <table class="products__table caption-top">
                         <caption class="products-title font-15-24 fw-600 p-0">Ваше замовлення</caption>
                         <thead>
                             <tr class="products__table__head font-12-16 fw-400">
-                                <th class="table-num"> </th>
+                                <th class="table-num"></th>
                                 <th class="table-name">Товар</th>
                                 <th class="table-col">Вартість</th>
                                 <th class="table-col">Кількість</th>
@@ -148,6 +142,9 @@ get_header(); ?>
                 <div class="checkout-page__section__body comment__body">
                     <textarea name="checkout-comment" id="checkout-comment" class="comment-textarea font-13-16 fw-400 d-block" placeholder="Наприклад: відправте, будь ласка, завтра"></textarea>
                     <button type="button" class="comment-button std-btn purple-btn">Додати</button>
+                </div>
+                <div class="checkout-page__section__ready comment__ready">
+                    <p class="comment__ready-text font-14-20 fw-500"></p>
                 </div>
             </section>
         </div>

@@ -458,33 +458,29 @@ jQuery(function($) {
     })
   }
 
+  // click "Перейти до кошика" button in product card
   body.on('click', '.buy-button--cart', function() {
     showMenu($('.cart-menu'));
   });
 
-  const checkoutComment = $('.checkout-page__comment');
-  if (checkoutComment.length) {
-    const checkoutCommentTitle = $('.comment-title');
-    const checkoutCommentBody = $('.comment__body');
-    checkoutComment.on('click', function(e) {
-      if (e.target.closest('.comment__body')) {
-        return false;
-      }
-      if (!$(this).hasClass('active')) {
-        $(this).addClass('active');
-        checkoutCommentTitle.text('Згорунти');
-        checkoutCommentBody.slideDown(300);
-      } else {
-        $(this).removeClass('active');
-        checkoutCommentTitle.text('Додати коментар до замовлення');
-        checkoutCommentBody.slideUp(300);
+  // click checkout link if total is less
+  const cartCheckoutLink = $('.cart-menu__order');
+  if (cartCheckoutLink.length) {
+    cartCheckoutLink.on('click', function(e) {
+      if (cartCheckoutLink.hasClass('disabled-check')) {
+        e.preventDefault();
+        const errorMin = $('.error-min');
+        errorMin.addClass('red');
+        setTimeout(() => {
+          errorMin.removeClass('red');
+        }, 5000);
       }
     });
   }
 
   // toggle checkout tabs
-  const checkoutNextButton = $('.checkout-next-button');
-  if (checkoutNextButton.length) {
+  if ($('.checkout-page').length) {
+    const checkoutNextButton = $('.checkout-next-button');
     const checkoutChangeButton = $('.checkout-change-button');
 
     // forbid change value to space
@@ -504,7 +500,8 @@ jQuery(function($) {
           $(this).val().length < 2
           ||
           $(this).is('#customer-email') &&
-          $(this).val() && !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+          $(this).val() &&
+          !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
         ) {
           $(this).addClass('input--error');
           $(this).siblings('.input--error-text').fadeIn(300);
@@ -530,16 +527,13 @@ jQuery(function($) {
           $('.ready__item--name').text($('#customer-lastname').val() + ' ' + $('#customer-name').val());
           $('.ready__item--phone').text($('#customer-phone').val());
           $('.ready__item--email').text($('#customer-email').val());
-          $('.products__body')
-            .slideDown(300)
-            .parent().addClass('active')
-            .find('.checkout-cart-button').addClass('show');
         }
         if ($(this).parent().hasClass('products__body')) {
-          $('.checkout-cart-button').removeClass('show');
         }
         $(this).parent().slideUp(300);
         $(this).parent().siblings('.checkout-page__section__ready').slideDown(300);
+        $(this).closest('.checkout-page__section').next().find('.checkout-change-button').hide();
+        $(this).closest('.checkout-page__section').next().addClass('active').children('.checkout-page__section__body').slideDown(300);
         $(this).parent().siblings('.checkout-page__section__head').children('.checkout-change-button').fadeIn(300);
         $(this).parent().siblings('.checkout-page__section__head').children('.checkout-page__section-title').children('span')
           .fadeOut(200)
@@ -553,16 +547,55 @@ jQuery(function($) {
           .fadeIn(200);
       }
     });
+
     // click "Змінити" button
     checkoutChangeButton.on('click', function() {
       $(this).parent().siblings('.checkout-page__section__body').slideDown(300);
       $(this).parent().siblings('.checkout-page__section__ready').slideUp(300);
       $(this).fadeOut(300);
-      if ($(this).siblings('.checkout-cart-button').length) {
-        $(this).hide();
-        $(this).siblings('.checkout-cart-button').addClass('show');
-      }
-    })
+    });
+
+    const checkoutComment = $('.checkout-page__comment');
+    if (checkoutComment.length) {
+      const checkoutCommentTitle = $('.comment-title');
+      const checkoutCommentBody = $('.comment__body');
+      const commentInput = $('#checkout-comment');
+      const commentReadyBlock = $('.comment__ready');
+      const commentReadyText = $('.comment__ready-text');
+      checkoutComment.on('click', function(e) {
+        if (e.target.closest('.comment__body') || e.target.closest('.comment__ready')) {
+          return false;
+        }
+        if (!$(this).hasClass('active')) {
+          $(this).addClass('active');
+          checkoutCommentTitle.text('Згорунти');
+          checkoutCommentBody.slideDown(300);
+          commentInput.trigger('focus');
+          if (commentReadyText.text()) {
+            commentReadyBlock.slideUp(300);
+          }
+        } else {
+          $(this).removeClass('active');
+          checkoutCommentTitle.text('Додати коментар до замовлення');
+          checkoutCommentBody.slideUp(300);
+          if (commentReadyText.text()) {
+            commentReadyBlock.slideDown(300);
+          }
+        }
+      });
+
+      // add a comment
+      $('.comment-button').on('click', function() {
+        if(commentInput.val()) {
+          commentReadyText.text(`«${commentInput.val()}»`);
+          commentReadyBlock.slideDown(300);
+        } else {
+          commentReadyText.text('');
+          commentReadyBlock.slideUp(300);
+        }
+        checkoutComment.trigger('click');
+      });
+    }
   }
 
 
@@ -744,6 +777,21 @@ jQuery(function($) {
         input.siblings('.qty_minus').prop('disabled', true);
       }
       $('.cart-menu__order-price > p').html(response.total);
+      const cartTotal = response.total.replace(/\D/g, '');
+      if (cartTotal < 250) {
+        $('.cart-menu__order').addClass('disabled-check');
+        $('.error-min').addClass('show');
+        $('.error-free').removeClass('show');
+      } else {
+        $('.cart-menu__order').removeClass('disabled-check');
+        $('.error-min').removeClass('show');
+      }
+      if (cartTotal > 250 && cartTotal < 500) {
+        $('.error-free').addClass('show');
+      }
+      if (cartTotal > 500) {
+        $('.error-free').removeClass('show');
+      }
     });
   });
 });

@@ -169,8 +169,29 @@
       }
     }
   }
-  &__order {
+  &__footer {
     margin-top: auto;
+    &--error {
+      display: none;
+      color: $grey;
+      &.show {
+        display: block;
+      }
+      &.red {
+        color: $red;
+        animation: horizontal-shaking .3s linear 0s 2 alternate;
+        @keyframes horizontal-shaking {
+          0% { transform: translateX(0) }
+          25% { transform: translateX(5px) }
+          50% { transform: translateX(-5px) }
+          75% { transform: translateX(5px) }
+          100% { transform: translateX(-5px) }
+        }
+      }
+    }
+  }
+  &__order {
+    margin-top: 12px;
     color: $white;
     background: $main-purple;
     overflow: hidden;
@@ -195,6 +216,8 @@
         color: inherit;
       }
     }
-
+    &.disabled-check {
+      opacity: .8;
+    }
   }
 }

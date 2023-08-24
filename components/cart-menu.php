@@ -65,10 +65,15 @@
             </div>
         <?php } ?>
     </div>
-    <a href="<?= wc_get_checkout_url(); ?>" class="cart-menu__order std-btn font-15-18 fw-600 transition-default d-flex">
-        <p class="cart-menu__order-text text-center">Оформити замовлення</p>
-        <div class="cart-menu__order-price d-flex align-items-center">
-            <p><?= WC()->cart->get_cart_total(); ?> грн</p>
-        </div>
-    </a>
+    <div class="cart-menu__footer">
+        <?php $cart_total = WC()->cart->get_cart_contents_total(); ?>
+        <p class="cart-menu__footer--error error-min font-11-13 fw-400 transition-default <?php $cart_total < 250 ? print 'show' : null; ?>">Мінімальна вартість замовлення складає 250 грн</p>
+        <p class="cart-menu__footer--error error-free font-11-13 fw-400 <?php $cart_total > 250 && $cart_total < 500 ? print 'show' : null; ?>">При замовленні на суму більше 500 грн доставка безкоштовна</p>
+        <a href="<?= wc_get_checkout_url(); ?>" class="cart-menu__order std-btn font-15-18 fw-600 transition-default d-flex <?php $cart_total < 250 ? print 'disabled-check' : null; ?>">
+            <p class="cart-menu__order-text text-center">Оформити замовлення</p>
+            <div class="cart-menu__order-price d-flex align-items-center">
+                <p><?= $cart_total; ?> грн</p>
+            </div>
+        </a>
+    </div>
 <?php }

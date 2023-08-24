@@ -1184,8 +1184,39 @@ h1, h2, h3, h4, h5, h6, p {
 .cart-menu__products__item .item__price-value {
   margin-top: 6px;
 }
-.cart-menu__order {
+.cart-menu__footer {
   margin-top: auto;
+}
+.cart-menu__footer--error {
+  display: none;
+  color: #B2B2B7;
+}
+.cart-menu__footer--error.show {
+  display: block;
+}
+.cart-menu__footer--error.red {
+  color: #E91F1F;
+  animation: horizontal-shaking 0.3s linear 0s 2 alternate;
+}
+@keyframes horizontal-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
+.cart-menu__order {
+  margin-top: 12px;
   color: #FFFFFF;
   background: #6757A9;
   overflow: hidden;
@@ -1210,6 +1241,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .cart-menu__order-price * {
   color: inherit;
+}
+.cart-menu__order.disabled-check {
+  opacity: 0.8;
 }
 
 .banner {
@@ -2621,15 +2655,6 @@ h1, h2, h3, h4, h5, h6, p {
 .checkout-page .checkout-change-button {
   display: none;
 }
-.checkout-page .checkout-cart-button {
-  display: none;
-  text-decoration: none;
-}
-.checkout-page .checkout-cart-button.show {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
 .checkout-page .checkout-next-button {
   margin-top: 28px;
 }
@@ -2720,6 +2745,33 @@ h1, h2, h3, h4, h5, h6, p {
   outline: none;
   border-color: transparent;
   border-radius: 4px;
+}
+.checkout-page__comment .comment-textarea::placeholder {
+  color: #B2B2B7;
+}
+.checkout-page__comment .comment-textarea:focus {
+  background: #FFFFFF;
+  border-color: #6757A9;
+}
+.checkout-page__comment .comment-textarea::-webkit-scrollbar {
+  width: 12px;
+}
+.checkout-page__comment .comment-textarea::-webkit-scrollbar-track {
+  background-color: #EEEDED;
+  border-radius: 0 4px 4px 0;
+}
+.checkout-page__comment .comment-textarea::-webkit-scrollbar-thumb {
+  background-color: #E1DEDF;
+  border-radius: 4px;
+}
+.checkout-page__comment .comment-textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #D6CECF;
+}
+.checkout-page__comment .comment-button {
+  margin-top: 20px;
+}
+.checkout-page__comment .comment__ready {
+  display: none;
 }
 .checkout-page__total, .checkout-page__coupon {
   opacity: 1;
