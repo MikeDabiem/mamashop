@@ -1,0 +1,18 @@
+.checkout-page__coupon {
+  .coupon {
+    &__head-button {
+      text-decoration: none;
+      cursor: pointer;
+    }
+    &-input {
+      margin-top: 20px;
+    }
+    &-button {
+      margin-top: 20px;
+      width: 100%;
+    }
+  }
+  .woocommerce-error {
+    display: none;
+  }
+}

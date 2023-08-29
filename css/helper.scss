@@ -42,3 +42,20 @@ $shadow: 0 2px 30px 0 rgba(223, 213, 215, 0.40);
     padding-top: $pt + 0%;
   }
 }
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #EEEDED;
+    border-radius: 0 4px 4px 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #E1DEDF;
+    border-radius: 4px;
+    &:hover {
+      background-color: $burger-grey;
+    }
+  }
+}

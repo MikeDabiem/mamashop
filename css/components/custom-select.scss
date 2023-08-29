@@ -1,0 +1,50 @@
+.custom-select {
+  position: relative;
+  &__chosen {
+    padding: 14px 14px 14px 16px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: $bg-color;
+    cursor: pointer;
+    &.active {
+      background: $white;
+      border-color: $grey;
+      .custom-select-arrow {
+        transform: rotate(180deg);
+        stroke: $black;
+      }
+    }
+  }
+  &-arrow {
+    stroke: $grey;
+  }
+  &__menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    max-height: 500px;
+    overflow: auto;
+    padding: 16px 10px;
+    background: $white;
+    border-radius: 4px;
+    box-shadow: $shadow;
+    z-index: 1;
+    @include scrollbar;
+    &__item {
+      padding: 12px 10px;
+      cursor: pointer;
+      @media (hover: hover) {
+        &:hover {
+          background: $opacity-grey;
+        }
+      }
+      &.active {
+        svg {
+          stroke: $black;
+        }
+      }
+    }
+  }
+}

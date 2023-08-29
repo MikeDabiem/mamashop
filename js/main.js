@@ -494,41 +494,47 @@ jQuery(function($) {
     checkoutNextButton.on('click', function() {
       // errors check
       let errorsCount = 0;
-      $(this).siblings('.checkout__inputs').find('.checkout__input-item').each(function() {
-        if (
-          $(this).is('[required]') &&
-          $(this).val().length < 2
-          ||
-          $(this).is('#customer-email') &&
-          $(this).val() &&
-          !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-        ) {
-          $(this).addClass('input--error');
-          $(this).siblings('.input--error-text').fadeIn(300);
-          errorsCount++;
-        }
-        if ($(this).is('#customer-email') && !$(this).val()) {
-          $('.ready__item__email').addClass('d-none');
-        }
-        // remove error after focusing input
-        $(this).on('focus', function() {
-          $(this).removeClass('input--error');
-          $(this).siblings('.input--error-text').fadeOut(300);
-          errorsCount = 0;
-          if ($(this).is('#customer-email')) {
-            $('.ready__item__email').removeClass('d-none');
+      if ($(this).siblings('.checkout__inputs').length) {
+        $(this).siblings('.checkout__inputs').find('.checkout__input-item').each(function() {
+          if (
+            $(this).is('[required]') &&
+            $(this).val().length < 2
+            ||
+            $(this).is('#billing_email') &&
+            $(this).val() &&
+            !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+          ) {
+            $(this).addClass('input--error');
+            $(this).siblings('.input--error-text').fadeIn(300);
+            errorsCount++;
           }
+          if ($(this).is('#billing_email') && !$(this).val()) {
+            $('.ready__item__email').addClass('d-none');
+          }
+          // remove error after focusing input
+          $(this).on('focus', function() {
+            $(this).removeClass('input--error');
+            $(this).siblings('.input--error-text').fadeOut(300);
+            errorsCount = 0;
+            if ($(this).is('#billing_email')) {
+              $('.ready__item__email').removeClass('d-none');
+            }
+          });
         });
-      });
+      }
 
       // toggle to next tab
       if (!errorsCount) {
         if ($(this).parent().hasClass('contacts__body')) {
-          $('.ready__item--name').text($('#customer-lastname').val() + ' ' + $('#customer-name').val());
-          $('.ready__item--phone').text($('#customer-phone').val());
-          $('.ready__item--email').text($('#customer-email').val());
+          $('.ready__item--name').text($('#billing_last_name').val() + ' ' + $('#billing_first_name').val());
+          $('.ready__item--phone').text($('#billing_phone').val());
+          $('.ready__item--email').text($('#billing_email').val());
         }
-        if ($(this).parent().hasClass('products__body')) {
+        if ($(this).parent().hasClass('payment__body')) {
+          $('.checkout-page__confirm').fadeIn(300);
+          const checkedRadioId = $('.input-radio:checked').attr('id');
+          $('.ready__item--payment').html($(`.payment__item-label[for=${checkedRadioId}]`).html());
+          $('.comment-title').text('Згорунти');
         }
         $(this).parent().slideUp(300);
         $(this).parent().siblings('.checkout-page__section__ready').slideDown(300);
@@ -555,11 +561,12 @@ jQuery(function($) {
       $(this).fadeOut(300);
     });
 
+    // show checkout comment field
     const checkoutComment = $('.checkout-page__comment');
     if (checkoutComment.length) {
       const checkoutCommentTitle = $('.comment-title');
       const checkoutCommentBody = $('.comment__body');
-      const commentInput = $('#checkout-comment');
+      const commentInput = $('#order_comments');
       const commentReadyBlock = $('.comment__ready');
       const commentReadyText = $('.comment__ready-text');
       checkoutComment.on('click', function(e) {
@@ -597,6 +604,76 @@ jQuery(function($) {
       });
     }
   }
+
+  const couponBody = $('.coupon__body');
+  if (couponBody.length) {
+    const couponHeadButton = $('.coupon__head-button');
+    function showCouponBody() {
+      if (couponBody.hasClass('active')) {
+        couponBody.removeClass('active');
+        couponHeadButton.text('Додати');
+      } else {
+        couponBody.addClass('active');
+        couponHeadButton.text('Закрити');
+      }
+    }
+    couponHeadButton.on('click', showCouponBody);
+    const couponSubmitButton = $('.coupon-button');
+    const couponInput = $('.coupon-input');
+    couponSubmitButton.on('click', function(e) {
+      if (!couponInput.val()) {
+        e.preventDefault();
+        couponInput.addClass('input--error');
+        couponInput.siblings('.input--error-text').fadeIn(300);
+      } else {
+        showCouponBody();
+      }
+    });
+    couponInput.on('focus', function() {
+      couponInput.removeClass('input--error');
+      couponInput.siblings('.input--error-text').fadeOut(300);
+    });
+  }
+
+  const customSelect = $('.custom-select');
+  if (customSelect.length) {
+    const customSelectMenu = $('.custom-select__menu');
+    const customSelectChosen = $('.custom-select__chosen');
+    customSelectChosen.on('click', function() {
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        $(this).siblings('.custom-select__menu').slideUp(300);
+      } else {
+        customSelectChosen.removeClass('active');
+        customSelectMenu.slideUp(300);
+        $(this).addClass('active');
+        $(this).siblings('.custom-select__menu').slideDown(300);
+      }
+    });
+    body.on('click', '.custom-select__menu__item', function() {
+      $(this).siblings().removeClass('active');
+      $(this).addClass('active');
+      $(this).parent().siblings().find('.custom-select__chosen-title').text($(this).children('.custom-select__menu__item-title').text());
+      $(this).parent().siblings().find('.custom-select-input').val($(this).data('value'));
+      customSelectMenu.slideUp(300);
+      customSelectChosen.removeClass('active');
+
+      const billingCityInput = $('#billing_city');
+      if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_region') {
+        billingCityInput.val($(this).children('.custom-select__menu__item-title').text() + ', ');
+        $('#delivery_city').find('.custom-select__chosen-title').text('Оберіть населений пункт');
+      } else if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_city') {
+        billingCityInput.val(billingCityInput.val() + $(this).children('.custom-select__menu__item-title').text());
+      }
+    });
+    body.on('click', (e) => {
+      if (!e.target.closest('.custom-select')) {
+        $('.custom-select__chosen').removeClass('active');
+        customSelectMenu.slideUp(300);
+      }
+    });
+  }
+
 
 
   //////////

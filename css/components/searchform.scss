@@ -32,20 +32,7 @@
     overflow: auto;
     padding: 16px;
     box-shadow: $shadow;
-    &::-webkit-scrollbar {
-      width: 12px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #EEEDED;
-      border-radius: 0 4px 4px 0;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #E1DEDF;
-      border-radius: 4px;
-      &:hover {
-        background-color: $burger-grey;
-      }
-    }
+    @include scrollbar;
     &__col1 {
       width: 50%;
       .search {

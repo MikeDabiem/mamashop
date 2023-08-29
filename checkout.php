@@ -1,11 +1,9 @@
 <?php /* Template Name: Checkout Template */
-// setcookie('username', 'Mike', time() + 60);
-// set cookie for 60 seconds
 get_header(); ?>
 <section class="checkout-page wrapper filler">
     <h1 class="checkout-page-title font-28-36 fw-600">Оформлення замовлення</h1>
     <div class="checkout-page__body d-flex">
-        <div class="checkout-page__body__col1">
+        <form name="checkout" method="post" id="checkout-form" class="checkout-page__body__col1 checkout__form checkout woocommerce-checkout" action="https://www.mamashop.brinpl.com/checkout/" enctype="multipart/form-data" novalidate="novalidate">
             <section class="checkout-page__section checkout-page__contacts active">
                 <div class="checkout-page__section__head d-flex justify-content-between">
                     <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">1</span>Контактні дані</h4>
@@ -13,32 +11,22 @@ get_header(); ?>
                 </div>
                 <div class="checkout-page__section__body contacts__body">
                     <div class="checkout__inputs d-flex flex-wrap">
-                        <?php $user_name = $_COOKIE['user_name'] ?? '';
-                        $user_lastname = $_COOKIE['user_lastname'] ?? '';
-                        $user_email = $_COOKIE['user_email'] ?? wp_get_current_user()->user_email;
-                        $user_phone = $_COOKIE['user_phone'] ?? ''; ?>
-                        <div class="checkout__input input__wrapper">
-                            <label for="customer-name" class="font-13-16 fw-500 d-block">Ім’я*</label>
-                            <input type="text" name="customer-name" id="customer-name" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть своє ім’я" value="<?= $user_name; ?>" required>
-                            <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
-                        </div>
-                        <div class="checkout__input input__wrapper">
-                            <label for="customer-lastname" class="font-13-16 fw-500 d-block">Прізвище*</label>
-                            <input type="text" name="customer-lastname" id="customer-lastname" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть своє прізвище" value="<?= $user_lastname; ?>" required>
-                            <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
-                        </div>
-                        <div class="checkout__input input__wrapper">
-                            <label for="customer-phone" class="font-13-16 fw-500 d-block">Телефон*</label>
-                            <input type="text" name="customer-phone" id="customer-phone" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть номер телефону" value="<?= $user_phone; ?>" required>
-                            <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
-                        </div>
-                        <div class="checkout__input input__wrapper">
-                            <label for="customer-email" class="font-13-16 fw-500 d-block">Електронна пошта</label>
-                            <input type="text" name="customer-email" id="customer-email" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="Введіть електронну пошту" value="<?= $user_email; ?>">
-                            <p class="input--error-text font-9-11 fw-400">Невірний формат адреси електронної пошти</p>
-                        </div>
+                        <?php $checkout = WC()->checkout();
+                        $fields = $checkout->get_checkout_fields('billing');
+                        foreach ( $fields as $key => $field ) {
+                            $hide = $key === 'billing_country' || $key === 'billing_address_1' || $key === 'billing_address_2' || $key === 'billing_city' ? 'd-none' : ''; ?>
+                            <div id="<?= $key; ?>_field" class="checkout__input input__wrapper <?= $hide; ?>">
+                                <label for="<?= $key; ?>" class="font-13-16 fw-500 d-block"><?= $field['label']; if ($field['required'] ): ?><abbr class="text-decoration-none" title="Обов'язкове поле">*</abbr><?php endif; ?></label>
+                                <input type="text" name="<?= $key; ?>" id="<?= $key; ?>" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="<?php isset($field['placeholder']) ? print $field['placeholder'] : print ''; ?>" value="<?= $checkout->get_value($key); ?>" <?php if ($field['required']): ?>required<?php endif; ?>>
+                                <?php if ($key === 'billing_email') { ?>
+                                    <p class="input--error-text font-9-11 fw-400">Невірний формат адреси електронної пошти</p>
+                                <?php } else { ?>
+                                    <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
                     </div>
-                    <button type="button" id="contacts-next" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
                 </div>
                 <div class="checkout-page__section__ready">
                     <div class="ready__item d-flex align-items-center">
@@ -125,29 +113,104 @@ get_header(); ?>
                             } ?>
                         </tbody>
                     </table>
-                    <button type="button" id="contacts-next" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
                 </div>
             </section>
-            <section class="checkout-page__section checkout-page__delivery">
-                <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">3</span>Доставка</h4>
-                <div class="checkout-page__section__body delivery__body">
-                    <?php the_content(); ?>
+            <section class="checkout-page__section checkout-page__delivery active">
+                <div class="checkout-page__section__head d-flex justify-content-between">
+                    <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">3</span>Доставка</h4>
+                    <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
+                </div>
+                <div class="checkout-page__section__body delivery__body d-block">
+                    <div class="delivery__place d-flex">
+                        <div id="delivery_region" class="delivery__place__item">
+                            <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть область</h6>
+                            <?php // $city_arr = explode(', ', $checkout->get_value('billing_city'));
+                            $city_arr = explode(', ', 'Київська, Київ');
+                            $options = [
+                                !empty($city_arr) ? $city_arr[0] : 'Київська'
+                            ];
+                            $input_id = 'delivery_region-input';
+                            require 'components/custom-select.php'; ?>
+                        </div>
+                        <div id="delivery_city" class="delivery__place__item">
+                            <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть населений пункт</h6>
+                            <?php
+                            $options = [
+                                !empty($city_arr) ? $city_arr[1] : 'Київ'
+                            ];
+                            $input_id = 'delivery_city-input';
+                            require 'components/custom-select.php'; ?>
+                        </div>
+                    </div>
+                    <?php WC()->cart->calculate_shipping();
+                    $packages = WC()->shipping()->get_packages();
+                    foreach ($packages as $index => $package) {
+                        $available_methods = $package['rates'];
+                        $chosen_method = isset( WC()->session->chosen_shipping_methods[ $index ] ) ? WC()->session->chosen_shipping_methods[ $index ] : '';
+                        foreach ( $available_methods as $method ) { ?>
+                            <div>
+                                <?php if ( 1 < count( $available_methods ) ) {
+                                    printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) );
+                                } else {
+                                    printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) );
+                                }
+                                printf( '<label for="shipping_method_%1$s_%2$s">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) );
+                                do_action( 'woocommerce_after_shipping_rate', $method, $index ); ?>
+                            </div>
+                        <?php }
+                    } ?>
+                    <?php do_action('woocommerce_before_order_notes'); ?>
+                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
                 </div>
             </section>
             <section class="checkout-page__section checkout-page__payment">
-                <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">4</span>Оплата</h4>
+                <div class="checkout-page__section__head d-flex justify-content-between">
+                    <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">4</span>Оплата</h4>
+                    <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
+                </div>
+                <div class="checkout-page__section__body payment__body">
+                    <?php $available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
+                    if (!empty($available_gateways)) {
+                        foreach ($available_gateways as $gateway) { ?>
+                            <div class="payment__item wc_payment_method payment_method_<?= esc_attr($gateway->id); ?> d-flex align-items-center">
+                                <input id="payment_method_<?= esc_attr($gateway->id); ?>" type="radio" class="input-radio" name="payment_method" value="<?= esc_attr($gateway->id); ?>" <?php checked($gateway->chosen, true); ?> data-order_button_text="<?= esc_attr($gateway->order_button_text); ?>" />
+                                <label for="payment_method_<?= esc_attr($gateway->id); ?>" class="payment__item-label font-14-20 fw-400">
+                                    <?= $gateway->get_title(); ?> <?= $gateway->get_icon(); ?>
+                                </label>
+                                <?php if (esc_attr($gateway->id) === 'cod') { ?>
+                                    <p class="payment__item-subtitle font-11-13 fw-400">Послуга оплачується окремо за тарифами перевізника</p>
+                                <?php } ?>
+                            </div>
+                        <?php }
+                    } else { ?>
+                        <p><?php wc_print_notice(apply_filters('woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__('Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce') : esc_html__('Please fill in your details above to see available payment methods.', 'woocommerce')), 'notice'); ?></p>
+                    <?php } ?>
+                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                </div>
+                <div class="checkout-page__section__ready">
+                    <div class="ready__item d-flex align-items-center">
+                        <div class="ready__item-icon icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                                <path d="M10.6111 11.7778C10.6111 13.3689 11.9089 14.6667 13.5 14.6667H17.5V15.3333C17.5 17.1111 16.6111 18 14.8333 18H4.16667C2.38889 18 1.5 17.1111 1.5 15.3333V3.77778C1.5 4.75556 2.3 5.55556 3.27778 5.55556H14.8333C16.6111 5.55556 17.5 6.44444 17.5 8.22222V8.88889H13.5C11.9089 8.88889 10.6111 10.1867 10.6111 11.7778ZM13.5 10.2222C12.6467 10.2222 11.9444 10.9244 11.9444 11.7778C11.9444 12.6311 12.6467 13.3333 13.5 13.3333H17.5V10.2222H13.5ZM13.9622 12.6667C13.4734 12.6667 13.0645 12.2667 13.0645 11.7778C13.0645 11.2889 13.4645 10.8889 13.9533 10.8889H13.9622C14.4511 10.8889 14.8511 11.2889 14.8511 11.7778C14.8511 12.2667 14.4511 12.6667 13.9622 12.6667ZM12.1667 2H3.94444C3.33111 2 2.83333 2.49778 2.83333 3.11111C2.83333 3.72444 3.33111 4.22222 3.94444 4.22222H14.8066C14.6733 2.73778 13.7933 2 12.1667 2Z" fill="#494558"/>
+                            </svg>
+                        </div>
+                        <p class="ready__item-text ready__item--payment font-14-20 fw-500"></p>
+                    </div>
+                </div>
             </section>
             <section class="checkout-page__section checkout-page__comment">
                 <h5 class="comment-title font-14-20 fw-500 transition-default">Додати коментар до замовлення</h5>
                 <div class="checkout-page__section__body comment__body">
-                    <textarea name="checkout-comment" id="checkout-comment" class="comment-textarea font-13-16 fw-400 d-block" placeholder="Наприклад: відправте, будь ласка, завтра"></textarea>
+                    <textarea name="order_comments" id="order_comments" class="comment-textarea font-13-16 fw-400 d-block" placeholder="Наприклад: відправте, будь ласка, завтра"></textarea>
                     <button type="button" class="comment-button std-btn purple-btn">Додати</button>
                 </div>
                 <div class="checkout-page__section__ready comment__ready">
                     <p class="comment__ready-text font-14-20 fw-500"></p>
                 </div>
             </section>
-        </div>
+            <?php wp_nonce_field('woocommerce-process-checkout', 'woocommerce-process-checkout-nonce'); ?>
+        </form>
         <div class="checkout-page__body__col2">
             <div class="checkout-page__section checkout-page__total">
                 <div class="total__head d-flex justify-content-between align-items-center">
@@ -173,14 +236,26 @@ get_header(); ?>
             <div class="checkout-page__section checkout-page__coupon">
                 <div class="coupon__head d-flex justify-content-between">
                     <h4 class="coupon-title font-14-20 fw-500">Промокод</h4>
-                    <button type="button" class="coupon__head-button transparent-btn font-14-20 fw-500">Додати</button>
+                    <a class="coupon__head-button transparent-btn font-14-20 fw-500 showcoupon">Додати</a>
                 </div>
-                <div class="coupon__body">
-                    <input type="text" class="coupon-input checkout__input-item font-13-16 fw-400" placeholder="Введіть промокод">
-                    <button type="button" class="coupon-button font-15-18 fw-600">Застосувати</button>
-                </div>
+                <form class="coupon__body checkout_coupon woocommerce-form-coupon" method="post" style="display:none">
+                    <div class="form-row form-row-first position-relative">
+                        <label for="coupon_code" class="screen-reader-text"><?php esc_html_e('Coupon:', 'woocommerce'); ?></label>
+                        <input type="text" name="coupon_code" class="coupon-input checkout__input-item font-13-16 fw-400 input-text" placeholder="<?php esc_attr_e('Введіть промокод', 'woocommerce'); ?>" id="coupon_code" value="" />
+                        <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
+                    </div>
+                    <div class="form-row form-row-last">
+                        <button type="submit" class="coupon-button std-btn purple-btn font-15-18 fw-600 button<?= esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Застосувати', 'woocommerce'); ?>"><?php esc_html_e('Застосувати', 'woocommerce'); ?></button>
+                    </div>
+                    <div class="clear"></div>
+                </form>
+            </div>
+            <div class="checkout-page__confirm">
+                <button type="submit" form="checkout-form" name="woocommerce_checkout_place_order" id="place_order" class="confirm-button std-btn purple-btn font-15-18 fw-600 w-100" data-value="Замовлення підтверджую">Замовлення підтверджую</button>
+                <p class="confirm-text font-11-13 fw-400">Підтверджуючи замовлення я приймаю <a href="<?= get_privacy_policy_url(); ?>">умови сайту</a> та надаю згоду на <a href="<?= get_privacy_policy_url(); ?>">обробку моїх персональних даних.</a></p>
             </div>
         </div>
     </div>
+    <?php  the_content(); ?>
 </section>
 <?php get_footer();

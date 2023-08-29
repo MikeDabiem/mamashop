@@ -2,27 +2,27 @@
   margin-top: 30px;
 }
 .checkout-page {
-  .woocommerce {
-    &-notices-wrapper,
-    &-form-coupon-toggle {
-      display: none;
-    }
-    &-checkout {
-      .col-2 {
-        display: none;
-      }
-      &-review-order,
-      &-review-order-table {
-        display: none;
-      }
-      h3 {
-        display: none;
-      }
-    }
-    &-billing-fields__field-wrapper {
-      display: none;
-    }
-  }
+  //.woocommerce {
+  //  &-notices-wrapper,
+  //  &-form-coupon-toggle {
+  //    display: none;
+  //  }
+  //  &-checkout {
+  //    .col-2 {
+  //      display: none;
+  //    }
+  //    &-review-order,
+  //    &-review-order-table {
+  //      display: none;
+  //    }
+  //    h3 {
+  //      display: none;
+  //    }
+  //  }
+  //  &-billing-fields__field-wrapper {
+  //    display: none;
+  //  }
+  //}
   &.filler {
     padding-top: 36px;
   }
@@ -119,6 +119,7 @@
     }
   }
   @import "../components/checkout/checkout-products";
+  @import "../components/checkout/checkout-delivery";
   &__comment {
     opacity: 1;
     cursor: pointer;
@@ -166,20 +167,7 @@
           background: $white;
           border-color: $main-purple;
         }
-        &::-webkit-scrollbar {
-          width: 12px;
-        }
-        &::-webkit-scrollbar-track {
-          background-color: #EEEDED;
-          border-radius: 0 4px 4px 0;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: #E1DEDF;
-          border-radius: 4px;
-          &:hover {
-            background-color: $burger-grey;
-          }
-        }
+        @include scrollbar;
       }
       &-button {
         margin-top: 20px;
@@ -212,9 +200,38 @@
       margin-top: 32px;
     }
   }
-  .coupon {
-    &__body {
-      display: none;
+  @import "../components/checkout/checkout-coupon";
+  &__confirm {
+    display: none;
+    margin-top: 12px;
+    .confirm-text {
+      margin-top: 12px;
+      color: $dark-grey;
+      &>a {
+        color: $black;
+        text-decoration: none;
+        @media (hover: hover) {
+          &:hover {
+            color: $main-purple;
+          }
+        }
+      }
+    }
+  }
+  &__payment {
+    .payment__item {
+      position: relative;
+      gap: 12px;
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+      &-subtitle {
+        position: absolute;
+        bottom: -13px;
+        left: 36px;
+        color: $grey;
+        white-space: nowrap;
+      }
     }
   }
 }

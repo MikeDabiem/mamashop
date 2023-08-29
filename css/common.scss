@@ -8,6 +8,7 @@
 body {
   background: $bg-color;
   overflow-x: hidden;
+  @include scrollbar;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -558,5 +559,10 @@ h1, h2, h3, h4, h5, h6, p {
       bottom: -12px;
       color: $red;
     }
+  }
+  &-radio {
+    width: 24px;
+    height: 24px;
+    accent-color: $main-purple;
   }
 }

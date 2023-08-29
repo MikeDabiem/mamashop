@@ -1,0 +1,14 @@
+.delivery {
+  &__place {
+    gap: 24px;
+    &__item {
+      width: calc(50% - 12px);
+      &-title {
+        color: $black-light;
+      }
+      .custom-select {
+        margin-top: 8px;
+      }
+    }
+  }
+}

@@ -22,28 +22,30 @@ function brinpl_change_fields($fields) {
     unset($fields['billing']['billing_state']);
     unset($fields['billing']['billing_postcode']);
     unset($fields['billing']['billing_company']);
-    unset($fields['billing']['billing_country']);
+//    unset($fields['billing']['billing_country']);
 
     $fields['billing']['billing_first_name']['label'] = 'Ім’я';
-    $fields['billing']['billing_first_name']['class'] = ['order-form-input'];
     $fields['billing']['billing_first_name']['autocomplete'] = false;
     $fields['billing']['billing_first_name']['placeholder'] = 'Введіть своє ім’я';
 
     $fields['billing']['billing_last_name']['label'] = 'Прізвище';
-    $fields['billing']['billing_last_name']['class'] = ['order-form-input'];
     $fields['billing']['billing_last_name']['autocomplete'] = false;
     $fields['billing']['billing_last_name']['placeholder'] = 'Введіть своє прізвище';
 
     $fields['billing']['billing_phone']['label'] = 'Телефон';
-    $fields['billing']['billing_phone']['class'] = ['order-form-input'];
     $fields['billing']['billing_phone']['autocomplete'] = false;
     $fields['billing']['billing_phone']['placeholder'] = 'Введіть номер телефону';
 
     $fields['billing']['billing_email']['label'] = 'Електронна пошта';
-    $fields['billing']['billing_email']['class'] = ['order-form-input'];
     $fields['billing']['billing_email']['autocomplete'] = false;
     $fields['billing']['billing_email']['placeholder'] = 'Введіть електронну пошту';
     $fields['billing']['billing_email']['required'] = false;
+
+    $fields['billing']['billing_address_1']['required'] = false;
+
+    $fields['billing']['billing_address_2']['required'] = false;
+
+    $fields['billing']['billing_city']['required'] = false;
 
     return $fields;
 }
