@@ -155,3 +155,20 @@ function cart_products_count( $fragments ) {
 
 // remove currency symbol
 add_filter('woocommerce_currency_symbol', function() {return false;});
+
+// add my-account endpoints
+add_action( 'init', 'cabinet_add_endpoints', 25 );
+function cabinet_add_endpoints() {
+    add_rewrite_endpoint( 'favorites', EP_PAGES );
+    add_rewrite_endpoint( 'qna', EP_PAGES );
+    add_rewrite_endpoint( 'security', EP_PAGES );
+}
+
+// add fields to edit-account
+add_action( 'woocommerce_save_account_details', 'save_additional_account_details' );
+function save_additional_account_details( $user_id ) {
+    if (isset($_POST['birthday'])) {
+        update_user_meta($user_id, 'account_middle_name', sanitize_text_field($_POST['account_middle_name']));
+        update_user_meta($user_id, 'birthday', sanitize_text_field($_POST['birthday']));
+    }
+}
