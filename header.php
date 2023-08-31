@@ -30,10 +30,12 @@ if (is_page('checkout')) { ?>
             </button>
             <?php get_search_form(); ?>
             <div class="header__cab d-flex">
-                <a href="#" class="header__fav header__btn std-btn d-flex justify-content-center align-items-center transition-default">
+                <?php $favorites_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') . '/favorites/' : 'login';
+                $profile_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') : 'login'; ?>
+                <a href="<?= $favorites_url; ?>" class="header__fav header__btn std-btn d-flex justify-content-center align-items-center transition-default">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-linecap="round" stroke-width="2" d="M22.166 10.24a5.188 5.188 0 0 0-1.336-2.175c-.522-.517-1.063-.859-1.606-1.065m-7.092-2.163c-1.952-1.239-5.106-2.41-7.829.367C-2.162 11.797 8.924 24.5 14 24.5c5.075 0 16.16-12.703 9.696-19.296-2.723-2.777-5.876-1.606-7.829-.367-1.103.7-2.632.7-3.735 0Z"/></svg>
                 </a>
-                <a href="<?= wc_get_page_permalink('myaccount'); ?>" class="header__profile header__btn std-btn d-flex justify-content-center align-items-center transition-default">
+                <a href="<?= $profile_url; ?>" class="header__profile header__btn std-btn d-flex justify-content-center align-items-center transition-default">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-width=".1" d="M17.802 6.818c0 2.1-1.702 3.802-3.802 3.802v2a5.802 5.802 0 0 0 5.802-5.802h-2ZM14 10.62a3.802 3.802 0 0 1-3.802-3.802h-2A5.802 5.802 0 0 0 14 12.62v-2Zm-3.802-3.802c0-2.1 1.702-3.802 3.802-3.802v-2a5.802 5.802 0 0 0-5.802 5.802h2ZM14 3.016c2.1 0 3.802 1.702 3.802 3.802h2A5.802 5.802 0 0 0 14 1.016v2ZM10.4 16.22h7.203v-2h-7.203v2Zm7.203 7.605h-7.203v2h7.203v-2Zm-7.203 0a3.802 3.802 0 0 1-3.802-3.803h-2a5.802 5.802 0 0 0 5.802 5.803v-2Zm11.005-3.803c0 2.1-1.702 3.803-3.802 3.803v2a5.802 5.802 0 0 0 5.802-5.803h-2Zm-3.802-3.802c2.1 0 3.802 1.703 3.802 3.802h2a5.802 5.802 0 0 0-5.802-5.802v2Zm-7.203-2a5.802 5.802 0 0 0-5.802 5.802h2c0-2.1 1.702-3.802 3.802-3.802v-2Z"/></svg>
                 </a>
                 <button type="button" class="header__cart header__btn std-btn">

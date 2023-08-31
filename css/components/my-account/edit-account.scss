@@ -1,0 +1,51 @@
+.edit-account {
+  margin-top: 20px;
+  &__personal,
+  &__birthday {
+    padding: 32px 32px 40px 32px;
+    border-radius: 8px;
+    background: $white;
+    gap: 20px;
+  }
+  &__birthday {
+    margin-top: 12px;
+    &-subtitle {
+      padding-top: 8px;
+      color: $dark-grey;
+    }
+    &-input {
+      margin-top: 24px;
+      &::-webkit-calendar-picker-indicator {
+        display: none;
+      }
+    }
+  }
+  .input__wrapper {
+    width: calc((100% - 40px) / 3);
+    label {
+      font-size: 13px;
+      line-height: 140%;
+      color: $black-light;
+    }
+    .woocommerce-Input {
+      &:not(#birthday) {
+        margin-top: 8px;
+      }
+      padding: 17px 16px;
+      width: 100%;
+      outline: none;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: $bg-color;
+      font-size: 13px;
+      line-height: 140%;
+      &:focus {
+        border-color: $main-purple;
+        background: $white;
+      }
+    }
+  }
+  .woocommerce-Button {
+    margin-top: 24px;
+  }
+}

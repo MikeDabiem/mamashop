@@ -167,8 +167,10 @@ function cabinet_add_endpoints() {
 // add fields to edit-account
 add_action( 'woocommerce_save_account_details', 'save_additional_account_details' );
 function save_additional_account_details( $user_id ) {
+    if (isset($_POST['account_middle_name'])) {
+        update_user_meta($user_id, 'middle_name', sanitize_text_field($_POST['account_middle_name']));
+    }
     if (isset($_POST['birthday'])) {
-        update_user_meta($user_id, 'account_middle_name', sanitize_text_field($_POST['account_middle_name']));
         update_user_meta($user_id, 'birthday', sanitize_text_field($_POST['birthday']));
     }
 }

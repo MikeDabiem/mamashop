@@ -1,0 +1,79 @@
+.account-page {
+  &__content {
+    margin-top: 30px;
+  }
+  &__col1 {
+    width: 25%;
+  }
+  &__col2 {
+    width: calc(75% - 20px);
+  }
+  &__menu {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    background: $white;
+    .menu__item {
+      gap: 12px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: $black;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      &:not(:first-child) {
+        margin-top: 4px;
+      }
+      &:not(.current_page) {
+        @media (hover: hover) {
+          &:hover {
+            border-color: $opacity-purple;
+            color: $main-purple;
+          }
+        }
+      }
+      &-image {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        border-radius: 4px;
+        background: $bg-color;
+        svg {
+          width: 100%;
+          height: 100%;
+          fill: $black;
+          stroke: $black;
+        }
+      }
+      &.current_page {
+        background: $opacity-purple;
+        color: $main-purple;
+        .menu__item-image {
+          background: $main-purple;
+          svg {
+            fill: $white;
+            stroke: $white;
+          }
+        }
+      }
+    }
+  }
+  .account {
+    &__avatar {
+      gap: 12px;
+      background: $white;
+      border-radius: 6px;
+      padding: 20px;
+      &-image {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      &-email {
+        margin-top: 2px;
+        color: $dark-grey;
+      }
+    }
+  }
+  @import "../components/my-account/edit-account";
+}

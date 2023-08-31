@@ -674,6 +674,70 @@ jQuery(function($) {
     });
   }
 
+  const editAccountForm = $('.edit-account');
+  if (editAccountForm.length) {
+    const firstNameInput = $('#account_first_name');
+    const lastNameInput = $('#account_last_name');
+    const displayNameInput = $('#account_display_name');
+
+    function setDisplayName() {
+      displayNameInput.val(lastNameInput.val() + ' ' + firstNameInput.val());
+    }
+
+    firstNameInput.on('change', function() {
+      setDisplayName();
+    });
+    lastNameInput.on('change', function() {
+      setDisplayName();
+    });
+
+    editAccountForm.on('submit', function(e) {
+      let errorsCount = 0;
+      $(this).find('.woocommerce-Input').each(function() {
+        if (
+          $(this).hasClass('required') &&
+          $(this).val().length < 2
+        ) {
+          $(this).addClass('input--error');
+          if ($(this).siblings('.input--error-text').text() !== 'Заповніть будь ласка поле') {
+            $(this).siblings('.input--error-text').text('Заповніть будь ласка поле');
+          }
+          $(this).siblings('.input--error-text').fadeIn(300);
+          errorsCount++;
+        } else if (
+          $(this).is('#account_email') &&
+          !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+        ) {
+          $(this).siblings('.input--error-text').text('Невірний формат адреси електронної пошти');
+          $(this).siblings('.input--error-text').fadeIn(300);
+          errorsCount++;
+        }
+        // remove error after focusing input
+        $(this).on('focus', function() {
+          $(this).removeClass('input--error');
+          $(this).siblings('.input--error-text').fadeOut(300);
+          errorsCount = 0;
+        });
+      });
+      if (errorsCount) {
+        e.preventDefault();
+      }
+    });
+
+    const bDayInput = $('#birthday');
+    if (bDayInput.length) {
+      bDayInput.on('focus', function() {
+        this.type='date';
+        this.showPicker()
+      });
+      bDayInput.on('blur', function() {
+        if (!$(this).val()) {
+          this.type='text';
+        }
+      });
+    }
+  }
+
 
 
   //////////
