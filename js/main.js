@@ -738,6 +738,14 @@ jQuery(function($) {
     }
   }
 
+  const accountOrdersPage = $('.account-page__orders');
+  if (accountOrdersPage.length) {
+    body.on('click', '.account-page__orders__item__head', function() {
+      $(this).parent().toggleClass('active');
+      $(this).siblings('.account-page__orders__item__body').slideToggle(300);
+    });
+  }
+
 
 
   //////////
@@ -935,4 +943,19 @@ jQuery(function($) {
       }
     });
   });
+
+  if (accountOrdersPage.length) {
+    body.on('click', '.account-page__orders__sort-button', function() {
+      const container = $('.account-page__orders__items');
+      container.animate({opacity: .5}, 200);
+      $(this).addClass('active').siblings('.account-page__orders__sort-button').removeClass('active');
+      const data = {
+        action: 'user_orders_sort',
+        post_status: this.id
+      }
+      $.post(ajaxURL.url, data, function (response) {
+        container.html(response).animate({opacity: 1}, 200);
+      });
+    });
+  }
 });

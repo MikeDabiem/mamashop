@@ -334,7 +334,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .no-image {
-  padding: 40px;
+  padding: 10%;
   opacity: 0.2;
 }
 
@@ -2955,8 +2955,6 @@ h1, h2, h3, h4, h5, h6, p {
   background: #F7F7F8;
 }
 .account-page__menu .menu__item-image svg {
-  width: 100%;
-  height: 100%;
   fill: #494558;
   stroke: #494558;
 }
@@ -3036,6 +3034,129 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .account-page .edit-account .woocommerce-Button {
   margin-top: 24px;
+}
+.account-page .account-page__orders-count {
+  margin-top: 8px;
+  color: #5E5E62;
+}
+.account-page .account-page__orders__sort {
+  margin-top: 24px;
+  gap: 12px;
+}
+.account-page .account-page__orders__sort-button {
+  padding: 13px 35px;
+  color: #6757A9;
+  background: rgba(236, 236, 240, 0.8);
+  outline: none;
+  border: none;
+  border-radius: 44px;
+}
+.account-page .account-page__orders__sort-button.active {
+  background: #6757A9;
+  color: #FFFFFF;
+}
+.account-page .account-page__orders__items {
+  margin-top: 24px;
+}
+.account-page .account-page__orders__item {
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.account-page .account-page__orders__item:not(:first-child) {
+  margin-top: 12px;
+}
+.account-page .account-page__orders__item.active .item__arrow svg {
+  transform: rotate(180deg);
+}
+.account-page .account-page__orders__item__head {
+  padding: 15px 24px;
+  cursor: pointer;
+}
+.account-page .account-page__orders__item__body {
+  display: none;
+  padding: 9px 24px 20px;
+}
+.account-page .account-page__orders__item .item__info {
+  width: 65%;
+  display: grid;
+  grid-template-columns: 37% 27% 20%;
+  justify-content: space-between;
+  row-gap: 8px;
+}
+.account-page .account-page__orders__item .item__info__row1 {
+  color: #848589;
+}
+.account-page .account-page__orders__item .item__info-status .purple {
+  color: #6757A9;
+}
+.account-page .account-page__orders__item .item__info-status .green {
+  color: #38A757;
+}
+.account-page .account-page__orders__item .item__info-status .red {
+  color: #E91F1F;
+}
+.account-page .account-page__orders__item .item__count {
+  color: #B2B2B7;
+  min-width: 40px;
+}
+.account-page .account-page__orders__item .item__thumbs {
+  width: 25%;
+}
+.account-page .account-page__orders__item .item__thumbs-image {
+  width: 50px;
+  height: 50px;
+}
+.account-page .account-page__orders__item .item__product {
+  padding: 15px 0;
+  border-bottom: 2px solid #F1F1F6;
+}
+.account-page .account-page__orders__item .item__product-image {
+  width: 10%;
+}
+.account-page .account-page__orders__item .item__product-image::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.account-page .account-page__orders__item .item__product__info {
+  width: 40%;
+}
+.account-page .account-page__orders__item .item__product__info a {
+  text-decoration: none;
+}
+.account-page .account-page__orders__item .item__product__info-title {
+  color: #494558;
+}
+.account-page .account-page__orders__item .item__product__info-subtitle {
+  margin-top: 12px;
+  color: #848589;
+}
+.account-page .account-page__orders__item .item__product__price, .account-page .account-page__orders__item .item__product__qty, .account-page .account-page__orders__item .item__product__total {
+  width: 10%;
+  text-align: center;
+}
+.account-page .account-page__orders__item .item__footer {
+  margin-top: 24px;
+}
+.account-page .account-page__orders__item .item__footer .totals-qty {
+  color: #5E5E62;
+}
+.account-page .account-page__orders__item .item__footer .totals-price {
+  margin-top: 4px;
+}
+.account-page .account-page__orders .account-page__orders__empty {
+  min-height: 378px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.account-page .account-page__orders .account-page__orders__empty .empty-subtitle {
+  margin-top: 12px;
+}
+.account-page .account-page__orders .account-page__orders__empty .empty-button {
+  width: fit-content;
+  margin: 20px auto 0;
+  text-decoration: none;
+  padding-inline: 55px;
 }
 
 /*# sourceMappingURL=style.css.map */

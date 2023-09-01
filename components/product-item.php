@@ -29,7 +29,7 @@
         <span class="rating__value font-13-16 fw-500"><?= rand(1, 999); ?></span>
     </div>
     <div class="product-item__price d-flex">
-        <p class="product-item__price-value font-15-24 fw-500"><?= $salePrice ? $salePrice : $price; ?> грн</p>
+        <p class="product-item__price-value font-15-24 fw-500"><?= $salePrice ?: $price; ?> грн</p>
         <?php if ($salePrice) { ?>
             <p class="product-item__price-disc font-12-16 fw-500"><?= $price; ?> грн</p>
         <?php } ?>

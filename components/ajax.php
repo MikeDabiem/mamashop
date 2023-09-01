@@ -7,6 +7,8 @@
     add_action( 'wp_ajax_nopriv_handle_cart_item', 'handle_cart_item' );
     add_action( 'wp_ajax_change_qty', 'change_qty' );
     add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
+    add_action( 'wp_ajax_user_orders_sort', 'user_orders_sort' );
+    add_action( 'wp_ajax_nopriv_user_orders_sort', 'user_orders_sort' );
 }
 
 function fetch_data($posts_per_page) {
@@ -162,5 +164,33 @@ function change_qty() {
         'total' => $total . ' ' . 'грн'
     ];
     echo json_encode($response);
+    wp_die();
+}
+
+function user_orders_sort() {
+    if ($_POST) {
+        $post_status = match ($_POST['post_status']) {
+            'sort-processing' => 'wc-processing',
+            'sort-completed' => 'wc-completed',
+            default => array_keys(wc_get_order_statuses())
+        };
+        $customer_orders = get_posts(
+            apply_filters(
+                'woocommerce_my_account_my_orders_query',
+                [
+                    'numberposts' => 20,
+                    'meta_key'    => '_customer_user',
+                    'meta_value'  => $_POST['user_id'],
+                    'post_type'   => wc_get_order_types('view-orders'),
+                    'post_status' => $post_status,
+                ]
+            )
+        );
+        if ($customer_orders) {
+            get_template_part('components/my-account/orders-items', null, ['customer_orders' => $customer_orders]);
+        } else {
+            get_template_part('components/my-account/orders-empty');
+        }
+    }
     wp_die();
 }

@@ -2,14 +2,15 @@
 if (is_user_logged_in()) {
 get_header();
 global $wp;
-$user = get_userdata(get_current_user_id()); ?>
+$user_id = get_current_user_id();
+$user = get_userdata($user_id); ?>
 <div class="account-page wrapper filler">
     <?php woocommerce_breadcrumb(); ?>
     <div class="account-page__content d-flex justify-content-between">
         <div class="account-page__col1">
             <div class="account__avatar d-flex align-items-center">
                 <div class="account__avatar-image img-wrapper-contain">
-                    <img src="<?= get_avatar_url(get_current_user_id()); ?>" alt="avatar">
+                    <img src="<?= get_avatar_url($user_id); ?>" alt="avatar">
                 </div>
                 <div class="account__avatar__info">
                     <p class="account__avatar-name font-15-24 fw-600"><?= esc_attr($user->display_name) ?></p>
@@ -77,7 +78,7 @@ $user = get_userdata(get_current_user_id()); ?>
                             </div>
                             <div class="woocommerce-form-row woocommerce-form-row--phone form-row form-row-phone input__wrapper">
                                 <label for="account_phone_name"><?php esc_html_e('Телефон', 'woocommerce'); ?><abbr class="text-decoration-none" title="Обов'язкове поле">*</abbr></label>
-                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text transition-default required" name="account_phone_name" id="account_phone_name" autocomplete="phone" value="<?= get_user_meta( get_current_user_id(), 'billing_phone', true ) ?>" />
+                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text transition-default required" name="account_phone_name" id="account_phone_name" autocomplete="phone" value="<?= get_user_meta( $user_id, 'billing_phone', true ) ?>" />
                                 <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
                             </div>
                             <div class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide input__wrapper d-none">
@@ -104,12 +105,21 @@ $user = get_userdata(get_current_user_id()); ?>
                             <input type="hidden" name="action" value="save_account_details" />
                         </p>
                     </form>
-                <?php } elseif (isset($wp->query_vars['orders'])) { ?>
-                    <h2 class="account-page-title font-28-36 fw-600">Мої замовлення</h2>
-                    <?php echo '<pre>';
-                    print_r(get_user_meta(get_current_user_id()));
-                    echo '</pre>'; ?>
-                <?php } elseif (isset($wp->query_vars['favorites'])) { ?>
+                <?php } elseif (isset($wp->query_vars['orders'])) {
+                    $customer_orders = get_posts(
+                        apply_filters(
+                            'woocommerce_my_account_my_orders_query',
+                            [
+                                'numberposts' => 20,
+                                'meta_key'    => '_customer_user',
+                                'meta_value'  => $user_id,
+                                'post_type'   => wc_get_order_types('view-orders'),
+                                'post_status' => array_keys(wc_get_order_statuses()),
+                            ]
+                        )
+                    );
+                    require 'components/my-account/orders.php';
+                } elseif (isset($wp->query_vars['favorites'])) { ?>
                     <h2 class="account-page-title font-28-36 fw-600">Улюблене</h2>
                 <?php } elseif (isset($wp->query_vars['qna'])) { ?>
                     <h2 class="account-page-title font-28-36 fw-600">Мої відгуки та питання</h2>

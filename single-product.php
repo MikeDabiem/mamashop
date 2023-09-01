@@ -63,7 +63,7 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <p class="info__main-out-stock font-13-16 fw-400">Немає в наявності</p>
                 <?php } ?>
                 <div class="info__main__price d-flex">
-                    <p class="info__main__price-value font-18-22 fw-500"><?= $sale_price ? $sale_price : $price; ?> грн</p>
+                    <p class="info__main__price-value font-18-22 fw-500"><?= $sale_price ?: $price; ?> грн</p>
                     <?php if ($sale_price) { ?>
                         <p class="info__main__price-disc font-13-16 fw-400 text-decoration-line-through"><?= $price; ?> грн</p>
                     <?php } ?>
