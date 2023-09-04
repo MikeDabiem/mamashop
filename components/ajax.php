@@ -8,7 +8,7 @@
     add_action( 'wp_ajax_change_qty', 'change_qty' );
     add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
     add_action( 'wp_ajax_user_orders_sort', 'user_orders_sort' );
-    add_action( 'wp_ajax_nopriv_user_orders_sort', 'user_orders_sort' );
+    add_action( 'wp_ajax_user_favorites', 'user_favorites' );
 }
 
 function fetch_data($posts_per_page) {
@@ -187,10 +187,22 @@ function user_orders_sort() {
             )
         );
         if ($customer_orders) {
-            get_template_part('components/my-account/orders-items', null, ['customer_orders' => $customer_orders]);
+            get_template_part('components/my-account/orders-item', null, ['customer_orders' => $customer_orders]);
         } else {
-            get_template_part('components/my-account/orders-empty');
+            get_template_part('components/my-account/empty');
         }
     }
     wp_die();
+}
+
+function user_favorites() {
+    if ($_POST['prod_id']) {
+        $user_id = get_current_user_id();
+        $favorites_arr = get_user_meta($user_id, 'favorites');
+        if (!in_array($_POST['prod_id'], $favorites_arr)) {
+            add_user_meta($user_id, 'favorites', $_POST['prod_id']);
+        } else {
+            delete_user_meta($user_id, 'favorites', $_POST['prod_id']);
+        }
+    }
 }

@@ -75,4 +75,22 @@
   }
   @import "../components/my-account/edit-account";
   @import "../components/my-account/orders";
+  @import "../components/my-account/favorites";
+  &__empty {
+    margin-top: 24px;
+    padding: 20px;
+    height: 100vh;
+    max-height: 420px;
+    background: $white;
+    border-radius: 8px;
+    .empty {
+      &-subtitle {
+        margin-top: 12px;
+      }
+      &-button {
+        margin: 20px auto 0;
+        width: fit-content;
+      }
+    }
+  }
 }

@@ -33,6 +33,7 @@
         }
       }
     }
+    &:active,
     &.active {
       &::after {
         opacity: 1;

@@ -1,0 +1,9 @@
+.favorites__item {
+  width: calc(50% - 10px);
+  padding: 12px;
+  background: $white;
+  border-radius: 8px;
+  &-brand {
+    margin-top: auto;
+  }
+}

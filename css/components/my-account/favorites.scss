@@ -1,0 +1,6 @@
+.account-page__favorites {
+  .favorites__items {
+    gap: 20px;
+  }
+  @import "favorites-item";
+}

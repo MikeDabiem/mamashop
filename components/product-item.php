@@ -10,9 +10,8 @@
     $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true);
 ?>
 <div class="product-item card-hover transition-default d-flex flex-column">
-    <button class="product-item__heart">
-        <svg class="transition-default" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-linecap="round" stroke-width="2" d="M22.166 10.24a5.188 5.188 0 0 0-1.336-2.175c-.522-.517-1.063-.859-1.606-1.065m-7.092-2.163c-1.952-1.239-5.106-2.41-7.829.367C-2.162 11.797 8.924 24.5 14 24.5c5.075 0 16.16-12.703 9.696-19.296-2.723-2.777-5.876-1.606-7.829-.367-1.103.7-2.632.7-3.735 0Z"></path></svg>
-    </button>
+    <?php $fav_btn_classes = 'product-item__heart';
+    require 'fav-button.php'; ?>
     <a href="<?= $link; ?>" class="product-item__image img-wrapper-contain d-block">
         <?php if($thumb) { ?>
             <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">

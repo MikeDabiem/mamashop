@@ -121,6 +121,7 @@ $user = get_userdata($user_id); ?>
                     require 'components/my-account/orders.php';
                 } elseif (isset($wp->query_vars['favorites'])) { ?>
                     <h2 class="account-page-title font-28-36 fw-600">Улюблене</h2>
+                    <?php require 'components/my-account/favorites.php'; ?>
                 <?php } elseif (isset($wp->query_vars['qna'])) { ?>
                     <h2 class="account-page-title font-28-36 fw-600">Мої відгуки та питання</h2>
                 <?php } elseif (isset($wp->query_vars['security'])) { ?>

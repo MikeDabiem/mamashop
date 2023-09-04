@@ -1347,10 +1347,10 @@ h1, h2, h3, h4, h5, h6, p {
     opacity: 0.8;
   }
 }
-.product-item__heart.active::after {
+.product-item__heart:active::after, .product-item__heart.active::after {
   opacity: 1;
 }
-.product-item__heart.active:hover svg {
+.product-item__heart:active:hover svg, .product-item__heart.active:hover svg {
   stroke: transparent;
 }
 .product-item__image::before {
@@ -2263,11 +2263,11 @@ h1, h2, h3, h4, h5, h6, p {
     stroke: #6757A9;
   }
 }
-.single-product-page .single-product__info .info__main__buttons .single-product-fav:active {
+.single-product-page .single-product__info .info__main__buttons .single-product-fav:active, .single-product-page .single-product__info .info__main__buttons .single-product-fav.active {
   background: #6757A9;
   transition-duration: 0.1s;
 }
-.single-product-page .single-product__info .info__main__buttons .single-product-fav:active svg {
+.single-product-page .single-product__info .info__main__buttons .single-product-fav:active svg, .single-product-page .single-product__info .info__main__buttons .single-product-fav.active svg {
   stroke: #FFFFFF;
 }
 .single-product-page .single-product__info .info__main .buy-button {
@@ -3051,6 +3051,9 @@ h1, h2, h3, h4, h5, h6, p {
   border: none;
   border-radius: 44px;
 }
+.account-page .account-page__orders__sort-button:hover {
+  background: rgba(103, 87, 169, 0.2);
+}
 .account-page .account-page__orders__sort-button.active {
   background: #6757A9;
   color: #FFFFFF;
@@ -3060,10 +3063,16 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .account-page .account-page__orders__item {
   background: #FFFFFF;
+  border: 1px solid transparent;
   border-radius: 8px;
 }
 .account-page .account-page__orders__item:not(:first-child) {
   margin-top: 12px;
+}
+@media (hover: hover) {
+  .account-page .account-page__orders__item:not(.active):hover {
+    border-color: rgba(236, 236, 240, 0.8);
+  }
 }
 .account-page .account-page__orders__item.active .item__arrow svg {
   transform: rotate(180deg);
@@ -3157,6 +3166,33 @@ h1, h2, h3, h4, h5, h6, p {
   margin: 20px auto 0;
   text-decoration: none;
   padding-inline: 55px;
+}
+.account-page .account-page__favorites .favorites__items {
+  gap: 20px;
+}
+.account-page .account-page__favorites .favorites__item {
+  width: calc(50% - 10px);
+  padding: 12px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.account-page .account-page__favorites .favorites__item-brand {
+  margin-top: auto;
+}
+.account-page__empty {
+  margin-top: 24px;
+  padding: 20px;
+  height: 100vh;
+  max-height: 420px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.account-page__empty .empty-subtitle {
+  margin-top: 12px;
+}
+.account-page__empty .empty-button {
+  margin: 20px auto 0;
+  width: fit-content;
 }
 
 /*# sourceMappingURL=style.css.map */

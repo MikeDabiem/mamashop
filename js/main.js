@@ -84,13 +84,6 @@ jQuery(function($) {
     })
   }
 
-  // product heart handler
-  if ($('.product-item__heart').length) {
-    body.on('click', '.product-item__heart', function() {
-      $(this).toggleClass('active');
-    });
-  }
-
   // random product rating
   const rating = $('.rating__stars-val');
   const infoRating = $('.info__rating-title');
@@ -724,6 +717,7 @@ jQuery(function($) {
       }
     });
 
+    // account birthday input handler
     const bDayInput = $('#birthday');
     if (bDayInput.length) {
       bDayInput.on('focus', function() {
@@ -738,6 +732,7 @@ jQuery(function($) {
     }
   }
 
+  // account orders sort
   const accountOrdersPage = $('.account-page__orders');
   if (accountOrdersPage.length) {
     body.on('click', '.account-page__orders__item__head', function() {
@@ -958,4 +953,24 @@ jQuery(function($) {
       });
     });
   }
+
+  // account favorites
+  body.on('click', '.add-to-fav', function() {
+    const button = $(this);
+    if ($(this).data('id') === 'login') {
+      console.log('log in');
+    } else {
+      const data = {
+        action: 'user_favorites',
+        prod_id: $(this).data('id').split('-')[1]
+      }
+      $.post(ajaxURL.url, data, function () {
+        if (button.hasClass('active')) {
+          button.removeClass('active');
+        } else {
+          button.addClass('active');
+        }
+      });
+    }
+  });
 });

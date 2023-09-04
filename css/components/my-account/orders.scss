@@ -13,6 +13,9 @@
       outline: none;
       border: none;
       border-radius: 44px;
+      &:hover {
+        background: $opacity-purple;
+      }
       &.active {
         background: $main-purple;
         color: $white;
@@ -24,9 +27,17 @@
   }
   &__item {
     background: $white;
+    border: 1px solid transparent;
     border-radius: 8px;
     &:not(:first-child) {
       margin-top: 12px;
+    }
+    &:not(.active) {
+      @media (hover: hover) {
+        &:hover {
+          border-color: $opacity-grey;
+        }
+      }
     }
     &.active {
       .item__arrow {

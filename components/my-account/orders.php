@@ -9,9 +9,9 @@
             <button id="sort-completed" class="account-page__orders__sort-button font-16-22 fw-500 transition-default">Виконані</button>
         </div>
         <div class="account-page__orders__items">
-            <?php require 'orders-items.php'; ?>
+            <?php require 'orders-item.php'; ?>
         </div>
     <?php else:
-        get_template_part('orders-empty.php');
+        get_template_part('components/my-account/empty');
     endif; ?>
 </div>
