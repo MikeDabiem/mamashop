@@ -2,8 +2,57 @@
   width: calc(50% - 10px);
   padding: 12px;
   background: $white;
-  border-radius: 8px;
+  border-radius: 6px;
+  gap: 16px;
+  &__image {
+    width: 50%;
+    @include flex-height(120);
+  }
+  &__info {
+    position: relative;
+  }
+  &-title {
+    width: fit-content;
+    margin-right: 50px;
+    margin-bottom: 8px;
+    color: $black;
+    @media (hover: hover) {
+      &:hover {
+        color: $main-purple;
+      }
+    }
+  }
   &-brand {
+    width: fit-content;
     margin-top: auto;
+    margin-right: 50px;
+    color: $dark-grey;
+    @media (hover: hover) {
+      &:hover {
+        color: $black;
+      }
+    }
+  }
+  &__price {
+    margin-top: 8px;
+    gap: 8px;
+    &-disc {
+      color: $grey;
+    }
+  }
+  &-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    @media (hover: hover) {
+      &:hover {
+        background: $opacity-purple;
+      }
+    }
+  }
+  .buy-button {
+    margin-top: 12px;
   }
 }

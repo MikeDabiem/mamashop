@@ -22,7 +22,7 @@
             $sale_price = $cart_item['data']->sale_price;
             $sale_val = get_post_meta($id, '_discount_value', true);
             $image_id = $cart_item['data']->image_id;
-            $image_url = wp_get_attachment_image_url($image_id);
+            $image_url = wp_get_attachment_image_url($image_id, 'medium');
             $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true); ?>
             <div class="cart-menu__products__item d-flex align-items-center">
                 <a href="<?= $product_url; ?>" class="item-image img-wrapper-contain d-block">

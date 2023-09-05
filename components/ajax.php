@@ -8,7 +8,9 @@
     add_action( 'wp_ajax_change_qty', 'change_qty' );
     add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
     add_action( 'wp_ajax_user_orders_sort', 'user_orders_sort' );
+    add_action( 'wp_ajax_order_repeat', 'order_repeat' );
     add_action( 'wp_ajax_user_favorites', 'user_favorites' );
+    add_action( 'wp_ajax_remove_user_favorites', 'remove_user_favorites' );
 }
 
 function fetch_data($posts_per_page) {
@@ -118,11 +120,7 @@ function products_filter() {
 }
 
 function hide_filters() {
-//    if (count(preg_grep("/pa_/", array_keys($_GET))) > 1) {
-//        $filters = fetch_data(-1, 'AND');
-//    } else {
-        $filters = fetch_data(-1);
-//    }
+    $filters = fetch_data(-1);
     if ($filters->have_posts()):
         require "product-filter-attr.php";
     else:
@@ -142,7 +140,13 @@ function handle_cart_item() {
     if ($_POST['key']) {
         WC()->cart->remove_cart_item($_POST['key']);
     } elseif ($_POST['id']) {
-        WC()->cart->add_to_cart($_POST['id']);
+        if (is_array($_POST['id'])) {
+            foreach ($_POST['id'] as $post_id) {
+                WC()->cart->add_to_cart($post_id);
+            }
+        } else {
+            WC()->cart->add_to_cart($_POST['id']);
+        }
     }
     get_template_part('components/cart-menu');
     wp_die();
@@ -195,6 +199,16 @@ function user_orders_sort() {
     wp_die();
 }
 
+function order_repeat() {
+    if ($_POST['id']) {
+        WC()->cart->empty_cart();
+        foreach ($_POST['id'] as $post_id) {
+            WC()->cart->add_to_cart($post_id);
+        }
+        echo wc_get_page_permalink('checkout');
+    }
+}
+
 function user_favorites() {
     if ($_POST['prod_id']) {
         $user_id = get_current_user_id();
@@ -205,4 +219,14 @@ function user_favorites() {
             delete_user_meta($user_id, 'favorites', $_POST['prod_id']);
         }
     }
+    wp_die();
+}
+
+function remove_user_favorites() {
+    if ($_POST['prod_id']) {
+        $user_id = get_current_user_id();
+        delete_user_meta($user_id, 'favorites', $_POST['prod_id']);
+        get_template_part('components/my-account/favorites', null, ['user_id' => $user_id]);
+    }
+    wp_die();
 }

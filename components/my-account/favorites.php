@@ -1,4 +1,8 @@
-<div class="account-page__favorites">
+<?php if (isset($args['user_id'])) {
+    $user_id = $args['user_id'];
+} ?>
+<section class="account-page__favorites">
+    <h2 class="account-page-title font-28-36 fw-600">Улюблене</h2>
     <?php $favorites = get_user_meta($user_id, 'favorites');
     $fav_count = count($favorites);
     if (!empty($favorites)) { ?>
@@ -19,4 +23,4 @@
     <?php } else {
         require 'empty.php';
     } ?>
-</div>
+</section>

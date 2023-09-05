@@ -73,7 +73,7 @@ foreach ($customer_orders as $customer_order) {
                     $thumb = get_the_post_thumbnail_url($product_id, "medium");
                     $thumbID = get_post_thumbnail_id($product_id);
                     $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true); ?>
-                    <div class="item__product d-flex justify-content-between align-items-center">
+                    <div data-id="prod-<?= $product_id ?>" class="item__product d-flex justify-content-between align-items-center">
                         <a href="<?= $link ?>" class="item__product-image img-wrapper-contain d-block">
                             <?php if ($thumb) { ?>
                                 <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
@@ -82,8 +82,8 @@ foreach ($customer_orders as $customer_order) {
                             <?php } ?>
                         </a>
                         <div class="item__product__info">
-                            <a href="<?= $link ?>" class="item__product__info-title font-14-20 fw-500 d-block"><?= get_the_title($product_id); ?></a>
-                            <a href="<?= $link ?>" class="item__product__info-subtitle font-14-20 fw-500 d-block"><?= $product->get_attribute('pa_brand'); ?></a>
+                            <a href="<?= $link ?>" class="item__product__info-title font-14-20 fw-500 transition-default d-block"><?= get_the_title($product_id); ?></a>
+                            <a href="<?= $link ?>" class="item__product__info-subtitle font-14-20 fw-500 transition-default d-block"><?= $product->get_attribute('pa_brand'); ?></a>
                         </div>
                         <div class="item__product__price">
                             <p class="font-14-20 fw-500"><?= $product->get_price(); ?> грн</p>
@@ -102,8 +102,8 @@ foreach ($customer_orders as $customer_order) {
                     <p class="totals-qty font-14-20 fw-400"><?= $items_count . ' ' . true_wordform($items_count, 'товар', 'товари', 'товарів') ?> на суму</p>
                     <p class="totals-price font-16-22 fw-500"><?= $order->get_total(); ?> грн</p>
                 </div>
-                <button class="std-btn purple-btn font-16-22 fw-600">Повторити замовлення</button>
+                <button class="order-repeat std-btn purple-btn font-16-22 fw-600">Повторити замовлення</button>
             </div>
         </div>
     </div>
-<?php } ?>
+<?php }

@@ -101,10 +101,21 @@
           }
           &-title {
             color: $black;
+            @media (hover: hover) {
+              &:hover {
+                color: $main-purple;
+              }
+            }
           }
           &-subtitle {
             margin-top: 12px;
+            width: fit-content;
             color: $dark-grey;
+            @media (hover: hover) {
+              &:hover {
+                color: $black;
+              }
+            }
           }
         }
         &__price,

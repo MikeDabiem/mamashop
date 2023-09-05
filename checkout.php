@@ -76,8 +76,8 @@ get_header(); ?>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
-                                $prod_num = 1;
+                            <?php $prod_num = 1;
+                            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                                 $id = $cart_item['data']->id;
                                 $product = wc_get_product($id);
                                 $product_url = get_permalink($id);

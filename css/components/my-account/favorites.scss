@@ -1,6 +1,23 @@
 .account-page__favorites {
-  .favorites__items {
-    gap: 20px;
+  .favorites {
+    &-count {
+      margin-top: 8px;
+    }
+    &__items {
+      margin-top: 24px;
+      gap: 12px;
+    }
+    &__footer {
+      margin-top: 32px;
+      &__info {
+        &-count {
+          color: $black-light;
+        }
+        &-total {
+          margin-top: 4px;
+        }
+      }
+    }
   }
   @import "favorites-item";
 }
