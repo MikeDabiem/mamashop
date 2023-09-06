@@ -740,8 +740,12 @@ h1, h2, h3, h4, h5, h6, p {
   background: #F1F1F6;
   padding: 12px 16px;
   border-radius: 4px 0 0 4px;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
+}
+.header .header-search__input:focus {
+  border-color: #6757A9;
+  background: #FFFFFF;
 }
 .header .header-search__button {
   margin-left: -7px;
@@ -1263,6 +1267,196 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .cart-menu__order.disabled-check {
   opacity: 0.8;
+}
+
+.user-login {
+  width: 100%;
+  max-width: 480px;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  position: relative;
+}
+.user-login .login-title {
+  margin-top: 4px;
+}
+.user-login .login__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.user-login .login__switch {
+  width: 310px;
+  margin: 24px auto 0;
+  padding: 8px;
+  background: #F7F7F8;
+  border-radius: 46px;
+  position: relative;
+}
+.user-login .login__switch::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  background: #6757A9;
+  border-radius: 44px;
+}
+.user-login .login__switch:has(.login-signin.active)::after {
+  left: 8px;
+  right: 50%;
+}
+.user-login .login__switch:has(.login-signup.active)::after {
+  left: 50%;
+  right: 8px;
+}
+.user-login .login__switch-button {
+  width: 50%;
+  padding: 14px;
+  border: none;
+  background: transparent;
+  color: #494558;
+  z-index: 1;
+}
+.user-login .login__switch-button.active {
+  color: #FFFFFF;
+}
+.user-login .login-remember {
+  margin-top: 20px;
+}
+.user-login .login-remember #rememberme {
+  position: relative;
+  cursor: pointer;
+}
+.user-login .login-remember #rememberme::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  background-color: #F1F1F6;
+}
+.user-login .login-remember #rememberme::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 7px;
+  width: 7px;
+  height: 12px;
+  border: solid #FFFFFF;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  opacity: 0;
+}
+.user-login .login-remember #rememberme:checked::before {
+  background-color: #6757A9;
+}
+.user-login .login-remember #rememberme:checked::after {
+  opacity: 1;
+}
+.user-login .login-remember span {
+  margin-left: 12px;
+  color: #5E5E62;
+}
+.user-login .login-remember .lost-password {
+  background: transparent;
+  border: none;
+  color: #6757A9;
+}
+.user-login .login__other {
+  margin-top: 32px;
+}
+.user-login .login__other-title {
+  color: #B2B2B7;
+}
+.user-login .login__other__items {
+  margin-top: 20px;
+  gap: 12px;
+}
+.user-login .login__other__item {
+  width: calc((100% - 24px) / 3);
+  height: 52px;
+  border: 1px solid #F1F1F6;
+  border-radius: 4px;
+  background: #F7F7F8;
+}
+.user-login .login-submit-button {
+  margin-top: 24px;
+}
+.user-login #registerform {
+  display: none;
+}
+.user-login #registerform fieldset:not(:first-child) {
+  margin-top: 24px;
+}
+.user-login #registerform .register-submit-button {
+  margin-top: 24px;
+}
+.user-login .user-login-form {
+  margin-top: 24px;
+  max-height: 433.97px;
+  overflow: auto;
+}
+.user-login .user-login-form::-webkit-scrollbar {
+  width: 12px;
+}
+.user-login .user-login-form::-webkit-scrollbar-track {
+  background-color: #EEEDED;
+  border-radius: 0 4px 4px 0;
+}
+.user-login .user-login-form::-webkit-scrollbar-thumb {
+  background-color: #E1DEDF;
+  border-radius: 4px;
+}
+.user-login .user-login-form::-webkit-scrollbar-thumb:hover {
+  background-color: #D6CECF;
+}
+.user-login .input__wrapper:not(:first-child) {
+  margin-top: 16px;
+}
+.user-login .input__wrapper label {
+  font-size: 13px;
+  line-height: 140%;
+  color: #5E5E62;
+}
+.user-login .input__wrapper input {
+  margin-top: 8px;
+  width: 100%;
+  background: #F7F7F8;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 17px 16px;
+  font-size: 13px;
+  line-height: 140%;
+  font-weight: 400;
+  transition: all 0.3s ease-in-out;
+}
+.user-login .input__wrapper input::placeholder {
+  color: #B2B2B7;
+}
+.user-login .input__wrapper input:focus {
+  border-color: #6757A9;
+  background: #FFFFFF;
+}
+.user-login .input__wrapper .show-password {
+  right: 16px;
+  bottom: 14px;
+}
+.user-login .input__wrapper .show-password.active svg {
+  fill: #848589;
+}
+.user-login .input__wrapper .show-password svg {
+  cursor: pointer;
+  fill: #B2B2B7;
+}
+@media (hover: hover) {
+  .user-login .input__wrapper .show-password svg:hover {
+    fill: #848589;
+  }
 }
 
 .banner {

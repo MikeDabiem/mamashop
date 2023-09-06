@@ -1,5 +1,5 @@
 <form role="search" method="get" id="search" name="search" class="header-search d-flex" action="<?= home_url('/'); ?>">
-    <input type="search" value="<?= get_search_query(); ?>" class="header-search__input font-14-20" name="s" placeholder="Я шукаю..." autocomplete="off">
+    <input type="search" value="<?= get_search_query(); ?>" class="header-search__input font-14-20 transition-default" name="s" placeholder="Я шукаю..." autocomplete="off">
     <button class="header-search__button std-btn purple-btn transition-default font-15-24 fw-600">Знайти</button>
     <div class="header-search__menu justify-content-between" style="display: none">
         <div class="header-search__menu__col1">

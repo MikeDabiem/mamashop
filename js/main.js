@@ -7,6 +7,8 @@ jQuery(function($) {
   const body = $('body');
   const ajaxURL = ajaxurl;
 
+  body.removeClass('d-none');
+
   // header scroll event
   const header = $(".header");
   let currentMenuScroll = $(window).scrollTop();
@@ -33,14 +35,22 @@ jQuery(function($) {
     element.parent().addClass('active');
     body.addClass('overflow-hidden');
   }
-  $('.burger').on('click', () => {
-    showMenu(mainMenu);
-  });
+
   $('.header__catalog').on('click', () => {
     showMenu($('.catalog-menu'));
   });
-  $('.header__cart').on('click', () => {
-    showMenu($('.cart-menu'));
+
+  $('.header__btn').on('click', function(e) {
+    if (($(this).hasClass('header__profile') || $(this).hasClass('header__fav')) && $(this).attr('href') === 'login') {
+      e.preventDefault();
+      showMenu($('.user-login'))
+    }
+    if ($(this).hasClass('burger')) {
+      showMenu(mainMenu);
+    }
+    if ($(this).hasClass('header__cart')) {
+      showMenu($('.cart-menu'));
+    }
   });
 
   // header search
@@ -755,6 +765,33 @@ jQuery(function($) {
       idArr.push($(this).data('id'));
     });
     cartItemsAJAX(idArr);
+  });
+
+  // switch log in/ registration button
+  $('.login__switch-button').on('click', function() {
+    $(this).addClass('active').siblings().removeClass('active');
+    $('.user-login-form').fadeOut(200);
+    setTimeout(() => {
+      if ($(this).hasClass('login-signin')) {
+        // $('#loginform').addClass('active').siblings('.user-login-form').removeClass('active');
+        $('#loginform').fadeIn(200);
+      } else if ($(this).hasClass('login-signup')) {
+        // $('#registerform').addClass('active').siblings('.user-login-form').removeClass('active');
+        $('#registerform').fadeIn(200);
+      }
+    }, 200);
+  });
+
+  // show password button
+  $('.show-password').on('click', function() {
+    const input = $(this).siblings('input');
+    if (input.attr('type') === 'password') {
+      $(this).addClass('active');
+      input.attr('type', 'text');
+    } else {
+      $(this).removeClass('active');
+      input.attr('type', 'password');
+    }
   });
 
 

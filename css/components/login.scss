@@ -1,0 +1,186 @@
+.user-login {
+  width: 100%;
+  max-width: 480px;
+  padding: 20px;
+  background: $white;
+  border-radius: 8px;
+  position: relative;
+  .login {
+    &-title {
+      margin-top: 4px;
+    }
+    &__close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    &__switch {
+      width: 310px;
+      margin: 24px auto 0;
+      padding: 8px;
+      background: $bg-color;
+      border-radius: 46px;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        bottom: 8px;
+        background: $main-purple;
+        border-radius: 44px;
+      }
+      &:has(.login-signin.active) {
+        &::after {
+          left: 8px;
+          right: 50%;
+        }
+      }
+      &:has(.login-signup.active) {
+        &::after {
+          left: 50%;
+          right: 8px;
+        }
+      }
+      &-button {
+        width: 50%;
+        padding: 14px;
+        border: none;
+        background: transparent;
+        color: $black;
+        z-index: 1;
+        &.active {
+          color: $white;
+        }
+      }
+    }
+    &-remember {
+      margin-top: 20px;
+      #rememberme {
+        position: relative;
+        cursor: pointer;
+        &::before {
+          content: "";
+          position: absolute;
+          top: -3px;
+          left: 0;
+          width: 20px;
+          height: 20px;
+          border-radius: 2px;
+          background-color: $light-grey;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 7px;
+          width: 7px;
+          height: 12px;
+          border: solid $white;
+          border-width: 0 2px 2px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+          opacity: 0;
+        }
+        &:checked::before {
+          background-color: $main-purple;
+        }
+        &:checked::after {
+          opacity: 1;
+        }
+      }
+      span {
+        margin-left: 12px;
+        color: $black-light;
+      }
+      .lost-password {
+        background: transparent;
+        border: none;
+        color: $main-purple;
+      }
+    }
+    &__other {
+      margin-top: 32px;
+      &-title {
+        color: $grey;
+      }
+      &__items {
+        margin-top: 20px;
+        gap: 12px;
+      }
+      &__item {
+        width: calc((100% - 24px) / 3);
+        height: 52px;
+        border: 1px solid $light-grey;
+        border-radius: 4px;
+        background: $bg-color;
+      }
+    }
+    &-submit-button {
+      margin-top: 24px;
+    }
+  }
+  #registerform {
+    display: none;
+    fieldset:not(:first-child) {
+      margin-top: 24px;
+    }
+    .register-submit-button {
+      margin-top: 24px;
+    }
+  }
+  .user-login-form {
+    margin-top: 24px;
+    max-height: 433.97px;
+    overflow: auto;
+    @include scrollbar;
+  }
+  .input__wrapper {
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+    label {
+      font-size: 13px;
+      line-height: 140%;
+      color: $black-light;
+    }
+    input {
+      margin-top: 8px;
+      width: 100%;
+      background: $bg-color;
+      outline: none;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      padding: 17px 16px;
+      font-size: 13px;
+      line-height: 140%;
+      font-weight: 400;
+      transition: all .3s ease-in-out;
+      &::placeholder {
+        color: $grey;
+      }
+      &:focus {
+        border-color: $main-purple;
+        background: $white;
+      }
+    }
+    .show-password {
+      right: 16px;
+      bottom: 14px;
+      &.active {
+        svg {
+          fill: $dark-grey;
+        }
+      }
+      svg {
+        cursor: pointer;
+        fill: $grey;
+        @media (hover: hover) {
+          &:hover {
+            fill: $dark-grey;
+          }
+        }
+      }
+    }
+  }
+}

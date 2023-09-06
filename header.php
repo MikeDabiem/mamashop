@@ -7,7 +7,7 @@
     <title><?php wp_title(); ?></title>
   <?php wp_head(); ?>
 </head>
-<body>
+<body class="d-none">
 <?php wp_body_open();
 if (is_page('checkout')) { ?>
     <header class="checkout-header wrapper">
@@ -137,5 +137,8 @@ if (is_page('checkout')) { ?>
                 <?php require 'components/cart-menu.php'; ?>
             </div>
         </div>
+    </div>
+    <div class="header-menu-bg blur-bg transition-default d-flex justify-content-center align-items-center">
+        <?php require 'components/login.php'; ?>
     </div>
 <?php }
