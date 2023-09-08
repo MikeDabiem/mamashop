@@ -403,7 +403,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .rating__stars-val {
   background: #F5C039;
-  width: 89%;
+  width: 0;
   height: 100%;
   position: absolute;
   top: 0;
@@ -1323,44 +1323,6 @@ h1, h2, h3, h4, h5, h6, p {
 .user-login .login-remember {
   margin-top: 20px;
 }
-.user-login .login-remember #rememberme {
-  position: relative;
-  cursor: pointer;
-}
-.user-login .login-remember #rememberme::before {
-  content: "";
-  position: absolute;
-  top: -3px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 2px;
-  background-color: #F1F1F6;
-}
-.user-login .login-remember #rememberme::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 7px;
-  width: 7px;
-  height: 12px;
-  border: solid #FFFFFF;
-  border-width: 0 2px 2px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  opacity: 0;
-}
-.user-login .login-remember #rememberme:checked::before {
-  background-color: #6757A9;
-}
-.user-login .login-remember #rememberme:checked::after {
-  opacity: 1;
-}
-.user-login .login-remember span {
-  margin-left: 12px;
-  color: #5E5E62;
-}
 .user-login .login-remember .lost-password {
   background: transparent;
   border: none;
@@ -1386,6 +1348,44 @@ h1, h2, h3, h4, h5, h6, p {
 .user-login .login-submit-button {
   margin-top: 24px;
 }
+.user-login .remember-input {
+  position: relative;
+  cursor: pointer;
+}
+.user-login .remember-input::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  background-color: #F1F1F6;
+}
+.user-login .remember-input::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 7px;
+  width: 7px;
+  height: 12px;
+  border: solid #FFFFFF;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  opacity: 0;
+}
+.user-login .remember-input:checked::before {
+  background-color: #6757A9;
+}
+.user-login .remember-input:checked::after {
+  opacity: 1;
+}
+.user-login .remember span {
+  margin-left: 12px;
+  color: #5E5E62;
+}
 .user-login #registerform {
   display: none;
 }
@@ -1394,6 +1394,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .user-login #registerform .register-submit-button {
   margin-top: 24px;
+}
+.user-login #registerform .remember {
+  margin-top: 20px;
 }
 .user-login .user-login-form {
   margin-top: 24px;

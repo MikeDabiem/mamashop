@@ -11,6 +11,10 @@
     add_action( 'wp_ajax_order_repeat', 'order_repeat' );
     add_action( 'wp_ajax_user_favorites', 'user_favorites' );
     add_action( 'wp_ajax_remove_user_favorites', 'remove_user_favorites' );
+    add_action( 'wp_ajax_register_user', 'register_user' );
+    add_action( 'wp_ajax_nopriv_register_user', 'register_user' );
+    add_action( 'wp_ajax_check_email', 'check_email' );
+    add_action( 'wp_ajax_nopriv_check_email', 'check_email' );
 }
 
 function fetch_data($posts_per_page) {
@@ -227,6 +231,29 @@ function remove_user_favorites() {
         $user_id = get_current_user_id();
         delete_user_meta($user_id, 'favorites', $_POST['prod_id']);
         get_template_part('components/my-account/favorites', null, ['user_id' => $user_id]);
+    }
+    wp_die();
+}
+
+function register_user() {
+    if ($_POST['reg']) {
+        $reg_form = $_POST['reg'];
+        $userdata = [];
+        foreach ($reg_form as $input) {
+            $userdata[$input['name']] = $input['value'];
+        }
+        $user_id = wc_create_new_customer($userdata['user_email'], $userdata['user_email'], $userdata['user_pass'], $userdata);
+        update_user_meta($user_id, 'billing_phone', $userdata['user_phone']);
+        update_user_meta($user_id, 'billing_first_name', $userdata['first_name']);
+        update_user_meta($user_id, 'billing_last_name', $userdata['last_name']);
+        echo get_home_url();
+    }
+    wp_die();
+}
+
+function check_email() {
+    if ($_POST['email'] && email_exists($_POST['email'])) {
+        echo 'Користувач з таким Email вже існує';
     }
     wp_die();
 }

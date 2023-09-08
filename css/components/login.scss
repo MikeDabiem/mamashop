@@ -55,44 +55,6 @@
     }
     &-remember {
       margin-top: 20px;
-      #rememberme {
-        position: relative;
-        cursor: pointer;
-        &::before {
-          content: "";
-          position: absolute;
-          top: -3px;
-          left: 0;
-          width: 20px;
-          height: 20px;
-          border-radius: 2px;
-          background-color: $light-grey;
-        }
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 7px;
-          width: 7px;
-          height: 12px;
-          border: solid $white;
-          border-width: 0 2px 2px 0;
-          -webkit-transform: rotate(45deg);
-          -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
-          opacity: 0;
-        }
-        &:checked::before {
-          background-color: $main-purple;
-        }
-        &:checked::after {
-          opacity: 1;
-        }
-      }
-      span {
-        margin-left: 12px;
-        color: $black-light;
-      }
       .lost-password {
         background: transparent;
         border: none;
@@ -120,6 +82,46 @@
       margin-top: 24px;
     }
   }
+  .remember {
+    &-input {
+      position: relative;
+      cursor: pointer;
+      &::before {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 2px;
+        background-color: $light-grey;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 7px;
+        width: 7px;
+        height: 12px;
+        border: solid $white;
+        border-width: 0 2px 2px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        opacity: 0;
+      }
+      &:checked::before {
+        background-color: $main-purple;
+      }
+      &:checked::after {
+        opacity: 1;
+      }
+    }
+    span {
+      margin-left: 12px;
+      color: $black-light;
+    }
+  }
   #registerform {
     display: none;
     fieldset:not(:first-child) {
@@ -127,6 +129,9 @@
     }
     .register-submit-button {
       margin-top: 24px;
+    }
+    .remember {
+      margin-top: 20px;
     }
   }
   .user-login-form {

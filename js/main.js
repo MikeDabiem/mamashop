@@ -95,30 +95,30 @@ jQuery(function($) {
   }
 
   // random product rating
-  const rating = $('.rating__stars-val');
-  const infoRating = $('.info__rating-title');
-  if (infoRating.length) {
-    const randomValue = Math.floor(Math.random() * (100 - 10 + 1) + 10);
-    if (randomValue < 20) {
-      infoRating.text('0.0');
-      rating.each(function() {
-        $(this).css('width', 0 + "%");
-      });
-      $('.info__rating__percents-value').addClass('d-none');
-      $('.info__rating__percents-text').css('maxWidth', 'none').addClass('text-center').text('Допоможіть іншим користувачам з вибором - будьте першим, хто поділиться своєю думкою про цей товар.');
-      $('.rating__value').text('0 Відгуків');
-    } else {
-      infoRating.text(randomValue / 20);
-      rating.each(function() {
-        $(this).css('width', randomValue + "%");
-      });
-      $('.info__rating__percents-value').text(randomValue + '%');
-    }
-  } else {
-    rating.each(function() {
-      $(this).css('width', Math.floor(Math.random() * (100 - 10 + 1) + 10) + "%");
-    });
-  }
+  // const rating = $('.rating__stars-val');
+  // const infoRating = $('.info__rating-title');
+  // if (infoRating.length) {
+  //   const randomValue = Math.floor(Math.random() * (100 - 10 + 1) + 10);
+  //   if (randomValue < 20) {
+  //     infoRating.text('0.0');
+  //     rating.each(function() {
+  //       $(this).css('width', 0 + "%");
+  //     });
+  //     $('.info__rating__percents-value').addClass('d-none');
+  //     $('.info__rating__percents-text').css('maxWidth', 'none').addClass('text-center').text('Допоможіть іншим користувачам з вибором - будьте першим, хто поділиться своєю думкою про цей товар.');
+  //     $('.rating__value').text('0 Відгуків');
+  //   } else {
+  //     infoRating.text(randomValue / 20);
+  //     rating.each(function() {
+  //       $(this).css('width', randomValue + "%");
+  //     });
+  //     $('.info__rating__percents-value').text(randomValue + '%');
+  //   }
+  // } else {
+  //   rating.each(function() {
+  //     $(this).css('width', Math.floor(Math.random() * (100 - 10 + 1) + 10) + "%");
+  //   });
+  // }
 
   // show category children
   const catalogCategories = $('.catalog__categories');
@@ -467,19 +467,16 @@ jQuery(function($) {
   });
 
   // click checkout link if total is less
-  const cartCheckoutLink = $('.cart-menu__order');
-  if (cartCheckoutLink.length) {
-    cartCheckoutLink.on('click', function(e) {
-      if (cartCheckoutLink.hasClass('disabled-check')) {
-        e.preventDefault();
-        const errorMin = $('.error-min');
-        errorMin.addClass('red');
-        setTimeout(() => {
-          errorMin.removeClass('red');
-        }, 5000);
-      }
-    });
-  }
+  body.on('click', '.cart-menu__order', function(e) {
+    if ($('.cart-menu__order').hasClass('disabled-check')) {
+      e.preventDefault();
+      const errorMin = $('.error-min');
+      errorMin.addClass('red');
+      setTimeout(() => {
+        errorMin.removeClass('red');
+      }, 5000);
+    }
+  });
 
   // toggle checkout tabs
   if ($('.checkout-page').length) {
@@ -794,6 +791,30 @@ jQuery(function($) {
     }
   });
 
+  // check existing email
+  const regEmail = $('#user_reg_email');
+  let emailExists = '';
+  if (regEmail.length) {
+    regEmail.on('blur', function() {
+      const emailInput = $(this);
+      const data = {
+        action: 'check_email',
+        email: emailInput.val()
+      }
+      $.post(ajaxURL.url, data, function(response) {
+        emailExists = response;
+        if (emailExists !== '') {
+          emailInput.addClass('input--error');
+          emailInput.siblings('.input--error-text').text(response).fadeIn(300);
+        }
+      });
+    });
+    regEmail.on('focus', function() {
+      $(this).removeClass('input--error').siblings('.input--error-text').fadeOut(300);
+    });
+
+  }
+
 
 
   //////////
@@ -1058,5 +1079,58 @@ jQuery(function($) {
     });
   });
 
-
+  // register form
+  $('#registerform').on('submit', function(e) {
+    e.preventDefault();
+    let errorsCount = 0;
+    $(this).find('.reg_input').each(function() {
+      if (
+        $(this).hasClass('required') &&
+        $(this).val().length < 2
+      ) {
+        $(this).addClass('input--error');
+        if ($(this).siblings('.input--error-text').text() !== 'Заповніть будь ласка поле') {
+          $(this).siblings('.input--error-text').text('Заповніть будь ласка поле');
+        }
+        $(this).siblings('.input--error-text').fadeIn(300);
+        errorsCount++;
+      } else if (
+        $(this).is('#user_reg_email') &&
+        !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+      ) {
+        $(this).addClass('input--error');
+        $(this).siblings('.input--error-text').text('Невірний формат адреси електронної пошти');
+        $(this).siblings('.input--error-text').fadeIn(300);
+        errorsCount++;
+      } else if (emailExists !== '') {
+        errorsCount++;
+      } else if (
+        $(this).is('#user_reg_password_repeat') &&
+        $(this).val() !== $('#user_reg_password').val()
+      ) {
+        $(this).addClass('input--error');
+        $(this).siblings('.input--error-text').text('Паролі не співпадають');
+        $(this).siblings('.input--error-text').fadeIn(300);
+        errorsCount++;
+      }
+      // remove error after focusing input
+      $(this).on('focus', function() {
+        $(this).removeClass('input--error');
+        $(this).siblings('.input--error-text').fadeOut(300);
+        errorsCount = 0;
+      });
+    });
+    if (!errorsCount) {
+      $('#user_reg_login').val($('#user_reg_email').val());
+      $('#user_reg_display_name').val($('#user_reg_lastname').val() + ' ' + $('#user_reg_firstname').val())
+      const data = {
+        action: 'register_user',
+        reg: $(this).serializeArray()
+      }
+      $.post(ajaxURL.url, data, function (response) {
+        window.location.href = response;
+        // console.log(response);
+      });
+    }
+  });
 });

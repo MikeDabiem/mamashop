@@ -167,10 +167,26 @@ function cabinet_add_endpoints() {
 // add fields to edit-account
 add_action( 'woocommerce_save_account_details', 'save_additional_account_details' );
 function save_additional_account_details( $user_id ) {
+    if (isset($_POST['account_first_name'])) {
+        update_user_meta($user_id, 'billing_first_name', sanitize_text_field($_POST['account_first_name']));
+    }
+    if (isset($_POST['account_last_name'])) {
+        update_user_meta($user_id, 'billing_last_name', sanitize_text_field($_POST['account_last_name']));
+    }
     if (isset($_POST['account_middle_name'])) {
         update_user_meta($user_id, 'middle_name', sanitize_text_field($_POST['account_middle_name']));
+    }
+    if (isset($_POST['billing_phone'])) {
+        update_user_meta($user_id, 'billing_phone', sanitize_text_field($_POST['billing_phone']));
     }
     if (isset($_POST['birthday'])) {
         update_user_meta($user_id, 'birthday', sanitize_text_field($_POST['birthday']));
     }
+}
+
+// login after registration
+add_action( 'user_register', 'auto_login_new_user' );
+function auto_login_new_user($user_id) {
+    wp_set_current_user($user_id);
+    wp_set_auth_cookie($user_id);
 }
