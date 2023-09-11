@@ -2,6 +2,7 @@
 the_post();
 $product_id = get_the_ID();
 $product = wc_get_product();
+$rating = get_product_rating($product);
 $rev_count = $product->get_review_count();
 $price = $product->get_regular_price();
 $sale_price = $product->get_sale_price();
@@ -45,13 +46,7 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                 <h1 class="info__main-title font-32-45 fw-600"><?= get_the_title(); ?></h1>
                 <div class="info__main-subtitle d-flex justify-content-between">
                     <div class="rating d-flex align-items-center">
-                        <?php $ratings_arr = $product->get_rating_counts();
-                        $ratings_sum = [];
-                        foreach ($ratings_arr as $value => $count) {
-                            $ratings_sum[] = $value * $count;
-                        }
-                        $rating = array_sum($ratings_sum) / array_sum($ratings_arr);
-                        if ($rev_count) { ?>
+                        <?php if ($rev_count) { ?>
                             <div class="rating__stars">
                                 <div class="rating__stars-bg"></div>
                                 <div class="rating__stars-val"></div>
@@ -132,8 +127,10 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                         <div class="reviews__items">
                             <?php foreach ($reviews as $review) {
                                 get_template_part('components/reviews-item', null, ['review' => $review, 'prod_id' => $product_id]);
-                            } ?>
-                            <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>">Показати ще</button>
+                            }
+                            if ($rev_count > 3) { ?>
+                                <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>">Показати ще</button>
+                            <?php } ?>
                         </div>
                     <?php } else { ?>
                         <div class="no-info__image img-wrapper-cover">

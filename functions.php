@@ -190,3 +190,17 @@ function auto_login_new_user($user_id) {
     wp_set_current_user($user_id);
     wp_set_auth_cookie($user_id);
 }
+
+// get product rating
+function get_product_rating ($product) {
+    $ratings_arr = $product->get_rating_counts();
+    if (!empty($ratings_arr)) {
+        $ratings_sum = [];
+        foreach ($ratings_arr as $value => $count) {
+            $ratings_sum[] = $value * $count;
+        }
+        return array_sum($ratings_sum) / array_sum($ratings_arr);
+    } else {
+        return 0;
+    }
+}
