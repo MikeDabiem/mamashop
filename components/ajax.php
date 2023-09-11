@@ -15,6 +15,8 @@
     add_action( 'wp_ajax_nopriv_register_user', 'register_user' );
     add_action( 'wp_ajax_check_email', 'check_email' );
     add_action( 'wp_ajax_nopriv_check_email', 'check_email' );
+    add_action( 'wp_ajax_get_next_reviews', 'get_next_reviews' );
+    add_action( 'wp_ajax_nopriv_get_next_reviews', 'get_next_reviews' );
 }
 
 function fetch_data($posts_per_page) {
@@ -254,6 +256,28 @@ function register_user() {
 function check_email() {
     if ($_POST['email'] && email_exists($_POST['email'])) {
         echo 'Користувач з таким Email вже існує';
+    }
+    wp_die();
+}
+
+function get_next_reviews() {
+    if ($_POST['prod_id'] && $_POST['offset']) {
+        $product_id = $_POST['prod_id'];
+        $offset = $_POST['offset'];
+        $args = [
+            'type' => 'review',
+            'post_id' => $product_id,
+            'number' => 3,
+            'offset' => $offset
+        ];
+        $rev_count = wc_get_product($product_id)->get_review_count();
+        $reviews = get_approved_comments($product_id, $args);
+        foreach ($reviews as $review) {
+            get_template_part('components/reviews-item', null, ['review' => $review, 'prod_id' => $product_id]);
+        }
+        if ($rev_count - 3 > $offset) { ?>
+            <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>">Показати ще</button>
+        <?php }
     }
     wp_die();
 }

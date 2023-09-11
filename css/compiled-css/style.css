@@ -2553,6 +2553,10 @@ h1, h2, h3, h4, h5, h6, p {
 .single-product-page .single-product__info .info__advanced__reviews .reviews__item-date {
   color: #B2B2B7;
 }
+.single-product-page .single-product__info .info__advanced__reviews .reviews__item-confirmed {
+  margin-top: 4px;
+  color: #5E5E62;
+}
 .single-product-page .single-product__info .info__advanced__reviews .reviews__item__stars {
   margin-top: 20px;
 }

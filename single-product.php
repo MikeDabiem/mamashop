@@ -1,15 +1,11 @@
 <?php get_header();
 the_post();
-$id = get_the_ID();
+$product_id = get_the_ID();
 $product = wc_get_product();
-$rating = $product->get_rating_count();
 $rev_count = $product->get_review_count();
-//$reviews = get_comments();
-$reviews = [];
 $price = $product->get_regular_price();
 $sale_price = $product->get_sale_price();
-$sale_val = get_post_meta($id, '_discount_value', true);
-?>
+$sale_val = get_post_meta($product_id, '_discount_value', true); ?>
 <div class="single-product-page wrapper filler">
     <?php woocommerce_breadcrumb(); ?>
     <main class="single-product__info">
@@ -21,9 +17,9 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <?php } ?>
                     <div class="info__main__image-main img-wrapper-contain">
                         <?php
-                        $thumb = get_the_post_thumbnail_url($id, "large");
+                        $thumb = get_the_post_thumbnail_url($product_id, "large");
                         if ($thumb) {
-                            $thumb_id = get_post_thumbnail_id($id);
+                            $thumb_id = get_post_thumbnail_id($product_id);
                             $alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true); ?>
                             <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
                         <?php } else { ?>
@@ -49,10 +45,17 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                 <h1 class="info__main-title font-32-45 fw-600"><?= get_the_title(); ?></h1>
                 <div class="info__main-subtitle d-flex justify-content-between">
                     <div class="rating d-flex align-items-center">
-                        <?php if ($rev_count) { ?>
+                        <?php $ratings_arr = $product->get_rating_counts();
+                        $ratings_sum = [];
+                        foreach ($ratings_arr as $value => $count) {
+                            $ratings_sum[] = $value * $count;
+                        }
+                        $rating = array_sum($ratings_sum) / array_sum($ratings_arr);
+                        if ($rev_count) { ?>
                             <div class="rating__stars">
                                 <div class="rating__stars-bg"></div>
                                 <div class="rating__stars-val"></div>
+                                <p class="rating-value d-none"><?= $rating ?></p>
                             </div>
                             <span class="rating__value font-13-16 fw-400">
                                 <?= $rev_count . ' ' . true_wordform($rev_count, 'Відгук', 'Відгуки', 'Відгуків'); ?>
@@ -118,43 +121,20 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                     <?php } ?>
                 </div>
                 <div class="info__advanced__reviews info__advanced__tab" data-name="reviews">
-                    <?php
-//                    $reviews = [
-//                        [
-//                            'name' => 'Наталля Шевченко',
-//                            'date' => '10.06.2023',
-//                            'stars' => 4,
-//                            'text' => 'Нещодавно купляла цей засіб. Дуже задоволена. Вистачає його на довго, миє посуд дуже гарно. Що ще потрібно від гелю? :)'
-//                        ]
-//                    ];
+                    <?php $args = [
+                        'type'    => 'review',
+                        'post_id' => $product_id,
+                        'number'  => 3
+                    ];
+                    $reviews = get_approved_comments($product_id, $args);
                     if (!empty($reviews)) { ?>
                         <h3 class="reviews-title font-18-22 fw-500">Відгуки про товар</h3>
                         <div class="reviews__items">
-                            <?php foreach ($reviews as $review) { ?>
-                                <div class="reviews__item">
-                                    <div class="reviews__item-head d-flex justify-content-between">
-                                        <h4 class="reviews__item-name font-15-18 fw-500"><?= $review['name']; ?></h4>
-                                        <time class="reviews__item-date font-11-13 fw-400"><?= $review['date']; ?></time>
-                                    </div>
-                                    <div class="reviews__item__stars d-flex">
-                                        <?php $stars = $review['stars'];
-                                        for ($i = 0; $i < 5; $i++) {
-                                            if ($i < $stars) { ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                                    <path d="M1.94498 9.33606C1.68393 9.09465 1.82573 8.65824 2.17882 8.61637L7.18183 8.0232C7.32574 8.00614 7.45073 7.91547 7.51143 7.78388L9.62163 3.20897C9.77055 2.8861 10.2295 2.88606 10.3785 3.20893L12.4887 7.78395C12.5494 7.91554 12.6736 8.00615 12.8175 8.02321L17.8207 8.61637C18.1738 8.65824 18.3155 9.09468 18.0545 9.33608L14.3559 12.7567C14.2495 12.8551 14.202 13.0018 14.2302 13.1439L15.2119 18.0854C15.2812 18.4342 14.9101 18.7039 14.5998 18.5302L10.2036 16.0694C10.0772 15.9986 9.92316 15.9985 9.79671 16.0693L5.40011 18.5302C5.08985 18.7039 4.71832 18.4342 4.78761 18.0855L5.76952 13.1438C5.79776 13.0017 5.75032 12.8552 5.64393 12.7568L1.94498 9.33606Z" fill="#F5C039"/>
-                                                </svg>
-                                            <?php } else { ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                                    <path d="M1.94537 9.33606C1.68433 9.09465 1.82613 8.65824 2.17921 8.61637L7.18223 8.0232C7.32613 8.00614 7.45113 7.91547 7.51182 7.78388L9.62203 3.20897C9.77095 2.8861 10.2299 2.88606 10.3789 3.20893L12.4891 7.78395C12.5498 7.91554 12.674 8.00615 12.8179 8.02321L17.8211 8.61637C18.1742 8.65824 18.3159 9.09468 18.0549 9.33608L14.3563 12.7567C14.2499 12.8551 14.2024 13.0018 14.2306 13.1439L15.2123 18.0854C15.2816 18.4342 14.9105 18.7039 14.6002 18.5302L10.204 16.0694C10.0776 15.9986 9.92356 15.9985 9.79711 16.0693L5.40051 18.5302C5.09025 18.7039 4.71871 18.4342 4.78801 18.0855L5.76991 13.1438C5.79816 13.0017 5.75072 12.8552 5.64433 12.7568L1.94537 9.33606Z" fill="#E7E4DE"/>
-                                                </svg>
-                                            <?php }
-                                        } ?>
-                                    </div>
-                                    <p class="reviews__item-text font-13-16 fw-400"><?= $review['text']; ?></p>
-                                </div>
-                            <?php } ?>
+                            <?php foreach ($reviews as $review) {
+                                get_template_part('components/reviews-item', null, ['review' => $review, 'prod_id' => $product_id]);
+                            } ?>
+                            <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>">Показати ще</button>
                         </div>
-                        <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600">Показати ще</button>
                     <?php } else { ?>
                         <div class="no-info__image img-wrapper-cover">
                             <img src="<?php bloginfo('template_url'); ?>/images/noinfo.png" alt="no info">
@@ -221,10 +201,11 @@ $sale_val = get_post_meta($id, '_discount_value', true);
                 <div class="rating__stars">
                     <div class="rating__stars-bg"></div>
                     <div class="rating__stars-val"></div>
+                    <p class="rating-value d-none"><?= $rating ?></p>
                 </div>
                 <div class="info__rating__percents d-flex justify-content-center align-items-center">
                     <?php if ($reviews) { ?>
-                        <p class="info__rating__percents-value fw-500"><?= $rating / 5 ?>%</p>
+                        <p class="info__rating__percents-value fw-500"><?= $rating / 0.05 ?>%</p>
                         <p class="info__rating__percents-text font-14-20 fw-400">покупців рекомендують цей товар</p>
                     <?php } else { ?>
                         <p class="font-13-16 fw-400 text-center">Допоможіть іншим користувачам<br>з вибором - будьте першим, хто поділиться<br>своєю думкою про цей товар.</p>
@@ -303,70 +284,15 @@ $sale_val = get_post_meta($id, '_discount_value', true);
 </div>
 <?php get_footer();
 
-$data = [
-    'comment_post_ID' => $id,
-    'comment_content' => 'User Review',
-    'comment_type' => 'review',
-    'user_id' => get_current_user_id(),
-    'comment_approved'     => 1,
-    'comment_meta' => [
-        'rating' => 5
-    ]
-];
-
-wp_insert_comment($data);
-
-$args = [
-    'type' => 'review',
-    'post_id' => $id
-];
-
-echo '<pre>';
-print_r(get_comments($args));
-echo '</pre>';
-
-//WP_Comment Object
-//(
-//    [comment_ID] => 23
-//    [comment_post_ID] => 52
-//    [comment_author] =>
-//    [comment_author_email] =>
-//    [comment_author_url] =>
-//    [comment_author_IP] =>
-//    [comment_date] => 2023-09-08 20:55:08
-//    [comment_date_gmt] => 2023-09-08 17:55:08
-//    [comment_content] => User Review
-//[comment_karma] => 0
-//    [comment_approved] => 1
-//    [comment_agent] =>
-//    [comment_type] => review
-//[comment_parent] => 0
-//    [user_id] => 1
-//    [children:protected] =>
-//    [populated_children:protected] =>
-//    [post_fields:protected] => Array
-//(
-//    [0] => post_author
-//    [1] => post_date
-//[2] => post_date_gmt
-//[3] => post_content
-//[4] => post_title
-//[5] => post_excerpt
-//[6] => post_status
-//[7] => comment_status
-//[8] => ping_status
-//[9] => post_name
-//[10] => to_ping
-//[11] => pinged
-//[12] => post_modified
-//[13] => post_modified_gmt
-//[14] => post_content_filtered
-//[15] => post_parent
-//[16] => guid
-//[17] => menu_order
-//[18] => post_type
-//[19] => post_mime_type
-//[20] => comment_count
-//        )
+//$data = [
+//    'comment_post_ID'  => $product_id,
+//    'comment_content'  => 'Test review',
+//    'comment_type'     => 'review',
+//    'user_id'          => get_current_user_id(),
+//    'comment_approved' => 0,
+//    'comment_meta'     => [
+//        'rating' => 5
+//    ]
+//];
 //
-//)
+//wp_insert_comment($data);

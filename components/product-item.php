@@ -21,11 +21,23 @@
     </a>
     <a href="<?= $link; ?>" class="product-item__title font-14-20 fw-500"><?= $title; ?></a>
     <div class="rating d-flex align-items-center">
+        <?php $ratings_arr = $product->get_rating_counts();
+        if (!empty($ratings_arr)) {
+            $ratings_sum = [];
+            foreach ($ratings_arr as $value => $count) {
+                $ratings_sum[] = $value * $count;
+            }
+            $rating = array_sum($ratings_sum) / array_sum($ratings_arr);
+        } else {
+            $rating = 0;
+        } ?>
         <div class="rating__stars">
             <div class="rating__stars-bg"></div>
             <div class="rating__stars-val"></div>
+            <p class="rating-value d-none"><?= $rating ?></p>
         </div>
-        <span class="rating__value font-13-16 fw-500"><?= rand(1, 999); ?></span>
+        <?php $rev_count = $product->get_review_count() ?: ''; ?>
+        <span class="rating__value font-13-16 fw-500"><?= $rev_count ?></span>
     </div>
     <div class="product-item__price d-flex">
         <p class="product-item__price-value font-15-24 fw-500"><?= $salePrice ?: $price; ?> грн</p>

@@ -95,30 +95,13 @@ jQuery(function($) {
   }
 
   // random product rating
-  // const rating = $('.rating__stars-val');
-  // const infoRating = $('.info__rating-title');
-  // if (infoRating.length) {
-  //   const randomValue = Math.floor(Math.random() * (100 - 10 + 1) + 10);
-  //   if (randomValue < 20) {
-  //     infoRating.text('0.0');
-  //     rating.each(function() {
-  //       $(this).css('width', 0 + "%");
-  //     });
-  //     $('.info__rating__percents-value').addClass('d-none');
-  //     $('.info__rating__percents-text').css('maxWidth', 'none').addClass('text-center').text('Допоможіть іншим користувачам з вибором - будьте першим, хто поділиться своєю думкою про цей товар.');
-  //     $('.rating__value').text('0 Відгуків');
-  //   } else {
-  //     infoRating.text(randomValue / 20);
-  //     rating.each(function() {
-  //       $(this).css('width', randomValue + "%");
-  //     });
-  //     $('.info__rating__percents-value').text(randomValue + '%');
-  //   }
-  // } else {
-  //   rating.each(function() {
-  //     $(this).css('width', Math.floor(Math.random() * (100 - 10 + 1) + 10) + "%");
-  //   });
-  // }
+  const rating = $('.rating__stars-val');
+  if (rating.length) {
+    rating.each(function() {
+      const value = $(this).siblings('.rating-value').text();
+      $(this).css('width', value * 20 + "%");
+    });
+  }
 
   // show category children
   const catalogCategories = $('.catalog__categories');
@@ -1129,8 +1112,21 @@ jQuery(function($) {
       }
       $.post(ajaxURL.url, data, function (response) {
         window.location.href = response;
-        // console.log(response);
       });
     }
+  });
+
+  // get more reviews
+  let offset = 3;
+  body.on('click', '.reviews__more', function() {
+    const data = {
+      action: 'get_next_reviews',
+      prod_id: $(this).data('id'),
+      offset
+    }
+    $.post(ajaxURL.url, data, function(response) {
+      $('.reviews__more').replaceWith(response);
+      offset += 3;
+    });
   });
 });
