@@ -1,6 +1,4 @@
 <?php get_header();
-//wp_redirect(get_home_url());
-//exit;
 $page = get_query_var('page', 1);
 $search = new WP_Query([
     'post_type'      => 'product',

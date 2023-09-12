@@ -402,46 +402,41 @@ jQuery(function($) {
   // make review button
   const makeReviewBtn = $('#make-review__btn');
   const askQuestionBtn = $('#ask-question__btn');
-  const reviewForm = $('.review__form');
+  const reviewForm = $('#review-form');
   const questionForm = $('.question__form');
   const reviewSuccessMsg = $('.review-success');
   const questionSuccessMsg = $('.question-success');
 
   if(makeReviewBtn.length) {
-    makeReviewBtn.on('click', () => {
-      $('.make-review').addClass('active');
-      body.addClass('overflow-hidden');
+    makeReviewBtn.on('click', function() {
+      if ($(this).hasClass('login')) {
+        showMenu($('.user-login'));
+      } else {
+        $('.make-review').addClass('active');
+        body.addClass('overflow-hidden');
+      }
     });
   }
 
   if (askQuestionBtn.length) {
-    askQuestionBtn.on('click', () => {
-      $('.ask-question').addClass('active');
-      body.addClass('overflow-hidden');
+    askQuestionBtn.on('click', function() {
+      if ($(this).hasClass('login')) {
+        showMenu($('.user-login'));
+      } else {
+        $('.ask-question').addClass('active');
+        body.addClass('overflow-hidden');
+      }
     });
   }
 
-  const successBtn = $('.success-button');
-  if (reviewForm.length) {
-    reviewForm.on('submit', function(e) {
-      e.preventDefault();
-      $(this).addClass('d-none');
-      reviewSuccessMsg.removeClass('d-none');
+  function showInputError(input) {
+    if (input.siblings('.input--error-text').text() !== 'Заповніть будь ласка поле') {
+      input.siblings('.input--error-text').text('Заповніть будь ласка поле');
+    }
+    input.addClass('input--error').siblings('.input--error-text').fadeIn(300);
+    input.on('focus', function() {
+      $(this).removeClass('input--error').siblings('.input--error-text').fadeOut(300);
     });
-    successBtn.on('click', () => {
-      blurBG.trigger('click');
-    })
-  }
-
-  if (questionForm.length) {
-    questionForm.on('submit', function(e) {
-      e.preventDefault();
-      $(this).addClass('d-none');
-      questionSuccessMsg.removeClass('d-none');
-    });
-    successBtn.on('click', () => {
-      blurBG.trigger('click');
-    })
   }
 
   // click "Перейти до кошика" button in product card
@@ -487,8 +482,7 @@ jQuery(function($) {
             $(this).val() &&
             !$(this).val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
           ) {
-            $(this).addClass('input--error');
-            $(this).siblings('.input--error-text').fadeIn(300);
+            showInputError($(this));
             errorsCount++;
           }
           if ($(this).is('#billing_email') && !$(this).val()) {
@@ -496,8 +490,6 @@ jQuery(function($) {
           }
           // remove error after focusing input
           $(this).on('focus', function() {
-            $(this).removeClass('input--error');
-            $(this).siblings('.input--error-text').fadeOut(300);
             errorsCount = 0;
             if ($(this).is('#billing_email')) {
               $('.ready__item__email').removeClass('d-none');
@@ -606,15 +598,10 @@ jQuery(function($) {
     couponSubmitButton.on('click', function(e) {
       if (!couponInput.val()) {
         e.preventDefault();
-        couponInput.addClass('input--error');
-        couponInput.siblings('.input--error-text').fadeIn(300);
+        showInputError(couponInput);
       } else {
         showCouponBody();
       }
-    });
-    couponInput.on('focus', function() {
-      couponInput.removeClass('input--error');
-      couponInput.siblings('.input--error-text').fadeOut(300);
     });
   }
 
@@ -682,10 +669,7 @@ jQuery(function($) {
           $(this).val().length < 2
         ) {
           $(this).addClass('input--error');
-          if ($(this).siblings('.input--error-text').text() !== 'Заповніть будь ласка поле') {
-            $(this).siblings('.input--error-text').text('Заповніть будь ласка поле');
-          }
-          $(this).siblings('.input--error-text').fadeIn(300);
+          showInputError($(this));
           errorsCount++;
         } else if (
           $(this).is('#account_email') &&
@@ -697,8 +681,6 @@ jQuery(function($) {
         }
         // remove error after focusing input
         $(this).on('focus', function() {
-          $(this).removeClass('input--error');
-          $(this).siblings('.input--error-text').fadeOut(300);
           errorsCount = 0;
         });
       });
@@ -753,10 +735,8 @@ jQuery(function($) {
     $('.user-login-form').fadeOut(200);
     setTimeout(() => {
       if ($(this).hasClass('login-signin')) {
-        // $('#loginform').addClass('active').siblings('.user-login-form').removeClass('active');
         $('#loginform').fadeIn(200);
       } else if ($(this).hasClass('login-signup')) {
-        // $('#registerform').addClass('active').siblings('.user-login-form').removeClass('active');
         $('#registerform').fadeIn(200);
       }
     }, 200);
@@ -787,15 +767,11 @@ jQuery(function($) {
       $.post(ajaxURL.url, data, function(response) {
         emailExists = response;
         if (emailExists !== '') {
-          emailInput.addClass('input--error');
-          emailInput.siblings('.input--error-text').text(response).fadeIn(300);
+          showInputError(emailInput);
+          emailInput.siblings('.input--error-text').text(response);
         }
       });
     });
-    regEmail.on('focus', function() {
-      $(this).removeClass('input--error').siblings('.input--error-text').fadeOut(300);
-    });
-
   }
 
 
@@ -1033,7 +1009,7 @@ jQuery(function($) {
   body.on('click', '.add-to-fav', function() {
     const button = $(this);
     if ($(this).data('id') === 'login') {
-      console.log('log in');
+      showMenu($('.user-login'));
     } else {
       const data = {
         action: 'user_favorites',
@@ -1071,11 +1047,7 @@ jQuery(function($) {
         $(this).hasClass('required') &&
         $(this).val().length < 2
       ) {
-        $(this).addClass('input--error');
-        if ($(this).siblings('.input--error-text').text() !== 'Заповніть будь ласка поле') {
-          $(this).siblings('.input--error-text').text('Заповніть будь ласка поле');
-        }
-        $(this).siblings('.input--error-text').fadeIn(300);
+        showInputError($(this));
         errorsCount++;
       } else if (
         $(this).is('#user_reg_email') &&
@@ -1096,10 +1068,7 @@ jQuery(function($) {
         $(this).siblings('.input--error-text').fadeIn(300);
         errorsCount++;
       }
-      // remove error after focusing input
       $(this).on('focus', function() {
-        $(this).removeClass('input--error');
-        $(this).siblings('.input--error-text').fadeOut(300);
         errorsCount = 0;
       });
     });
@@ -1110,8 +1079,8 @@ jQuery(function($) {
         action: 'register_user',
         reg: $(this).serializeArray()
       }
-      $.post(ajaxURL.url, data, function (response) {
-        window.location.href = response;
+      $.post(ajaxURL.url, data, function () {
+        location.reload();
       });
     }
   });
@@ -1128,5 +1097,48 @@ jQuery(function($) {
       $('.reviews__more').replaceWith(response);
       offset += 3;
     });
+  });
+
+  // make new review
+  if (reviewForm.length) {
+    const reviewTextInput = $('#review-text');
+    reviewForm.on('submit', function(e) {
+      e.preventDefault();
+      if (reviewTextInput.val() === '') {
+        showInputError(reviewTextInput);
+      } else {
+        const data = {
+          action: 'new_comment',
+          rev_form: $(this).serializeArray()
+        }
+        $.post(ajaxURL.url, data, function() {
+          reviewForm.addClass('d-none');
+          reviewSuccessMsg.removeClass('d-none');
+        });
+      }
+    });
+  }
+
+  if (questionForm.length) {
+    const questionTextInput = $('#question-text');
+    questionForm.on('submit', function(e) {
+      e.preventDefault();
+      if (questionTextInput.val() === '') {
+        showInputError(questionTextInput);
+      } else {
+        const data = {
+          action: 'new_comment',
+          ask_form: $(this).serializeArray()
+        }
+        $.post(ajaxURL.url, data, function() {
+          questionForm.addClass('d-none');
+          questionSuccessMsg.removeClass('d-none');
+        });
+      }
+    });
+  }
+
+  $('.success-button').on('click', () => {
+    blurBG.trigger('click');
   });
 });

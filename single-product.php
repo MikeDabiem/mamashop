@@ -89,7 +89,7 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                                 $term_name = get_term($option_id)->name;
                                 $term_slug = get_term($option_id)->slug;
                                 $term_tax = get_term($option_id)->taxonomy; ?>
-                                <a href="<?= site_url(); ?>/?s&<?= $term_tax . '=' . $term_slug ?>" class="info__main__specs__item-value"><?= $term_name; ?></a>
+                                <a href="<?= wc_get_page_permalink('shop') . '?' . $term_tax . '=' . $term_slug ?>" class="info__main__specs__item-value"><?= $term_name; ?></a>
                             <?php } ?>
                         </p>
                     <?php } ?>
@@ -116,12 +116,14 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                     <?php } ?>
                 </div>
                 <div class="info__advanced__reviews info__advanced__tab" data-name="reviews">
-                    <?php $args = [
+                    <?php $r_args = [
                         'type'    => 'review',
                         'post_id' => $product_id,
-                        'number'  => 3
+                        'number'  => 3,
+                        'orderby ' => 'comment_date',
+                        'order' => 'DESC'
                     ];
-                    $reviews = get_approved_comments($product_id, $args);
+                    $reviews = get_approved_comments($product_id, $r_args);
                     if (!empty($reviews)) { ?>
                         <h3 class="reviews-title font-18-22 fw-500">Відгуки про товар</h3>
                         <div class="reviews__items">
@@ -141,7 +143,8 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                     <?php } ?>
                 </div>
                 <div class="info__advanced__questions info__advanced__tab" data-name="questions">
-                    <?php $questions = [
+                    <?php
+                    $questions = [
                         [
                             'q' => [
                                 'name' => 'Наталля Шевченко',
@@ -193,7 +196,7 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                 </div>
             </div>
             <div class="info__advanced__col2 info__rating">
-                <h2 class="info__rating-title font-36-44 fw-500"><?= $rating; ?></h2>
+                <h2 class="info__rating-title font-36-44 fw-500"><?= number_format($rating, 2); ?></h2>
                 <p class="info__rating-subtitle font-16-22 fw-400"><?= $reviews ? 'Рейтинг товару' : 'Немає оцінок'; ?></p>
                 <div class="rating__stars">
                     <div class="rating__stars-bg"></div>
@@ -202,14 +205,15 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                 </div>
                 <div class="info__rating__percents d-flex justify-content-center align-items-center">
                     <?php if ($reviews) { ?>
-                        <p class="info__rating__percents-value fw-500"><?= $rating / 0.05 ?>%</p>
+                        <p class="info__rating__percents-value fw-500"><?= intval($rating / 0.05) ?>%</p>
                         <p class="info__rating__percents-text font-14-20 fw-400">покупців рекомендують цей товар</p>
                     <?php } else { ?>
                         <p class="font-13-16 fw-400 text-center">Допоможіть іншим користувачам<br>з вибором - будьте першим, хто поділиться<br>своєю думкою про цей товар.</p>
                     <?php } ?>
                 </div>
-                <button id="make-review__btn" class="info__rating-make-review std-btn purple-btn font-16-22 fw-600">Залишити відгук</button>
-                <button id="ask-question__btn" class="info__rating-make-question std-btn pale-purple-btn font-16-22 fw-600">Запитати</button>
+                <?php $login_class = is_user_logged_in() ? '' : ' login'; ?>
+                <button id="make-review__btn" class="info__rating-make-review std-btn purple-btn font-16-22 fw-600<?= $login_class ?>">Залишити відгук</button>
+                <button id="ask-question__btn" class="info__rating-make-question std-btn pale-purple-btn font-16-22 fw-600<?= $login_class ?>">Запитати</button>
             </div>
         </div>
     </main>
@@ -230,7 +234,7 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
         </button>
     </section>
     <div class="make-review blur-bg d-flex justify-content-center align-items-center">
-        <form action="" id="review-form" class="review__form std-form">
+        <form id="review-form" class="review__form std-form">
             <svg class="std-form__close close-menu transition-default" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 6L21.9993 21" stroke="#D9D9D9" stroke-width="2"/><path d="M22 6L7 20.9993" stroke="#D9D9D9" stroke-width="2"/></svg>
             <h2 class="std-form__main-title font-20-24 fw-600">Залиште свій відгук</h2>
             <h4 class="std-form__title font-16-22 fw-500">Оцініть товар</h4>
@@ -246,7 +250,11 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                 <?php } ?>
             </div>
             <h4 class="std-form__title font-16-22 fw-500">Ваш відгук</h4>
-            <textarea name="review-text" id="review-text" class="std-form__textarea font-12-16 fw-500 transition-default d-block" placeholder="Наприклад: Мені дуже сподобався цей товар!"></textarea>
+            <div class="input__wrapper">
+                <textarea name="review-text" id="review-text" class="std-form__textarea font-12-16 fw-500 transition-default d-block" placeholder="Наприклад: Мені дуже сподобався цей товар!"></textarea>
+                <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
+            </div>
+            <input type="hidden" name="product_id" value="<?= $product_id ?>">
             <button type="submit" class="std-form__submit std-btn purple-btn">Надіслати відгук</button>
         </form>
         <div class="std-form__success review-success d-none">
@@ -265,7 +273,11 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
             <h2 class="std-form__main-title font-20-24 fw-600">Напишіть своє питання</h2>
             <p class="std-form__main-subtitle font-14-20 fw-400">Ми відповімо вам найближчим часом</p>
             <h4 class="std-form__title font-16-22 fw-500">Ваше питання</h4>
-            <textarea name="question-text" id="question-text" class="std-form__textarea font-12-16 fw-500 transition-default d-block" placeholder="Наприклад: Можу я замовити 1 товар?"></textarea>
+            <div class="input__wrapper">
+                <textarea name="question-text" id="question-text" class="std-form__textarea font-12-16 fw-500 transition-default d-block" placeholder="Наприклад: Можу я замовити 1 товар?"></textarea>
+                <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
+            </div>
+            <input type="hidden" name="product_id" value="<?= $product_id ?>">
             <button type="submit" class="std-form__submit std-btn purple-btn">Надіслати питання</button>
         </form>
         <div class="std-form__success question-success d-none">
@@ -280,16 +292,3 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
     </div>
 </div>
 <?php get_footer();
-
-//$data = [
-//    'comment_post_ID'  => $product_id,
-//    'comment_content'  => 'Test review',
-//    'comment_type'     => 'review',
-//    'user_id'          => get_current_user_id(),
-//    'comment_approved' => 0,
-//    'comment_meta'     => [
-//        'rating' => 5
-//    ]
-//];
-//
-//wp_insert_comment($data);

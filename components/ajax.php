@@ -17,6 +17,7 @@
     add_action( 'wp_ajax_nopriv_check_email', 'check_email' );
     add_action( 'wp_ajax_get_next_reviews', 'get_next_reviews' );
     add_action( 'wp_ajax_nopriv_get_next_reviews', 'get_next_reviews' );
+    add_action( 'wp_ajax_new_comment', 'new_comment' );
 }
 
 function fetch_data($posts_per_page) {
@@ -248,7 +249,6 @@ function register_user() {
         update_user_meta($user_id, 'billing_phone', $userdata['user_phone']);
         update_user_meta($user_id, 'billing_first_name', $userdata['first_name']);
         update_user_meta($user_id, 'billing_last_name', $userdata['last_name']);
-        echo get_home_url();
     }
     wp_die();
 }
@@ -267,7 +267,9 @@ function get_next_reviews() {
         $args = [
             'type' => 'review',
             'post_id' => $product_id,
-            'number' => 3,
+            'number'  => 3,
+            'orderby ' => 'comment_date',
+            'order' => 'DESC',
             'offset' => $offset
         ];
         $rev_count = wc_get_product($product_id)->get_review_count();
@@ -279,5 +281,40 @@ function get_next_reviews() {
             <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>">Показати ще</button>
         <?php }
     }
+    wp_die();
+}
+
+function new_comment() {
+    if ($_POST['rev_form']) {
+        $rev_form = $_POST['rev_form'];
+        $rev_content = [];
+        foreach ($rev_form as $input) {
+            $rev_content[$input['name']] = $input['value'];
+        }
+        $data = [
+            'comment_post_ID'  => $rev_content['product_id'],
+            'comment_content'  => $rev_content['review-text'],
+            'comment_type'     => 'review',
+            'user_id'          => get_current_user_id(),
+            'comment_approved' => 0,
+            'comment_meta'     => [
+                'rating' => $rev_content['stars']
+            ]
+        ];
+    } elseif ($_POST['ask_form']) {
+        $ask_form = $_POST['ask_form'];
+        $ask_content = [];
+        foreach ($ask_form as $input) {
+            $ask_content[$input['name']] = $input['value'];
+        }
+        $data = [
+            'comment_post_ID'  => $ask_content['product_id'],
+            'comment_content'  => $ask_content['question-text'],
+            'comment_type'     => 'review',
+            'user_id'          => get_current_user_id(),
+            'comment_approved' => 0,
+        ];
+    }
+    wp_insert_comment($data);
     wp_die();
 }
