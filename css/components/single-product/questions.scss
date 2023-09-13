@@ -3,45 +3,5 @@
     &__items {
       margin-top: 30px;
     }
-    &__item {
-      padding: 20px;
-      border-radius: 6px;
-      background: $bg-color;
-      *:not(.answer__name, .answer__status) {
-        color: $black-light;
-      }
-      &:not(:first-child) {
-        margin-top: 12px;
-      }
-      &-date {
-        color: $grey;
-      }
-      &-status {
-        margin-top: 4px;
-      }
-      &-text {
-        margin-top: 20px;
-      }
-      &__answer {
-        margin-top: 20px;
-        padding: 16px;
-        border-radius: 4px;
-        background: $white;
-        .answer {
-          &__head__text {
-            gap: 8px;
-          }
-          &-name {
-            color: $black;
-          }
-          &-status {
-            color: $main-purple;
-          }
-          &-text {
-            margin-top: 16px;
-          }
-        }
-      }
-    }
   }
 }

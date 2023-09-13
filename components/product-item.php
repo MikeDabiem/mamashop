@@ -9,6 +9,7 @@
     $thumb = get_the_post_thumbnail_url($id, "medium_large");
     $thumbID = get_post_thumbnail_id($id);
     $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true);
+    $rev_count = get_count_of_reviews($id) ?: '';
 ?>
 <div class="product-item card-hover transition-default d-flex flex-column">
     <?php $fav_btn_classes = 'product-item__heart';
@@ -27,7 +28,6 @@
             <div class="rating__stars-val"></div>
             <p class="rating-value d-none"><?= $rating ?></p>
         </div>
-        <?php $rev_count = $product->get_review_count() ?: ''; ?>
         <span class="rating__value font-13-16 fw-500"><?= $rev_count ?></span>
     </div>
     <div class="product-item__price d-flex">

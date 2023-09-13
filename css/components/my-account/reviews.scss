@@ -1,0 +1,70 @@
+.account-page__reviews {
+  &__subtitle {
+    margin-top: 8px;
+    color: $black-light;
+  }
+  &__sort {
+    margin-top: 24px;
+    gap: 12px;
+  }
+  &__items {
+    margin-top: 24px;
+  }
+  &__item {
+    padding: 24px;
+    background: $white;
+    &:not(:first-child) {
+      margin-top: 12px;
+    }
+    &__product {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      grid-template-rows: repeat(2, 1fr);
+      column-gap: 12px;
+      row-gap: 8px;
+      .product {
+        &__image {
+          grid-row: span 2;
+          width: 42px;
+          height: 42px;
+        }
+        &__title {
+          width: fit-content;
+          color: inherit;
+          @media (hover: hover) {
+            &:hover {
+              color: $main-purple;
+            }
+          }
+        }
+        &__brand {
+          width: fit-content;
+          color: $dark-grey;
+          @media (hover: hover) {
+            &:hover {
+              color: $black;
+            }
+          }
+        }
+      }
+    }
+  }
+  .reviews-empty {
+    width: 100%;
+    min-height: 430px;
+    background: $white;
+    border-radius: 6px;
+    &__image {
+      width: 120px;
+      height: 120px;
+      margin-inline: auto;
+    }
+    &-title {
+      margin-top: 16px;
+    }
+    &-subtitle {
+      margin-top: 12px;
+      color: $black-light;
+    }
+  }
+}

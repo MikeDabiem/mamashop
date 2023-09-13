@@ -6,21 +6,6 @@
   &__sort {
     margin-top: 24px;
     gap: 12px;
-    &-button {
-      padding: 13px 35px;
-      color: $main-purple;
-      background: $opacity-grey;
-      outline: none;
-      border: none;
-      border-radius: 44px;
-      &:hover {
-        background: $opacity-purple;
-      }
-      &.active {
-        background: $main-purple;
-        color: $white;
-      }
-    }
   }
   &__items {
     margin-top: 24px;

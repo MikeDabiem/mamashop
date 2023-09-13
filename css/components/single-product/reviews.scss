@@ -3,31 +3,6 @@
     &__items {
       margin-top: 30px;
     }
-    &__item {
-      padding: 20px;
-      border-radius: 6px;
-      background: $bg-color;
-      &:not(:first-child) {
-        margin-top: 12px;
-      }
-      &-name {
-        color: $black-light;
-      }
-      &-date {
-        color: $grey;
-      }
-      &-confirmed {
-        margin-top: 4px;
-        color: $black-light;
-      }
-      &__stars {
-        margin-top: 20px;
-      }
-      &-text {
-        margin-top: 12px;
-        line-height: 146%;
-      }
-    }
     &__more {
       margin-top: 24px;
     }

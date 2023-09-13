@@ -73,9 +73,26 @@
       }
     }
   }
+  &__tab-button {
+    padding: 13px 35px;
+    color: $main-purple;
+    background: $opacity-grey;
+    outline: none;
+    border: none;
+    border-radius: 44px;
+    &:hover {
+      background: $opacity-purple;
+    }
+    &.active {
+      background: $main-purple;
+      color: $white;
+      pointer-events: none;
+    }
+  }
   @import "../components/my-account/edit-account";
   @import "../components/my-account/orders";
   @import "../components/my-account/favorites";
+  @import "../components/my-account/reviews";
   &__empty {
     margin-top: 24px;
     padding: 20px;

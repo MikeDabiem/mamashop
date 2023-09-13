@@ -160,7 +160,7 @@ add_filter('woocommerce_currency_symbol', function() {return false;});
 add_action( 'init', 'cabinet_add_endpoints', 25 );
 function cabinet_add_endpoints() {
     add_rewrite_endpoint( 'favorites', EP_PAGES );
-    add_rewrite_endpoint( 'qna', EP_PAGES );
+    add_rewrite_endpoint( 'reviews', EP_PAGES );
     add_rewrite_endpoint( 'security', EP_PAGES );
 }
 
@@ -203,4 +203,18 @@ function get_product_rating ($product) {
     } else {
         return 0;
     }
+}
+
+// get count of product reviews
+function get_count_of_reviews($product_id, $meta_value = 'review') {
+    return count(get_approved_comments($product_id, [
+        'type' => 'review',
+        'post_id' => $product_id,
+        'meta_query' => [
+            [
+                'key' => 'type',
+                'value' => $meta_value,
+            ],
+        ],
+    ]));
 }

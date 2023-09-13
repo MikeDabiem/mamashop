@@ -8,6 +8,7 @@
     add_action( 'wp_ajax_change_qty', 'change_qty' );
     add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
     add_action( 'wp_ajax_user_orders_sort', 'user_orders_sort' );
+    add_action( 'wp_ajax_rev_q_tabs', 'rev_q_tabs' );
     add_action( 'wp_ajax_order_repeat', 'order_repeat' );
     add_action( 'wp_ajax_user_favorites', 'user_favorites' );
     add_action( 'wp_ajax_remove_user_favorites', 'remove_user_favorites' );
@@ -206,6 +207,40 @@ function user_orders_sort() {
     wp_die();
 }
 
+
+function rev_q_tabs() {
+    if ($_POST) {
+        $type = $_POST['type'];
+        $args = [
+            'type' => 'review',
+            'user_id' => get_current_user_id(),
+            'meta_query' => [
+                [
+                    'key' => 'type',
+                    'value' => $type,
+                ]
+            ]
+        ];
+        $reviews = get_comments($args);
+        if (!empty($reviews)) {
+            foreach ($reviews as $review) {
+                if ($type === 'review') {
+                    get_template_part('components/my-account/account-reviews-item', null, ['review' => $review]);
+                } elseif ($type === 'question') {
+                    get_template_part('components/my-account/account-questions-item', null, ['review' => $review]);
+                }
+            }
+        } else {
+            if ($type === 'review') {
+                get_template_part('components/my-account/reviews-empty', null, ['title' => 'Ви ще не залишали відгуки']);
+            } elseif ($type === 'question') {
+                get_template_part('components/my-account/reviews-empty', null, ['title' => 'Ви ще не нічого не запитували']);
+            }
+        }
+    }
+    wp_die();
+}
+
 function order_repeat() {
     if ($_POST['id']) {
         WC()->cart->empty_cart();
@@ -264,21 +299,32 @@ function get_next_reviews() {
     if ($_POST['prod_id'] && $_POST['offset']) {
         $product_id = $_POST['prod_id'];
         $offset = $_POST['offset'];
+        $type = $_POST['type'];
         $args = [
             'type' => 'review',
             'post_id' => $product_id,
             'number'  => 3,
             'orderby ' => 'comment_date',
             'order' => 'DESC',
-            'offset' => $offset
+            'offset' => $offset,
+            'meta_query' => [
+                [
+                    'key' => 'type',
+                    'value' => $type,
+                ]
+            ]
         ];
-        $rev_count = wc_get_product($product_id)->get_review_count();
+        $rev_count = get_count_of_reviews($product_id, $type);
         $reviews = get_approved_comments($product_id, $args);
         foreach ($reviews as $review) {
-            get_template_part('components/reviews-item', null, ['review' => $review, 'prod_id' => $product_id]);
+            if ($type === 'review') {
+                get_template_part('components/reviews-item', null, ['review' => $review, 'prod_id' => $product_id]);
+            } elseif ($type === 'question') {
+                get_template_part('components/questions-item', null, ['question' => $review, 'prod_id' => $product_id]);
+            }
         }
         if ($rev_count - 3 > $offset) { ?>
-            <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>">Показати ще</button>
+            <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>" data-type="<?= $type ?>">Показати ще</button>
         <?php }
     }
     wp_die();
@@ -298,7 +344,8 @@ function new_comment() {
             'user_id'          => get_current_user_id(),
             'comment_approved' => 0,
             'comment_meta'     => [
-                'rating' => $rev_content['stars']
+                'type' => 'review',
+                'rating' => $rev_content['stars'] ?: 1
             ]
         ];
     } elseif ($_POST['ask_form']) {
@@ -313,6 +360,9 @@ function new_comment() {
             'comment_type'     => 'review',
             'user_id'          => get_current_user_id(),
             'comment_approved' => 0,
+            'comment_meta'     => [
+                'type' => 'question'
+            ]
         ];
     }
     wp_insert_comment($data);

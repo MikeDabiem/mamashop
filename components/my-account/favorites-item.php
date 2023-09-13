@@ -3,6 +3,7 @@ $title = get_the_title($id);
 $link = get_permalink($id);
 $product = wc_get_product($id);
 $brand = $product->get_attribute('pa_brand');
+$brand_slug = wc_get_product_terms($id, 'pa_brand')[0]->slug;
 $price = $product->get_regular_price();
 $salePrice = $product->get_sale_price();
 $thumb = get_the_post_thumbnail_url($id, "medium");
@@ -18,7 +19,7 @@ $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true); ?>
     </a>
     <div class="favorites__item__info d-flex flex-column w-100">
         <a href="<?= $link ?>" class="favorites__item-title font-14-20 fw-500 transition-default d-block text-decoration-none"><?= $title ?></a>
-        <a href="<?= $link ?>" class="favorites__item-brand font-14-20 fw-400 transition-default d-block text-decoration-none"><?= $brand ?></a>
+        <a href="<?= wc_get_page_permalink('shop') . '?pa_brand=' . $brand_slug ?>" class="favorites__item-brand font-14-20 fw-400 transition-default d-block text-decoration-none"><?= $brand ?></a>
         <div class="favorites__item__price d-flex align-items-center">
             <p class="favorites__item__price-value font-15-24 fw-500"><?= $salePrice ?: $price; ?> грн</p>
             <?php if ($salePrice) {

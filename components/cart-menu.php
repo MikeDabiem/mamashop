@@ -17,6 +17,7 @@
             $product_url = get_permalink($id);
             $name = $cart_item['data']->name;
             $brand = $product->get_attribute('pa_brand');
+            $brand_slug = wc_get_product_terms($id, 'pa_brand')[0]->slug;
             $quantity = $cart_item['quantity'];
             $price = $cart_item['data']->regular_price;
             $sale_price = $cart_item['data']->sale_price;
@@ -36,7 +37,7 @@
                     <div class="item__info__top d-flex justify-content-between">
                         <div class="item__name">
                             <a href="<?= $product_url; ?>" class="item__name-title font-13-16 fw-500 transition-default d-block"><?= $name; ?></a>
-                            <a href="<?php site_url(); ?>/brand/<?= strtolower($brand); ?>" class="item__name-subtitle font-12-16 fw-500 transition-default d-block"><?= $brand; ?></a>
+                            <a href="<?= wc_get_page_permalink('shop') . '?pa_brand=' . $brand_slug ?>" class="item__name-subtitle font-12-16 fw-500 transition-default d-block"><?= $brand; ?></a>
                         </div>
                         <button class="delete-cart-item align-self-start" data-key="<?= $cart_item_key; ?>" data-id="<?= $id; ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

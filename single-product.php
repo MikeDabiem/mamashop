@@ -3,10 +3,11 @@ the_post();
 $product_id = get_the_ID();
 $product = wc_get_product();
 $rating = get_product_rating($product);
-$rev_count = $product->get_review_count();
 $price = $product->get_regular_price();
 $sale_price = $product->get_sale_price();
-$sale_val = get_post_meta($product_id, '_discount_value', true); ?>
+$sale_val = get_post_meta($product_id, '_discount_value', true);
+$rev_count = get_count_of_reviews($product_id);
+?>
 <div class="single-product-page wrapper filler">
     <?php woocommerce_breadcrumb(); ?>
     <main class="single-product__info">
@@ -17,8 +18,7 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                         <span class="sale-val font-16-22 fw-600">-<?= $sale_val; ?>%</span>
                     <?php } ?>
                     <div class="info__main__image-main img-wrapper-contain">
-                        <?php
-                        $thumb = get_the_post_thumbnail_url($product_id, "large");
+                        <?php $thumb = get_the_post_thumbnail_url($product_id, "large");
                         if ($thumb) {
                             $thumb_id = get_post_thumbnail_id($product_id);
                             $alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true); ?>
@@ -121,7 +121,13 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                         'post_id' => $product_id,
                         'number'  => 3,
                         'orderby ' => 'comment_date',
-                        'order' => 'DESC'
+                        'order' => 'DESC',
+                        'meta_query' => [
+                            [
+                                'key' => 'type',
+                                'value' => 'review',
+                            ]
+                        ]
                     ];
                     $reviews = get_approved_comments($product_id, $r_args);
                     if (!empty($reviews)) { ?>
@@ -131,7 +137,7 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                                 get_template_part('components/reviews-item', null, ['review' => $review, 'prod_id' => $product_id]);
                             }
                             if ($rev_count > 3) { ?>
-                                <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>">Показати ще</button>
+                                <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>" data-type="review">Показати ще</button>
                             <?php } ?>
                         </div>
                     <?php } else { ?>
@@ -143,47 +149,28 @@ $sale_val = get_post_meta($product_id, '_discount_value', true); ?>
                     <?php } ?>
                 </div>
                 <div class="info__advanced__questions info__advanced__tab" data-name="questions">
-                    <?php
-                    $questions = [
-                        [
-                            'q' => [
-                                'name' => 'Наталля Шевченко',
-                                'date' => '10.06.2023',
-                                'status' => 'Покупець',
-                                'q' => 'Чи можна замовити 1 штуку?'
-                            ],
-                            'a' => [
-                                'name' => 'Представник Mamashop',
-                                'date' => '11.06.2023',
-                                'status' => 'Відповідь',
-                                'a' => 'Так, звичайно!'
+                    <?php $q_args = [
+                        'type' => 'review',
+                        'post_id' => $product_id,
+                        'number' => 3,
+                        'orderby ' => 'comment_date',
+                        'order' => 'DESC',
+                        'meta_query' => [
+                            [
+                                'key' => 'type',
+                                'value' => 'question',
                             ]
                         ]
                     ];
+                    $questions = get_approved_comments($product_id, $q_args);
+                    $q_count = get_count_of_reviews($product_id, 'question');
                     if (!empty($questions)) { ?>
                         <h3 class="questions-title font-18-22 fw-500">Запитання про товар</h3>
                         <div class="questions__items">
-                            <?php foreach ($questions as $question_arr) {
-                                $question = $question_arr['q'];
-                                $answer = $question_arr['a']; ?>
-                                <div class="questions__item">
-                                    <div class="questions__item-head d-flex justify-content-between">
-                                        <h4 class="questions__item-name font-15-18 fw-500"><?= $question['name']; ?></h4>
-                                        <time class="questions__item-date font-11-13 fw-400"><?= $question['date']; ?></time>
-                                    </div>
-                                    <p class="questions__item-status font-11-13 fw-400"><?= $question['status']; ?></p>
-                                    <p class="questions__item-text font-13-16 fw-400"><?= $question['q']; ?></p>
-                                    <div class="questions__item__answer">
-                                        <div class="answer__head d-flex justify-content-between">
-                                            <div class="answer__head__text d-flex align-items-baseline">
-                                                <h5 class="answer-name font-13-16 fw-500"><?= $answer['name']; ?></h5>
-                                                <span class="answer-status font-11-13 fw-400"><?= $answer['status']; ?></span>
-                                            </div>
-                                            <time class="questions__item-date font-11-13 fw-400"><?= $answer['date']; ?></time>
-                                        </div>
-                                        <p class="answer-text font-13-16 fw-400"><?= $answer['a']; ?></p>
-                                    </div>
-                                </div>
+                            <?php foreach ($questions as $question) {
+                                get_template_part('components/questions-item', null, ['question' => $question, 'prod_id' => $product_id]);
+                            } if ($q_count > 3) { ?>
+                                <button class="reviews__more std-btn pale-purple-btn font-16-22 fw-600" data-id="<?= $product_id ?>" data-type="question">Показати ще</button>
                             <?php } ?>
                         </div>
                     <?php } else { ?>

@@ -973,37 +973,49 @@ jQuery(function($) {
     });
   });
 
-  if (accountOrdersPage.length) {
-    // sort orders by status
-    body.on('click', '.account-page__orders__sort-button', function() {
+  // change account page tab
+  function accPageTabChanger(container, button, data) {
+    container.animate({opacity: .5}, 200);
+    button.addClass('active').siblings('.account-page__tab-button').removeClass('active');
+    $.post(ajaxURL.url, data, function (response) {
+      container.html(response).animate({opacity: 1}, 200);
+    });
+  }
+
+  // sort orders by status
+  body.on('click', '.account-page__tab-button', function() {
+    if (this.id === 'sort-all' || this.id === 'sort-processing' || this.id === 'sort-completed') {
       const container = $('.account-page__orders__items');
-      container.animate({opacity: .5}, 200);
-      $(this).addClass('active').siblings('.account-page__orders__sort-button').removeClass('active');
       const data = {
         action: 'user_orders_sort',
         post_status: this.id
       }
-      $.post(ajaxURL.url, data, function (response) {
-        container.html(response).animate({opacity: 1}, 200);
-      });
-    });
-
-    // repeat order
-    body.on('click', '.order-repeat', function() {
-      const idArr = [];
-      $(this).parent().siblings('.item__products').children('.item__product').each(function() {
-        idArr.push($(this).data('id').split('-')[1]);
-      });
+      accPageTabChanger(container, $(this), data);
+    }
+    if (this.id === 'review' || this.id === 'question') {
+      const container = $('.account-page__reviews__items');
       const data = {
-        action: 'order_repeat',
-        id: idArr
+        action: 'rev_q_tabs',
+        type: this.id
       }
-      $.post(ajaxURL.url, data, function(response) {
-        window.location.href = response;
-      });
-    });
+      accPageTabChanger(container, $(this), data);
+    }
+  });
 
-  }
+  // repeat order
+  body.on('click', '.order-repeat', function() {
+    const idArr = [];
+    $(this).parent().siblings('.item__products').children('.item__product').each(function() {
+      idArr.push($(this).data('id').split('-')[1]);
+    });
+    const data = {
+      action: 'order_repeat',
+      id: idArr
+    }
+    $.post(ajaxURL.url, data, function(response) {
+      window.location.href = response;
+    });
+  });
 
   // account favorites
   body.on('click', '.add-to-fav', function() {
@@ -1086,16 +1098,23 @@ jQuery(function($) {
   });
 
   // get more reviews
-  let offset = 3;
+  let revOffset = 3;
+  let qOffset = 3;
   body.on('click', '.reviews__more', function() {
+    const button = $(this);
     const data = {
       action: 'get_next_reviews',
-      prod_id: $(this).data('id'),
-      offset
+      prod_id: button.data('id'),
+      offset: button.data('type') === 'review' ? revOffset : qOffset,
+      type: button.data('type')
     }
     $.post(ajaxURL.url, data, function(response) {
-      $('.reviews__more').replaceWith(response);
-      offset += 3;
+      button.replaceWith(response);
+      if (button.data('type') === 'review') {
+        revOffset += 3;
+      } else {
+        qOffset += 3;
+      }
     });
   });
 
