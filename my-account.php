@@ -73,33 +73,13 @@ $user = get_userdata($user_id); ?>
                         )
                     );
                     require 'components/my-account/orders.php';
-                } elseif (isset($wp->query_vars['favorites'])) { ?>
-                    <?php require 'components/my-account/favorites.php'; ?>
-                <?php } elseif (isset($wp->query_vars['reviews'])) {
-                    require 'components/my-account/reviews.php'; ?>
-                <?php } elseif (isset($wp->query_vars['security'])) { ?>
-                    <h2 class="account-page-title font-28-36 fw-600">Безпека</h2>
-                    <form class="woocommerce-EditAccountForm edit-account" action="" method="post" <?php do_action('woocommerce_edit_account_form_tag'); ?> >
-                        <legend><?php esc_html_e('Password change', 'woocommerce'); ?></legend>
-                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                            <label for="password_current"><?php esc_html_e('Current password (leave blank to leave unchanged)', 'woocommerce'); ?></label>
-                            <input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_current" id="password_current" autocomplete="off" />
-                        </p>
-                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                            <label for="password_1"><?php esc_html_e('New password (leave blank to leave unchanged)', 'woocommerce'); ?></label>
-                            <input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_1" id="password_1" autocomplete="off" />
-                        </p>
-                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                            <label for="password_2"><?php esc_html_e('Confirm new password', 'woocommerce'); ?></label>
-                            <input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_2" id="password_2" autocomplete="off" />
-                        </p>
-                        <p>
-                            <?php wp_nonce_field('save_account_details', 'save-account-details-nonce'); ?>
-                            <button type="submit" class="woocommerce-Button button<?= esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="save_account_details" value="<?php esc_attr_e('Save changes', 'woocommerce'); ?>"><?php esc_html_e('Save changes', 'woocommerce'); ?></button>
-                            <input type="hidden" name="action" value="save_account_details" />
-                        </p>
-                    </form>
-                <?php } else {
+                } elseif (isset($wp->query_vars['favorites'])) {
+                    require 'components/my-account/favorites.php';
+                } elseif (isset($wp->query_vars['reviews'])) {
+                    require 'components/my-account/reviews.php';
+                } elseif (isset($wp->query_vars['security'])) {
+                    require 'components/my-account/security.php';
+                } else {
                     wp_redirect(wc_get_page_permalink('myaccount') . '/edit-account/');
                 }
             } ?>

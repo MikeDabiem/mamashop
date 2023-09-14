@@ -644,7 +644,7 @@ jQuery(function($) {
     });
   }
 
-  const editAccountForm = $('.edit-account');
+  const editAccountForm = $('#edit-account');
   if (editAccountForm.length) {
     const firstNameInput = $('#account_first_name');
     const lastNameInput = $('#account_last_name');
@@ -1138,6 +1138,7 @@ jQuery(function($) {
     });
   }
 
+  // ask new question
   if (questionForm.length) {
     const questionTextInput = $('#question-text');
     questionForm.on('submit', function(e) {
@@ -1156,8 +1157,48 @@ jQuery(function($) {
       }
     });
   }
-
+  // hide success message after review/question
   $('.success-button').on('click', () => {
     blurBG.trigger('click');
+  });
+
+  // change password
+  $('#change-password-form').on('submit', function(e) {
+    e.preventDefault();
+    let errorsCount = 0;
+    $(this).find('.woocommerce-Input').each(function() {
+      if ($(this).val() === '') {
+        showInputError($(this));
+        errorsCount++;
+      } else if ($(this).attr('id') === 'password_new' && $(this).val().length < 8) {
+        showInputError($(this));
+        $(this).siblings('.input--error-text').text('Пароль має містити не менше 8 символів');
+        errorsCount++;
+      } else if ($(this).attr('id') === 'password_repeat' && $(this).val() !== $('#password_new').val()) {
+        showInputError($(this));
+        $(this).siblings('.input--error-text').text('Паролі не співпадають');
+        errorsCount++;
+      }
+    });
+    if (!errorsCount) {
+      const data = {
+        action: 'change_password',
+        data: $(this).serializeArray()
+      }
+      $.post(ajaxURL.url, data, function(response) {
+        if (response === 'password-error') {
+          const currentPassInput = $('#password_current');
+          showInputError(currentPassInput);
+          currentPassInput.siblings('.input--error-text').text('Не вірний пароль');
+        } else if (response === 'success') {
+          $('.security-submit-button')
+            .addClass('success')
+            .html('<svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none"><path d="M2.64014 10.3535L8.97803 16.6914L20.3603 5.30908" stroke="white" stroke-width="2" stroke-linecap="round"/></svg> Пароль змінено');
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        }
+      });
+    }
   });
 });

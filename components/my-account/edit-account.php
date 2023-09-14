@@ -1,5 +1,5 @@
 <h2 class="account-page-title font-28-36 fw-600">Персональні данні</h2>
-<form class="woocommerce-EditAccountForm edit-account" action="" method="post" <?php do_action('woocommerce_edit_account_form_tag'); ?> >
+<form id="edit-account" class="woocommerce-EditAccountForm edit-account" method="post" <?php do_action('woocommerce_edit_account_form_tag'); ?> >
     <fieldset class="edit-account__personal d-flex flex-wrap">
         <legend class="font-16-22 fw-600 w-100 m-0">Особиста інформація</legend>
         <div class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first input__wrapper">

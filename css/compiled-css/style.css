@@ -665,6 +665,23 @@ h1, h2, h3, h4, h5, h6, p {
   accent-color: #6757A9;
 }
 
+.show-password {
+  right: 16px;
+  bottom: 14px;
+}
+.show-password.active svg {
+  fill: #848589;
+}
+.show-password svg {
+  cursor: pointer;
+  fill: #B2B2B7;
+}
+@media (hover: hover) {
+  .show-password svg:hover {
+    fill: #848589;
+  }
+}
+
 .header {
   position: fixed;
   width: 100%;
@@ -1444,22 +1461,6 @@ h1, h2, h3, h4, h5, h6, p {
 .user-login .input__wrapper input:focus {
   border-color: #6757A9;
   background: #FFFFFF;
-}
-.user-login .input__wrapper .show-password {
-  right: 16px;
-  bottom: 14px;
-}
-.user-login .input__wrapper .show-password.active svg {
-  fill: #848589;
-}
-.user-login .input__wrapper .show-password svg {
-  cursor: pointer;
-  fill: #B2B2B7;
-}
-@media (hover: hover) {
-  .user-login .input__wrapper .show-password svg:hover {
-    fill: #848589;
-  }
 }
 
 .banner {
@@ -2607,6 +2608,9 @@ h1, h2, h3, h4, h5, h6, p {
 .single-product-page .single-product__info .info__advanced__questions .questions__items {
   margin-top: 30px;
 }
+.single-product-page .single-product__info .info__advanced__questions .reviews__more {
+  margin-top: 24px;
+}
 .single-product-page .single-product__info .info__rating {
   width: 30%;
   background: #FFFFFF;
@@ -3523,6 +3527,26 @@ h1, h2, h3, h4, h5, h6, p {
 .account-page .account-page__reviews .reviews-empty-subtitle {
   margin-top: 12px;
   color: #5E5E62;
+}
+.account-page .account-page__security {
+  padding: 32px 32px 40px;
+  border-radius: 8px;
+  background: #FFFFFF;
+}
+.account-page .account-page__security .input__wrapper {
+  width: 50%;
+}
+.account-page .account-page__security .input__wrapper:first-child {
+  margin-top: 24px;
+}
+.account-page .account-page__security .input__wrapper:not(:first-child) {
+  margin-top: 20px;
+}
+.account-page .account-page__security .security-submit-button {
+  margin-top: 40px;
+}
+.account-page .account-page__security .security-submit-button.success {
+  background: #38A757;
 }
 .account-page__empty {
   margin-top: 24px;

@@ -566,3 +566,22 @@ h1, h2, h3, h4, h5, h6, p {
     accent-color: $main-purple;
   }
 }
+
+.show-password {
+  right: 16px;
+  bottom: 14px;
+  &.active {
+    svg {
+      fill: $dark-grey;
+    }
+  }
+  svg {
+    cursor: pointer;
+    fill: $grey;
+    @media (hover: hover) {
+      &:hover {
+        fill: $dark-grey;
+      }
+    }
+  }
+}

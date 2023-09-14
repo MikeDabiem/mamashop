@@ -169,23 +169,5 @@
         background: $white;
       }
     }
-    .show-password {
-      right: 16px;
-      bottom: 14px;
-      &.active {
-        svg {
-          fill: $dark-grey;
-        }
-      }
-      svg {
-        cursor: pointer;
-        fill: $grey;
-        @media (hover: hover) {
-          &:hover {
-            fill: $dark-grey;
-          }
-        }
-      }
-    }
   }
 }

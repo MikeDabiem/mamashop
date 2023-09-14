@@ -19,6 +19,7 @@
     add_action( 'wp_ajax_get_next_reviews', 'get_next_reviews' );
     add_action( 'wp_ajax_nopriv_get_next_reviews', 'get_next_reviews' );
     add_action( 'wp_ajax_new_comment', 'new_comment' );
+    add_action( 'wp_ajax_change_password', 'change_password' );
 }
 
 function fetch_data($posts_per_page) {
@@ -366,5 +367,25 @@ function new_comment() {
         ];
     }
     wp_insert_comment($data);
+    wp_die();
+}
+
+function change_password() {
+    if ($_POST['data']) {
+        $user_id = get_current_user_id();
+        $user = get_userdata($user_id);
+        $formdata = [];
+        foreach ($_POST['data'] as $input) {
+            $formdata[$input['name']] = $input['value'];
+        }
+        $current_password = $formdata['password_current'];
+        $new_password = $formdata['password_new'];
+        if ($user && wp_check_password($current_password, $user->user_pass, $user_id)) {
+            wp_set_password($new_password, $user_id);
+            echo 'success';
+        } else {
+            echo 'password-error';
+        }
+    }
     wp_die();
 }
