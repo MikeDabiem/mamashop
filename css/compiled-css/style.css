@@ -2990,6 +2990,9 @@ h1, h2, h3, h4, h5, h6, p {
 .checkout-page .delivery__place__item .custom-select {
   margin-top: 8px;
 }
+.checkout-page .delivery__place #delivery_city #city-search {
+  margin-bottom: 8px;
+}
 .checkout-page__comment {
   opacity: 1;
   cursor: pointer;

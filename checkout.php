@@ -125,10 +125,9 @@ get_header(); ?>
                     <div class="delivery__place d-flex">
                         <div id="delivery_region" class="delivery__place__item">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть область</h6>
-                            <?php // $city_arr = explode(', ', $checkout->get_value('billing_city'));
-                            $city_arr = explode(', ', 'Київська, Київ');
+                            <?php $city_arr = explode(', ', $checkout->get_value('billing_city'));
                             $options = [
-                                !empty($city_arr) ? $city_arr[0] : 'Київська'
+                                !empty($city_arr) && isset($city_arr[0]) ? $city_arr[0] : 'Київська'
                             ];
                             $input_id = 'delivery_region-input';
                             require 'components/custom-select.php'; ?>
@@ -136,10 +135,18 @@ get_header(); ?>
                         <div id="delivery_city" class="delivery__place__item">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть населений пункт</h6>
                             <?php
+                            if (empty($city_arr) || isset($city_arr[0]) && $city_arr[0] === 'Київська' && !isset($city_arr[1])) {
+                                $option = 'Київ';
+                            } elseif (isset($city_arr[1])) {
+                                $option = $city_arr[1];
+                            } else {
+                                $option = 'Оберіть населений пункт';
+                            }
                             $options = [
-                                !empty($city_arr) ? $city_arr[1] : 'Київ'
+                                $option
                             ];
                             $input_id = 'delivery_city-input';
+                            $select_type = 'city';
                             require 'components/custom-select.php'; ?>
                         </div>
                     </div>

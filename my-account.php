@@ -60,18 +60,6 @@ $user = get_userdata($user_id); ?>
                 if (isset($wp->query_vars['edit-account'])) {
                     require 'components/my-account/edit-account.php';
                 } elseif (isset($wp->query_vars['orders'])) {
-                    $customer_orders = get_posts(
-                        apply_filters(
-                            'woocommerce_my_account_my_orders_query',
-                            [
-                                'numberposts' => 20,
-                                'meta_key'    => '_customer_user',
-                                'meta_value'  => $user_id,
-                                'post_type'   => wc_get_order_types('view-orders'),
-                                'post_status' => array_keys(wc_get_order_statuses()),
-                            ]
-                        )
-                    );
                     require 'components/my-account/orders.php';
                 } elseif (isset($wp->query_vars['favorites'])) {
                     require 'components/my-account/favorites.php';
@@ -83,7 +71,6 @@ $user = get_userdata($user_id); ?>
                     wp_redirect(wc_get_page_permalink('myaccount') . '/edit-account/');
                 }
             } ?>
-            <?php // the_content(); ?>
         </div>
     </div>
 </div>

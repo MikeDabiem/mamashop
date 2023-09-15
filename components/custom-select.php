@@ -6,10 +6,17 @@
         <input type="hidden" value="<?= $selected_option; ?>" id="<?= $input_id ?? ''; ?>" class="custom-select-input">
     </div>
     <div class="custom-select__menu">
-        <?php foreach ($options as $option) { ?>
-            <div class="custom-select__menu__item transition-default d-flex justify-content-between align-items-center<?= $option === $selected_option ? ' active' : ''; ?>" data-value="<?= $option; ?>">
-                <p class="custom-select__menu__item-title font-13-16 fw-400"><?= $option; ?></p>
-                <svg class="custom-select__menu__item-check transition-default" xmlns="http://www.w3.org/2000/svg" width="14" height="10" fill="none"><path stroke-width="2" d="M1.686 4.516 5.55 8.382l6.764-6.765"/></svg>
+        <?php if (isset($select_type) && $select_type === 'city') { ?>
+            <input name="cty-srch" id="city-search" class="city-search-input checkout__input-item font-13-16 fw-400" type="text" placeholder="Пошук">
+            <div class="custom-select__menu__items"></div>
+        <?php } else { ?>
+            <div class="custom-select__menu__items">
+                <?php foreach ($options as $option) { ?>
+                    <div class="custom-select__menu__item transition-default d-flex justify-content-between align-items-center<?= $option === $selected_option ? ' active' : ''; ?>" data-value="<?= $option; ?>">
+                        <p class="custom-select__menu__item-title font-13-16 fw-400"><?= $option; ?></p>
+                        <svg class="custom-select__menu__item-check transition-default" xmlns="http://www.w3.org/2000/svg" width="14" height="10" fill="none"><path stroke-width="2" d="M1.686 4.516 5.55 8.382l6.764-6.765"/></svg>
+                    </div>
+                <?php } ?>
             </div>
         <?php } ?>
     </div>

@@ -22,7 +22,6 @@ function brinpl_change_fields($fields) {
     unset($fields['billing']['billing_state']);
     unset($fields['billing']['billing_postcode']);
     unset($fields['billing']['billing_company']);
-//    unset($fields['billing']['billing_country']);
 
     $fields['billing']['billing_first_name']['label'] = 'Ім’я';
     $fields['billing']['billing_first_name']['autocomplete'] = false;

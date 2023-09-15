@@ -623,8 +623,8 @@ jQuery(function($) {
     body.on('click', '.custom-select__menu__item', function() {
       $(this).siblings().removeClass('active');
       $(this).addClass('active');
-      $(this).parent().siblings().find('.custom-select__chosen-title').text($(this).children('.custom-select__menu__item-title').text());
-      $(this).parent().siblings().find('.custom-select-input').val($(this).data('value'));
+      $(this).closest('.custom-select__menu').siblings().find('.custom-select__chosen-title').text($(this).children('.custom-select__menu__item-title').text());
+      $(this).closest('.custom-select__menu').siblings().find('.custom-select-input').val($(this).data('value'));
       customSelectMenu.slideUp(300);
       customSelectChosen.removeClass('active');
 
@@ -792,6 +792,15 @@ jQuery(function($) {
   let formData = {};
   let page = urlParams.page || '1';
   const searchString = urlParams.s ? {s: urlParams.s} : {};
+
+  if (productFilter.length) {
+    productFilter.find('input:checkbox').each(function() {
+      const nameAttr = $(this).attr('name');
+      if (nameAttr in urlParams) {
+        formData[nameAttr] = urlParams[nameAttr];
+      }
+    });
+  }
 
   const defaultData = {
     action: 'filter',
@@ -964,11 +973,8 @@ jQuery(function($) {
         $('.cart-menu__order').removeClass('disabled-check');
         $('.error-min').removeClass('show');
       }
-      if (cartTotal > 250 && cartTotal < 500) {
+      if (cartTotal > 250) {
         $('.error-free').addClass('show');
-      }
-      if (cartTotal > 500) {
-        $('.error-free').removeClass('show');
       }
     });
   });

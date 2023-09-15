@@ -2,7 +2,7 @@
 <section class="category-page wrapper filler">
     <?php woocommerce_breadcrumb(); ?>
     <h1 class="section-title"><?php woocommerce_page_title(); ?></h1>
-    <?php $term_id = get_term_by('name', woocommerce_page_title(false), 'product_cat')->term_id;
+    <?php $term_id = get_term_by('slug', get_query_var('product_cat'), 'product_cat')->term_id;
     $term_children = get_term_children($term_id, 'product_cat');
     if (!empty($term_children)) { ?>
         <div class="subcategory__items d-flex flex-wrap">
@@ -25,8 +25,8 @@
             'tax_query' => [
                 [
                     'taxonomy' => 'product_cat',
-                    'field' => 'name',
-                    'terms' => woocommerce_page_title(false)
+                    'field' => 'slug',
+                    'terms' => get_query_var('product_cat')
                 ]
             ]
         ]);
@@ -48,17 +48,7 @@
         <?php endif;
         wp_reset_postdata();
     } else { ?>
-        <?php $search = new WP_Query([
-            'post_type' => 'product',
-            'posts_per_page' => 16,
-            'tax_query' => [
-                [
-                    'taxonomy' => 'product_cat',
-                    'field' => 'name',
-                    'terms' => woocommerce_page_title(false)
-                ]
-            ]
-        ]);
+        <?php $search = fetch_data(16);
         if ($search->have_posts()):
             $products_count = wc_get_loop_prop('total'); ?>
             <p class="products-count font-14-20 fw-400"><?= $products_count . ' ' . true_wordform($products_count, 'товар', 'товари', 'товарів') ?></p>

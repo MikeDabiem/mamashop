@@ -73,7 +73,7 @@ function fetch_data($posts_per_page) {
     }
     $filter_args = [
         'tax_query' => [
-            'relation' => 'AND'
+            'relation' => 'AND',
         ]
     ];
     foreach (array_keys($_GET) as $key) {
@@ -85,10 +85,16 @@ function fetch_data($posts_per_page) {
             ];
         };
     }
+    if (get_query_var('product_cat')) {
+        $filter_args['tax_query'][] = [
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => get_query_var('product_cat')
+        ];
+    }
     $args = [
         'post_type' => 'product',
         'posts_per_page' => $posts_per_page,
-        'taxonomy' => 'product_cat',
         'paged' => isset($_GET['page']) ?? 1
     ];
     if (isset($_GET['s'])) {
