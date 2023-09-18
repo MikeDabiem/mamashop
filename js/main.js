@@ -774,6 +774,21 @@ jQuery(function($) {
     });
   }
 
+  // show shipping method selector
+  const shippingMethod = $('.shipping_method');
+  if (shippingMethod.length) {
+    function showShipSelector() {
+      shippingMethod.each(function() {
+        $(this).closest('.delivery__type__item').removeClass('active').children('.item__select').slideUp(300);
+        if ($(this).is(':checked')) {
+          $(this).closest('.delivery__type__item').addClass('active').children('.item__select').slideDown(300);
+        }
+      });
+    }
+    showShipSelector();
+    shippingMethod.on('change', showShipSelector);
+  }
+
 
 
   //////////

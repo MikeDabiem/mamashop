@@ -32,6 +32,9 @@
     box-shadow: $shadow;
     z-index: 1;
     @include scrollbar;
+    &__items {
+      margin-top: 8px;
+    }
     &__item {
       padding: 12px 10px;
       cursor: pointer;
@@ -45,6 +48,9 @@
           stroke: $black;
         }
       }
+    }
+    .checkout__input-item {
+      margin-top: 0;
     }
   }
 }

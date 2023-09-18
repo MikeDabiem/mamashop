@@ -6,8 +6,9 @@
         <input type="hidden" value="<?= $selected_option; ?>" id="<?= $input_id ?? ''; ?>" class="custom-select-input">
     </div>
     <div class="custom-select__menu">
-        <?php if (isset($select_type) && $select_type === 'city') { ?>
-            <input name="cty-srch" id="city-search" class="city-search-input checkout__input-item font-13-16 fw-400" type="text" placeholder="Пошук">
+        <?php if (isset($select_type)) {
+            $name = $select_type === 'city' ? 'cty-srch' : $select_type . '-search'; ?>
+            <input name="<?= $name ?>" id="<?= $name ?>" class="select-search-input checkout__input-item font-13-16 fw-400" type="text" placeholder="Пошук">
             <div class="custom-select__menu__items"></div>
         <?php } else { ?>
             <div class="custom-select__menu__items">

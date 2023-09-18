@@ -2116,6 +2116,9 @@ h1, h2, h3, h4, h5, h6, p {
 .custom-select__menu::-webkit-scrollbar-thumb:hover {
   background-color: #D6CECF;
 }
+.custom-select__menu__items {
+  margin-top: 8px;
+}
 .custom-select__menu__item {
   padding: 12px 10px;
   cursor: pointer;
@@ -2127,6 +2130,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .custom-select__menu__item.active svg {
   stroke: #494558;
+}
+.custom-select__menu .checkout__input-item {
+  margin-top: 0;
 }
 
 .reviews__item {
@@ -2992,6 +2998,40 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .checkout-page .delivery__place #delivery_city #city-search {
   margin-bottom: 8px;
+}
+.checkout-page .delivery__type-title {
+  margin-top: 24px;
+}
+.checkout-page .delivery__type__item {
+  max-width: 480px;
+  margin-top: 20px;
+  border: 1px solid transparent;
+}
+.checkout-page .delivery__type__item.active {
+  padding: 16px;
+  border-color: #6757A9;
+  border-radius: 6px;
+}
+.checkout-page .delivery__type__item .item__radio {
+  gap: 12px;
+}
+.checkout-page .delivery__type__item .item__radio input,
+.checkout-page .delivery__type__item .item__radio label {
+  cursor: pointer;
+}
+.checkout-page .delivery__type__item .item__select {
+  display: none;
+  margin-top: 16px;
+}
+.checkout-page .delivery__type__item .item__select-title {
+  color: #5E5E62;
+  margin-bottom: 8px;
+}
+.checkout-page .delivery__type__item .item__select__address {
+  margin-top: 16px;
+}
+.checkout-page .delivery__type__item .item__select__address__item {
+  width: calc(50% - 8px);
 }
 .checkout-page__comment {
   opacity: 1;
