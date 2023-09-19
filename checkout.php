@@ -125,29 +125,37 @@ get_header(); ?>
                     <div class="delivery__place d-flex">
                         <div id="delivery_region" class="delivery__place__item">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть область</h6>
-                            <?php $city_arr = explode(', ', $checkout->get_value('billing_city'));
-                            $options = [
-                                !empty($city_arr) && isset($city_arr[0]) ? $city_arr[0] : 'Київська'
-                            ];
-                            $input_id = 'delivery_region-input';
-                            require 'components/custom-select.php'; ?>
+                            <?php global $wpdb;
+                            $areas = [];
+                            $areas_data = $wpdb->get_results("
+                                SELECT ref, description
+                                FROM wp_nova_poshta_areas
+                            ");
+                            foreach ($areas_data as $item) {
+                                $areas[$item->description] = $item->ref;
+                            }
+                            $city_arr = explode(', ', $checkout->get_value('billing_city'));
+                            $chosen_option = [$city_arr[0] => $areas[$city_arr[0]]];
+                            get_template_part('components/checkout/checkout-select', null, ['options' => $areas, 'chosen_option' => $chosen_option, 'input_id' => 'delivery_region-input']); ?>
                         </div>
                         <div id="delivery_city" class="delivery__place__item">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть населений пункт</h6>
-                            <?php
-                            if (empty($city_arr) || isset($city_arr[0]) && $city_arr[0] === 'Київська' && !isset($city_arr[1])) {
-                                $option = 'Київ';
+                            <?php if (empty($city_arr) || isset($city_arr[0]) && $city_arr[0] === 'Київська' && !isset($city_arr[1])) {
+                                $option = ['Київ' => '8d5a980d-391c-11dd-90d9-001a92567626'];
                             } elseif (isset($city_arr[1])) {
-                                $option = $city_arr[1];
+                                $city_name = $city_arr[1];
+                                $area_ref = $areas[$city_arr[0]];
+                                $cities_data = $wpdb->get_results("
+                                    SELECT ref
+                                    FROM wp_nova_poshta_cities
+                                    WHERE area_ref = '$area_ref'
+                                    AND description = '$city_name'
+                                ");
+                                $option = [$city_name => $cities_data[0]->ref];
                             } else {
-                                $option = 'Оберіть населений пункт';
+                                $option = ['Оберіть населений пункт' => ''];
                             }
-                            $options = [
-                                $option
-                            ];
-                            $input_id = 'delivery_city-input';
-                            $select_type = 'city';
-                            require 'components/custom-select.php'; ?>
+                            get_template_part('components/checkout/checkout-select', null, ['options' => $option, 'chosen_option' => $option, 'input_id' => 'delivery_city-input', 'select_type' => 'city']); ?>
                         </div>
                     </div>
                     <div class="delivery__type">
@@ -175,12 +183,7 @@ get_header(); ?>
                                         'nova_poshta_courier' => ['title' => 'Вулиця', 'select' => 'Оберіть вулицю'],
                                         }; ?>
                                         <h5 class="item__select-title font-13-16 fw-500"><?= $delivery_item['title'] ?></h5>
-                                        <?php $options = [
-                                            $delivery_item['select']
-                                        ];
-                                        $input_id = 'delivery_type-input';
-                                        $select_type = $method->method_id;
-                                        require 'components/custom-select.php';
+                                        <?php // get_template_part('components/checkout/checkout-select', null, ['options' => [$delivery_item['select']], 'input_id' => 'delivery_type-input', 'select_type' => $method->method_id]);
                                         if ($method->method_id === 'nova_poshta_courier') { ?>
                                             <div class="item__select__address d-flex justify-content-between">
                                                 <div class="item__select__address__item">
@@ -296,15 +299,3 @@ get_header(); ?>
     <?php  the_content(); ?>
 </section>
 <?php get_footer();
-global $wpdb;
-$areas = [];
-$areas_data = $wpdb->get_results("
-	SELECT description
-	FROM wp_nova_poshta_areas
-");
-foreach ($areas_data as $item) {
-    $areas[] = $item->description;
-}
-echo '<pre>';
-print_r($areas);
-echo '</pre>';

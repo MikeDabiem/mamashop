@@ -2067,28 +2067,28 @@ h1, h2, h3, h4, h5, h6, p {
   color: #FFFFFF;
 }
 
-.custom-select {
+.checkout-select {
   position: relative;
 }
-.custom-select__chosen {
+.checkout-select__chosen {
   padding: 14px 14px 14px 16px;
   border: 1px solid transparent;
   border-radius: 4px;
   background: #F7F7F8;
   cursor: pointer;
 }
-.custom-select__chosen.active {
+.checkout-select__chosen.active {
   background: #FFFFFF;
   border-color: #B2B2B7;
 }
-.custom-select__chosen.active .custom-select-arrow {
+.checkout-select__chosen.active .checkout-select-arrow {
   transform: rotate(180deg);
   stroke: #494558;
 }
-.custom-select-arrow {
+.checkout-select-arrow {
   stroke: #B2B2B7;
 }
-.custom-select__menu {
+.checkout-select__menu {
   display: none;
   position: absolute;
   top: calc(100% + 4px);
@@ -2102,36 +2102,36 @@ h1, h2, h3, h4, h5, h6, p {
   box-shadow: 0 2px 30px 0 rgba(223, 213, 215, 0.4);
   z-index: 1;
 }
-.custom-select__menu::-webkit-scrollbar {
+.checkout-select__menu::-webkit-scrollbar {
   width: 12px;
 }
-.custom-select__menu::-webkit-scrollbar-track {
+.checkout-select__menu::-webkit-scrollbar-track {
   background-color: #EEEDED;
   border-radius: 0 4px 4px 0;
 }
-.custom-select__menu::-webkit-scrollbar-thumb {
+.checkout-select__menu::-webkit-scrollbar-thumb {
   background-color: #E1DEDF;
   border-radius: 4px;
 }
-.custom-select__menu::-webkit-scrollbar-thumb:hover {
+.checkout-select__menu::-webkit-scrollbar-thumb:hover {
   background-color: #D6CECF;
 }
-.custom-select__menu__items {
+.checkout-select__menu__items {
   margin-top: 8px;
 }
-.custom-select__menu__item {
+.checkout-select__menu__item {
   padding: 12px 10px;
   cursor: pointer;
 }
 @media (hover: hover) {
-  .custom-select__menu__item:hover {
+  .checkout-select__menu__item:hover {
     background: rgba(236, 236, 240, 0.8);
   }
 }
-.custom-select__menu__item.active svg {
+.checkout-select__menu__item.active svg {
   stroke: #494558;
 }
-.custom-select__menu .checkout__input-item {
+.checkout-select__menu .checkout__input-item {
   margin-top: 0;
 }
 
@@ -2993,7 +2993,7 @@ h1, h2, h3, h4, h5, h6, p {
 .checkout-page .delivery__place__item-title {
   color: #5E5E62;
 }
-.checkout-page .delivery__place__item .custom-select {
+.checkout-page .delivery__place__item .checkout-select {
   margin-top: 8px;
 }
 .checkout-page .delivery__place #delivery_city #city-search {

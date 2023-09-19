@@ -1,4 +1,4 @@
-.custom-select {
+.checkout-select {
   position: relative;
   &__chosen {
     padding: 14px 14px 14px 16px;
@@ -9,7 +9,7 @@
     &.active {
       background: $white;
       border-color: $grey;
-      .custom-select-arrow {
+      .checkout-select-arrow {
         transform: rotate(180deg);
         stroke: $black;
       }

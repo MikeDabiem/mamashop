@@ -23,6 +23,7 @@ function load_style_script()
     wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js');
 
     wp_localize_script('main', 'ajaxurl', ['url' => admin_url('admin-ajax.php')]);
+    wp_localize_script('nova-poshta', 'ajaxurl', ['url' => admin_url('admin-ajax.php')]);
     wp_localize_script('main', 'searchHelpArr', [
         "Порошок для прання",
         "Пом'якшувач для тканини",
@@ -44,7 +45,7 @@ add_theme_support('menus');
 add_theme_support('widgets');
 
 require 'components/ajax.php';
-require 'components/checkout-settings.php';
+require 'components/checkout/checkout-settings.php';
 
 //add views count meta to new products
 add_action('woocommerce_new_product', 'initialize_total_views_count');
@@ -217,4 +218,10 @@ function get_count_of_reviews($product_id, $meta_value = 'review') {
             ],
         ],
     ]));
+}
+
+// change index of array element
+function change_index(&$array, $from, $to) {
+    $out = array_splice($array, $from, 1);
+    array_splice($array, $to, 0, $out);
 }

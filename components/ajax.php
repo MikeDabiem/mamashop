@@ -20,6 +20,8 @@
     add_action( 'wp_ajax_nopriv_get_next_reviews', 'get_next_reviews' );
     add_action( 'wp_ajax_new_comment', 'new_comment' );
     add_action( 'wp_ajax_change_password', 'change_password' );
+    add_action( 'wp_ajax_db_city_search', 'db_city_search' );
+    add_action( 'wp_ajax_nopriv_db_city_search', 'db_city_search' );
 }
 
 function fetch_data($posts_per_page) {
@@ -391,6 +393,29 @@ function change_password() {
             echo 'success';
         } else {
             echo 'password-error';
+        }
+    }
+    wp_die();
+}
+
+function db_city_search() {
+    if ($_POST) {
+        global $wpdb;
+        $search = sanitize_text_field($_POST['search']);
+        $area_ref = $_POST['area_ref'];
+        $cities_data = $wpdb->get_results("
+            SELECT ref, description
+            FROM wp_nova_poshta_cities
+            WHERE area_ref = '$area_ref'
+            AND description LIKE '$search%'
+            OR area_ref = '$area_ref'
+            AND description_ru LIKE '$search%'
+            LIMIT 20
+        ");
+        foreach ($cities_data as $item) {
+            $name = $item->description;
+            $ref = $item->ref;
+            get_template_part('components/checkout/checkout-select-option', null, ['name' => $name, 'ref' => $ref]);
         }
     }
     wp_die();

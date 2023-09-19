@@ -605,41 +605,42 @@ jQuery(function($) {
     });
   }
 
-  const customSelect = $('.custom-select');
-  if (customSelect.length) {
-    const customSelectMenu = $('.custom-select__menu');
-    const customSelectChosen = $('.custom-select__chosen');
-    customSelectChosen.on('click', function() {
+  const checkoutSelect = $('.checkout-select');
+  if (checkoutSelect.length) {
+    const checkoutSelectMenu = $('.checkout-select__menu');
+    const checkoutSelectChosen = $('.checkout-select__chosen');
+    checkoutSelectChosen.on('click', function() {
       if ($(this).hasClass('active')) {
         $(this).removeClass('active');
-        $(this).siblings('.custom-select__menu').slideUp(300);
+        $(this).siblings('.checkout-select__menu').slideUp(300);
       } else {
-        customSelectChosen.removeClass('active');
-        customSelectMenu.slideUp(300);
+        checkoutSelectChosen.removeClass('active');
+        checkoutSelectMenu.slideUp(300);
         $(this).addClass('active');
-        $(this).siblings('.custom-select__menu').slideDown(300);
+        $(this).siblings('.checkout-select__menu').slideDown(300);
       }
     });
-    body.on('click', '.custom-select__menu__item', function() {
+    body.on('click', '.checkout-select__menu__item', function() {
       $(this).siblings().removeClass('active');
       $(this).addClass('active');
-      $(this).closest('.custom-select__menu').siblings().find('.custom-select__chosen-title').text($(this).children('.custom-select__menu__item-title').text());
-      $(this).closest('.custom-select__menu').siblings().find('.custom-select-input').val($(this).data('value'));
-      customSelectMenu.slideUp(300);
-      customSelectChosen.removeClass('active');
+      $(this).closest('.checkout-select__menu').siblings().find('.checkout-select__chosen-title').text($(this).children('.checkout-select__menu__item-title').text());
+      $(this).closest('.checkout-select__menu').siblings().find('.checkout-select-input').val($(this).data('value')).trigger('change');
+      $(this).closest('.checkout-select__menu').siblings().find('.checkout-select-ref').val($(this).data('ref'));
+      checkoutSelectMenu.slideUp(300);
+      checkoutSelectChosen.removeClass('active');
 
       const billingCityInput = $('#billing_city');
       if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_region') {
-        billingCityInput.val($(this).children('.custom-select__menu__item-title').text() + ', ');
-        $('#delivery_city').find('.custom-select__chosen-title').text('Оберіть населений пункт');
+        billingCityInput.val($(this).children('.checkout-select__menu__item-title').text() + ', ');
+        $('#delivery_city').find('.checkout-select__chosen-title').text('Оберіть населений пункт');
       } else if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_city') {
-        billingCityInput.val(billingCityInput.val() + $(this).children('.custom-select__menu__item-title').text());
+        billingCityInput.val(billingCityInput.val() + $(this).children('.checkout-select__menu__item-title').text());
       }
     });
     body.on('click', (e) => {
-      if (!e.target.closest('.custom-select')) {
-        $('.custom-select__chosen').removeClass('active');
-        customSelectMenu.slideUp(300);
+      if (!e.target.closest('.checkout-select')) {
+        $('.checkout-select__chosen').removeClass('active');
+        checkoutSelectMenu.slideUp(300);
       }
     });
   }
