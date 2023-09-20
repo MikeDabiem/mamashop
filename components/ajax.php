@@ -22,6 +22,8 @@
     add_action( 'wp_ajax_change_password', 'change_password' );
     add_action( 'wp_ajax_db_city_search', 'db_city_search' );
     add_action( 'wp_ajax_nopriv_db_city_search', 'db_city_search' );
+    add_action( 'wp_ajax_db_np_depart_search', 'db_np_depart_search' );
+    add_action( 'wp_ajax_nopriv_db_np_depart_search', 'db_np_depart_search' );
 }
 
 function fetch_data($posts_per_page) {
@@ -402,20 +404,54 @@ function db_city_search() {
     if ($_POST) {
         global $wpdb;
         $search = sanitize_text_field($_POST['search']);
-        $area_ref = $_POST['area_ref'];
+        $area_ref = $_POST['ref'];
         $cities_data = $wpdb->get_results("
             SELECT ref, description
             FROM wp_nova_poshta_cities
             WHERE area_ref = '$area_ref'
-            AND description LIKE '$search%'
-            OR area_ref = '$area_ref'
-            AND description_ru LIKE '$search%'
+            AND (description LIKE '$search%'
+            OR description_ru LIKE '$search%')
             LIMIT 20
         ");
         foreach ($cities_data as $item) {
             $name = $item->description;
             $ref = $item->ref;
             get_template_part('components/checkout/checkout-select-option', null, ['name' => $name, 'ref' => $ref]);
+        }
+    }
+    wp_die();
+}
+
+function db_np_depart_search() {
+    if ($_POST) {
+        global $wpdb;
+        $search = sanitize_text_field($_POST['search']);
+        $city_ref = $_POST['ref'];
+        if ($_POST['type'] === 'department') {
+            $cities_data = $wpdb->get_results("
+                SELECT ref, description
+                FROM wp_nova_poshta_warehouses
+                WHERE city_ref = '$city_ref'
+                AND warehouse_type < 3
+                AND (description LIKE '%$search%'
+                OR description_ru LIKE '%$search%')
+                LIMIT 20
+            ");
+        } elseif ($_POST['type'] === 'postomat') {
+            $cities_data = $wpdb->get_results("
+                SELECT description
+                FROM wp_nova_poshta_warehouses
+                WHERE city_ref = '$city_ref'
+                AND warehouse_type = 3
+                AND (description LIKE '%$search%'
+                OR description_ru LIKE '%$search%')
+                LIMIT 20
+            ");
+        } else {
+            exit;
+        }
+        foreach ($cities_data as $item) {
+            get_template_part('components/checkout/checkout-select-option', null, ['name' => $item->description]);
         }
     }
     wp_die();

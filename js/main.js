@@ -630,11 +630,14 @@ jQuery(function($) {
       checkoutSelectChosen.removeClass('active');
 
       const billingCityInput = $('#billing_city');
+      const billingAddressInput = $('#billing_address_1');
       if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_region') {
         billingCityInput.val($(this).children('.checkout-select__menu__item-title').text() + ', ');
         $('#delivery_city').find('.checkout-select__chosen-title').text('Оберіть населений пункт');
       } else if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_city') {
         billingCityInput.val(billingCityInput.val() + $(this).children('.checkout-select__menu__item-title').text());
+      } else if ($(this).closest('.delivery__type__item').attr('id') === 'nova_poshta_depart') {
+        billingAddressInput.val($(this).children('.checkout-select__menu__item-title').text());
       }
     });
     body.on('click', (e) => {

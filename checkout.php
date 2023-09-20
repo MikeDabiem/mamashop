@@ -135,7 +135,7 @@ get_header(); ?>
                                 $areas[$item->description] = $item->ref;
                             }
                             $city_arr = explode(', ', $checkout->get_value('billing_city'));
-                            $chosen_option = [$city_arr[0] => $areas[$city_arr[0]]];
+                            $chosen_option = empty($city_arr) ? ['Київська' => $areas['Київська']] : [$city_arr[0] => $areas[$city_arr[0]]];
                             get_template_part('components/checkout/checkout-select', null, ['options' => $areas, 'chosen_option' => $chosen_option, 'input_id' => 'delivery_region-input']); ?>
                         </div>
                         <div id="delivery_city" class="delivery__place__item">
@@ -155,7 +155,7 @@ get_header(); ?>
                             } else {
                                 $option = ['Оберіть населений пункт' => ''];
                             }
-                            get_template_part('components/checkout/checkout-select', null, ['options' => $option, 'chosen_option' => $option, 'input_id' => 'delivery_city-input', 'select_type' => 'city']); ?>
+                            get_template_part('components/checkout/checkout-select', null, ['chosen_option' => $option, 'input_id' => 'delivery_city-input', 'select_type' => 'city']); ?>
                         </div>
                     </div>
                     <div class="delivery__type">
@@ -166,7 +166,7 @@ get_header(); ?>
                             $available_methods = $package['rates'];
                             $chosen_method = isset( WC()->session->chosen_shipping_methods[ $index ] ) ? WC()->session->chosen_shipping_methods[ $index ] : '';
                             foreach ( $available_methods as $method ) { ?>
-                                <div class="delivery__type__item transition-default">
+                                <div id="<?= $method->method_id ?>" class="delivery__type__item transition-default">
                                     <div class="item__radio d-flex align-items-center">
                                         <?php if ( 1 < count( $available_methods ) ) {
                                             printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method input-radio" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) );
@@ -183,7 +183,13 @@ get_header(); ?>
                                         'nova_poshta_courier' => ['title' => 'Вулиця', 'select' => 'Оберіть вулицю'],
                                         }; ?>
                                         <h5 class="item__select-title font-13-16 fw-500"><?= $delivery_item['title'] ?></h5>
-                                        <?php // get_template_part('components/checkout/checkout-select', null, ['options' => [$delivery_item['select']], 'input_id' => 'delivery_type-input', 'select_type' => $method->method_id]);
+                                        <?php $address = $checkout->get_value('billing_address_1');
+                                        if ($method->id === $chosen_method && $address) {
+                                            $chosen_option = [$address => ''];
+                                        } else {
+                                            $chosen_option = [$delivery_item['select'] => ''];
+                                        }
+                                        get_template_part('components/checkout/checkout-select', null, ['chosen_option' => $chosen_option, 'input_id' => 'delivery_type-input', 'select_type' => $method->method_id]);
                                         if ($method->method_id === 'nova_poshta_courier') { ?>
                                             <div class="item__select__address d-flex justify-content-between">
                                                 <div class="item__select__address__item">

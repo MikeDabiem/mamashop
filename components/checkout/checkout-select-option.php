@@ -1,6 +1,6 @@
 <?php if (isset($args['name']) || isset($args['ref']) || isset($args['chosen_name'])) {
     $name = $args['name'];
-    $ref = $args['ref'];
+    $ref = $args['ref'] ?? '';
     $chosen_name = $args['chosen_name'] ?? '';
 ?>
     <div class="checkout-select__menu__item transition-default d-flex justify-content-between align-items-center<?= $name === $chosen_name ? ' active' : ''; ?>" data-value="<?= $name; ?>" data-ref="<?= $ref ?>">
