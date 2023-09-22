@@ -49,6 +49,22 @@ function brinpl_change_fields($fields) {
     return $fields;
 }
 
+// change admin panel fields
+add_filter( 'woocommerce_admin_billing_fields' ,'change_admin_billing_fields');
+function change_admin_billing_fields( $fields ) {
+    $fields['first_name']['label'] = 'Ім’я';
+    $fields['first_name']['show'] = true;
+    $fields['last_name']['label'] = 'Прізвище';
+    $fields['last_name']['show'] = true;
+    $fields['address_1']['label'] = 'Адреса / Відділення';
+    $fields['address_1']['show'] = true;
+    $fields['address_2']['label'] = 'Кв.';
+    $fields['address_2']['show'] = true;
+    $fields['city']['label'] = 'Область, Місто';
+    $fields['city']['show'] = true;
+    return $fields;
+}
+
 // register shipping methods
 add_filter( 'woocommerce_shipping_methods', 'register_new_shipping_methods' );
 function register_new_shipping_methods( $methods ) {

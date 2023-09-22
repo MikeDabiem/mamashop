@@ -2,27 +2,6 @@
   margin-top: 30px;
 }
 .checkout-page {
-  //.woocommerce {
-  //  &-notices-wrapper,
-  //  &-form-coupon-toggle {
-  //    display: none;
-  //  }
-  //  &-checkout {
-  //    .col-2 {
-  //      display: none;
-  //    }
-  //    &-review-order,
-  //    &-review-order-table {
-  //      display: none;
-  //    }
-  //    h3 {
-  //      display: none;
-  //    }
-  //  }
-  //  &-billing-fields__field-wrapper {
-  //    display: none;
-  //  }
-  //}
   &.filler {
     padding-top: 36px;
   }
@@ -116,6 +95,9 @@
     }
     &-next-button {
       margin-top: 28px;
+      &:disabled {
+        opacity: .5;
+      }
     }
   }
   @import "../components/checkout/checkout-products";
@@ -198,6 +180,11 @@
     }
     &__to_pay {
       margin-top: 32px;
+    }
+  }
+  .coupon {
+    &__body {
+      display: none;
     }
   }
   @import "../components/checkout/checkout-coupon";

@@ -162,6 +162,7 @@ get_header(); ?>
                         <h4 class="delivery__type-title font-15-24 fw-500">Спосіб доставки</h4>
                         <?php WC()->cart->calculate_shipping();
                         $packages = WC()->shipping()->get_packages();
+                        $selected_delivery = '';
                         foreach ($packages as $index => $package) {
                             $available_methods = $package['rates'];
                             $chosen_method = isset( WC()->session->chosen_shipping_methods[ $index ] ) ? WC()->session->chosen_shipping_methods[ $index ] : '';
@@ -186,19 +187,27 @@ get_header(); ?>
                                         <?php $address = $checkout->get_value('billing_address_1');
                                         if ($method->id === $chosen_method && $address) {
                                             $chosen_option = [$address => ''];
+                                            $selected_delivery = $method->method_id;
                                         } else {
                                             $chosen_option = [$delivery_item['select'] => ''];
                                         }
                                         get_template_part('components/checkout/checkout-select', null, ['chosen_option' => $chosen_option, 'input_id' => 'delivery_type-input', 'select_type' => $method->method_id]);
-                                        if ($method->method_id === 'nova_poshta_courier') { ?>
+                                        if ($method->method_id === 'nova_poshta_courier') {
+                                            $address_arr = explode(', ', $checkout->get_value('billing_address_1'));
+                                            $building_num = '';
+                                            $apartment_num = '';
+                                            if ($selected_delivery === 'nova_poshta_courier' && isset($address_arr[1])) {
+                                                $building_num = $address_arr[1];
+                                                $apartment_num = $checkout->get_value('billing_address_2');
+                                            } ?>
                                             <div class="item__select__address d-flex justify-content-between">
                                                 <div class="item__select__address__item">
                                                     <label for="building-number" class="font-13-16 fw-500">Будинок</label>
-                                                    <input type="text" name="building-number" id="building-number" class="checkout__input-item font-13-16 fw-400" placeholder="Номер будинку">
+                                                    <input type="text" name="building-number" id="building-number" class="checkout__input-item font-13-16 fw-400" value="<?= $building_num ?>" placeholder="Номер будинку">
                                                 </div>
                                                 <div class="item__select__address__item">
                                                     <label for="apartment-number" class="font-13-16 fw-500">Квартира</label>
-                                                    <input type="text" name="apartment-number" id="apartment-number" class="checkout__input-item font-13-16 fw-400" placeholder="Номер квартири">
+                                                    <input type="text" name="apartment-number" id="apartment-number" class="checkout__input-item font-13-16 fw-400" value="<?= $apartment_num ?>" placeholder="Номер квартири">
                                                 </div>
                                             </div>
                                         <?php } ?>
@@ -207,7 +216,18 @@ get_header(); ?>
                             <?php }
                         } ?>
                     </div>
-                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                    <?php if (isset($address) && $selected_delivery === 'nova_poshta_courier') {
+                        if (isset($address_arr[1])) {
+                            $is_disabled = '';
+                        } else {
+                            $is_disabled = 'disabled';
+                        }
+                    } elseif (isset($address)) {
+                        $is_disabled = '';
+                    } else {
+                        $is_disabled = 'disabled';
+                    } ?>
+                    <button type="button" class="checkout-next-button std-btn purple-btn" <?= $is_disabled ?>>Продовжити</button>
                 </div>
             </section>
             <section class="checkout-page__section checkout-page__payment">
@@ -220,7 +240,7 @@ get_header(); ?>
                     if (!empty($available_gateways)) {
                         foreach ($available_gateways as $gateway) { ?>
                             <div class="payment__item wc_payment_method payment_method_<?= esc_attr($gateway->id); ?> d-flex align-items-center">
-                                <input id="payment_method_<?= esc_attr($gateway->id); ?>" type="radio" class="input-radio" name="payment_method" value="<?= esc_attr($gateway->id); ?>" <?php checked($gateway->chosen, true); ?> data-order_button_text="<?= esc_attr($gateway->order_button_text); ?>" />
+                                <input id="payment_method_<?= esc_attr($gateway->id); ?>" type="radio" class="payment_method input-radio" name="payment_method" value="<?= esc_attr($gateway->id); ?>" <?php checked($gateway->chosen, true); ?> data-order_button_text="<?= esc_attr($gateway->order_button_text); ?>" />
                                 <label for="payment_method_<?= esc_attr($gateway->id); ?>" class="payment__item-label font-14-20 fw-400">
                                     <?= $gateway->get_title(); ?> <?= $gateway->get_icon(); ?>
                                 </label>
@@ -255,7 +275,7 @@ get_header(); ?>
                     <p class="comment__ready-text font-14-20 fw-500"></p>
                 </div>
             </section>
-            <?php wp_nonce_field('woocommerce-process-checkout', 'woocommerce-process-checkout-nonce'); ?>
+            <?php wp_nonce_field('woocommerce-process_checkout'); ?>
         </form>
         <div class="checkout-page__body__col2">
             <div class="checkout-page__section checkout-page__total">
@@ -267,34 +287,31 @@ get_header(); ?>
                 <div class="total__body">
                     <div class="total__body__item d-flex justify-content-between">
                         <p class="total__body__item-title font-14-20 fw-400">Всього:</p>
-                        <p class="total__body__item-value font-14-20 fw-500"><?= WC()->cart->get_cart_subtotal(); ?> грн</p>
+                        <p class="total__body__item-value font-14-20 fw-500"><?= WC()->cart->get_subtotal(); ?> грн</p>
                     </div>
                     <div class="total__body__item d-flex justify-content-between">
                         <p class="total__body__item-title font-14-20 fw-400">Знижка:</p>
-                        <p class="total__body__item-value font-14-20 fw-500"><?= array_sum(WC()->cart->get_coupon_discount_totals()); ?> грн</p>
+                        <p id="discount_value" class="total__body__item-value font-14-20 fw-500"><?= array_sum(WC()->cart->get_coupon_discount_totals()); ?> грн</p>
                     </div>
                 </div>
                 <div class="total__to_pay d-flex justify-content-between align-items-center">
                     <p class="total__to_pay-title font-15-24 fw-600">До сплати:</p>
-                    <p class="total__to_pay-value font-18-22 fw-600"><?= WC()->cart->get_cart_total(); ?> грн</p>
+                    <p class="total__to_pay-value font-18-22 fw-600"><?= WC()->cart->get_cart_contents_total(); ?> грн</p>
                 </div>
             </div>
             <div class="checkout-page__section checkout-page__coupon">
                 <div class="coupon__head d-flex justify-content-between">
                     <h4 class="coupon-title font-14-20 fw-500">Промокод</h4>
-                    <a class="coupon__head-button transparent-btn font-14-20 fw-500 showcoupon">Додати</a>
+                    <button class="coupon__head-button transparent-btn font-14-20 fw-500">Додати</button>
                 </div>
-                <form class="coupon__body checkout_coupon woocommerce-form-coupon" method="post" style="display:none">
-                    <div class="form-row form-row-first position-relative">
+                <div class="coupon__body">
+                    <div class="input__wrapper">
                         <label for="coupon_code" class="screen-reader-text"><?php esc_html_e('Coupon:', 'woocommerce'); ?></label>
-                        <input type="text" name="coupon_code" class="coupon-input checkout__input-item font-13-16 fw-400 input-text" placeholder="<?php esc_attr_e('Введіть промокод', 'woocommerce'); ?>" id="coupon_code" value="" />
+                        <input type="text" name="coupon_code" class="coupon-input checkout__input-item font-13-16 fw-400 transition-default" placeholder="<?php esc_attr_e('Введіть промокод', 'woocommerce'); ?>" id="coupon_code" value="" />
                         <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
                     </div>
-                    <div class="form-row form-row-last">
-                        <button type="submit" class="coupon-button std-btn purple-btn font-15-18 fw-600 button<?= esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Застосувати', 'woocommerce'); ?>"><?php esc_html_e('Застосувати', 'woocommerce'); ?></button>
-                    </div>
-                    <div class="clear"></div>
-                </form>
+                    <button type="button" class="coupon-button std-btn purple-btn font-15-18 fw-600 button<?= esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Застосувати', 'woocommerce'); ?>"><?php esc_html_e('Застосувати', 'woocommerce'); ?></button>
+                </div>
             </div>
             <div class="checkout-page__confirm">
                 <button type="submit" form="checkout-form" name="woocommerce_checkout_place_order" id="place_order" class="confirm-button std-btn purple-btn font-15-18 fw-600 w-100" data-value="Замовлення підтверджую">Замовлення підтверджую</button>
@@ -302,6 +319,6 @@ get_header(); ?>
             </div>
         </div>
     </div>
-    <?php  the_content(); ?>
+    <?php // the_content(); ?>
 </section>
 <?php get_footer();

@@ -460,6 +460,8 @@ jQuery(function($) {
   if ($('.checkout-page').length) {
     const checkoutNextButton = $('.checkout-next-button');
     const checkoutChangeButton = $('.checkout-change-button');
+    const buildingNum = $('#building-number');
+    const apartmentNum = $('#apartment-number');
 
     // forbid change value to space
     $('.checkout__input-item').on('input', function() {
@@ -505,9 +507,23 @@ jQuery(function($) {
           $('.ready__item--phone').text($('#billing_phone').val());
           $('.ready__item--email').text($('#billing_email').val());
         }
+        if ($(this).parent().hasClass('delivery__body')) {
+          const billingAddress = $('#billing_address_1');
+          const billingApartment = $('#billing_address_2');
+          const parent = $('.shipping_method:checked').closest('.delivery__type__item');
+          if (parent.has('#building-number').length && parent.has('#apartment-number').length) {
+            if (buildingNum.val() && apartmentNum.val()) {
+              billingAddress.val($(this).siblings('.delivery__type').find('.checkout-select-input').val() + ', ' + buildingNum.val());
+              billingApartment.val(apartmentNum.val());
+            }
+          } else {
+            billingAddress.val($(this).siblings('.delivery__type').find('.checkout-select-input').val());
+            billingApartment.val('');
+          }
+        }
         if ($(this).parent().hasClass('payment__body')) {
           $('.checkout-page__confirm').fadeIn(300);
-          const checkedRadioId = $('.input-radio:checked').attr('id');
+          const checkedRadioId = $('.payment_method:checked').attr('id');
           $('.ready__item--payment').html($(`.payment__item-label[for=${checkedRadioId}]`).html());
           $('.comment-title').text('Згорунти');
         }
@@ -535,6 +551,26 @@ jQuery(function($) {
       $(this).parent().siblings('.checkout-page__section__ready').slideUp(300);
       $(this).fadeOut(300);
     });
+
+    // activate delivery next button
+    const nextButton = $('.delivery__body').find('.checkout-next-button');
+    function activateNextButton() {
+      const checkedMethod = $('.shipping_method:checked');
+      if (
+        checkedMethod.parent().siblings('.item__select').find('.checkout-select__chosen-title').text().indexOf('Оберіть') < 0 &&
+        (checkedMethod.attr('id') === 'shipping_method_0_nova_poshta_courier7' &&
+        buildingNum.val() ||
+        checkedMethod.attr('id') !== 'shipping_method_0_nova_poshta_courier7')
+      ) {
+          nextButton.removeAttr('disabled');
+      } else {
+        nextButton.prop('disabled', true);
+      }
+    }
+
+    $('.shipping_method').on('change', activateNextButton);
+    $('.delivery__type').find('.checkout-select-input').on('change', activateNextButton);
+    buildingNum.on('input', activateNextButton);
 
     // show checkout comment field
     const checkoutComment = $('.checkout-page__comment');
@@ -585,10 +621,10 @@ jQuery(function($) {
     const couponHeadButton = $('.coupon__head-button');
     function showCouponBody() {
       if (couponBody.hasClass('active')) {
-        couponBody.removeClass('active');
+        couponBody.removeClass('active').slideUp(200);
         couponHeadButton.text('Додати');
       } else {
-        couponBody.addClass('active');
+        couponBody.addClass('active').slideDown(200);
         couponHeadButton.text('Закрити');
       }
     }
@@ -597,10 +633,23 @@ jQuery(function($) {
     const couponInput = $('.coupon-input');
     couponSubmitButton.on('click', function(e) {
       if (!couponInput.val()) {
-        e.preventDefault();
         showInputError(couponInput);
       } else {
-        showCouponBody();
+        const data = {
+          action: 'coupon_check',
+          coupon: couponInput.val()
+        }
+        $.post(ajaxURL.url, data, function(response) {
+          const resp = JSON.parse(response);
+          if (!resp.error) {
+            $('#discount_value').text(resp.discount + ' грн');
+            $('.total__to_pay-value').text(resp.total + ' грн');
+            showCouponBody();
+          } else {
+            showInputError(couponInput);
+            couponSubmitButton.siblings('.input__wrapper').find('.input--error-text').text(resp.error);
+          }
+        });
       }
     });
   }
@@ -618,6 +667,11 @@ jQuery(function($) {
         checkoutSelectMenu.slideUp(300);
         $(this).addClass('active');
         $(this).siblings('.checkout-select__menu').slideDown(300);
+        if ($(this).siblings('.checkout-select__menu').has('.select-search-input').length) {
+          setTimeout(() => {
+            $(this).siblings('.checkout-select__menu').find('.select-search-input').trigger('focus');
+          }, 200);
+        }
       }
     });
     body.on('click', '.checkout-select__menu__item', function() {
@@ -630,14 +684,11 @@ jQuery(function($) {
       checkoutSelectChosen.removeClass('active');
 
       const billingCityInput = $('#billing_city');
-      const billingAddressInput = $('#billing_address_1');
       if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_region') {
         billingCityInput.val($(this).children('.checkout-select__menu__item-title').text() + ', ');
         $('#delivery_city').find('.checkout-select__chosen-title').text('Оберіть населений пункт');
       } else if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_city') {
         billingCityInput.val(billingCityInput.val() + $(this).children('.checkout-select__menu__item-title').text());
-      } else if ($(this).closest('.delivery__type__item').attr('id') === 'nova_poshta_depart') {
-        billingAddressInput.val($(this).children('.checkout-select__menu__item-title').text());
       }
     });
     body.on('click', (e) => {

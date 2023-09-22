@@ -24,6 +24,8 @@
     add_action( 'wp_ajax_nopriv_db_city_search', 'db_city_search' );
     add_action( 'wp_ajax_db_np_depart_search', 'db_np_depart_search' );
     add_action( 'wp_ajax_nopriv_db_np_depart_search', 'db_np_depart_search' );
+    add_action( 'wp_ajax_coupon_check', 'coupon_check' );
+    add_action( 'wp_ajax_nopriv_coupon_check', 'coupon_check' );
 }
 
 function fetch_data($posts_per_page) {
@@ -452,6 +454,25 @@ function db_np_depart_search() {
         }
         foreach ($cities_data as $item) {
             get_template_part('components/checkout/checkout-select-option', null, ['name' => $item->description]);
+        }
+    }
+    wp_die();
+}
+
+function coupon_check() {
+    if ($_POST['coupon']) {
+        $coupon = new WC_Coupon(sanitize_text_field($_POST['coupon']));
+        $discounts = new WC_Discounts( WC()->cart );
+        $is_valid = is_wp_error( $discounts->is_coupon_valid($coupon) ) ? false : true;
+        if (WC()->cart->has_discount( $_POST['coupon'] )) {
+            echo json_encode(['error' => 'Промокод вже застосований'], JSON_UNESCAPED_UNICODE);
+        } elseif ($is_valid) {
+            $cart = WC()->cart;
+            $disc_val = $cart->get_cart_contents_total() * ($coupon->get_amount() / 100);
+            $cart->apply_coupon('test');
+            echo json_encode(['discount' => $disc_val, 'total' => $cart->get_cart_contents_total()]);
+        } else {
+            echo json_encode(['error' => 'Промокод недійсний'], JSON_UNESCAPED_UNICODE);
         }
     }
     wp_die();

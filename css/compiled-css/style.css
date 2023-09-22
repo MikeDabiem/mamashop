@@ -2934,6 +2934,9 @@ h1, h2, h3, h4, h5, h6, p {
 .checkout-page .checkout-next-button {
   margin-top: 28px;
 }
+.checkout-page .checkout-next-button:disabled {
+  opacity: 0.5;
+}
 .checkout-page__products .products-title {
   color: inherit;
   margin-bottom: 20px;
@@ -3115,6 +3118,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .checkout-page .total__to_pay {
   margin-top: 32px;
+}
+.checkout-page .coupon__body {
+  display: none;
 }
 .checkout-page .checkout-page__coupon .coupon__head-button {
   text-decoration: none;

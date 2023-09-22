@@ -2,8 +2,6 @@
 /*Load styles and scripts*/
 function load_style_script()
 {
-    $templatePath = ['templateUrl' => get_template_directory_uri()];
-
     // CSS PLUGINS
     wp_enqueue_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css');
     wp_enqueue_style('slick', get_template_directory_uri() . '/css/slick.css');
@@ -18,6 +16,7 @@ function load_style_script()
     wp_enqueue_script('slick', get_template_directory_uri() . '/js/slick.min.js');
     wp_enqueue_script('slick-js', get_template_directory_uri() . '/js/slick-main.js');
     wp_enqueue_script('nova-poshta', get_template_directory_uri() . '/js/nova-poshta.js');
+    wp_enqueue_script('ukrposhta', get_template_directory_uri() . '/js/ukrposhta.js');
 
     // JS CUSTOM HEADER
     wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js');
