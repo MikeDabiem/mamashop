@@ -5,7 +5,13 @@ get_header(); ?>
     <section class="top products-slider">
         <h2 class="section-title">Топ товари</h2>
         <div class="top__items products-slider__items">
-            <?php $topProducts = new WP_Query(['post_type' => 'product', 'posts_per_page' => 10]);
+            <?php $topProducts = new WP_Query([
+                'post_type' => 'product',
+                'posts_per_page' => 10,
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
+                'meta_key' => '_wc_average_rating'
+            ]);
             if ($topProducts->have_posts()): while ($topProducts->have_posts()): $topProducts->the_post();
                 require "components/product-item.php";
             endwhile; endif;
@@ -22,7 +28,13 @@ get_header(); ?>
     <section class="hits products-slider">
         <h2 class="section-title">Хіти продажів</h2>
         <div class="hits__items products-slider__items">
-            <?php if ($topProducts->have_posts()): while ($topProducts->have_posts()): $topProducts->the_post();
+            <?php $hits = new WP_Query([
+                'post_type' => 'product',
+                'posts_per_page' => 10,
+                'meta_key' => 'total_sales',
+                'orderby' => 'meta_value_num',
+            ]);
+            if ($hits->have_posts()): while ($hits->have_posts()): $hits->the_post();
                 require "components/product-item.php";
             endwhile; endif;
             wp_reset_postdata(); ?>

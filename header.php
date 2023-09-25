@@ -7,7 +7,7 @@
     <title><?php wp_title(); ?></title>
   <?php wp_head(); ?>
 </head>
-<body class="d-none">
+<body>
 <?php wp_body_open();
 if (is_page('checkout')) { ?>
     <header class="checkout-header wrapper">

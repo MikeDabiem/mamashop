@@ -12,8 +12,12 @@
     add_action( 'wp_ajax_order_repeat', 'order_repeat' );
     add_action( 'wp_ajax_user_favorites', 'user_favorites' );
     add_action( 'wp_ajax_remove_user_favorites', 'remove_user_favorites' );
+    add_action( 'wp_ajax_login_user', 'login_user' );
+    add_action( 'wp_ajax_nopriv_login_user', 'login_user' );
     add_action( 'wp_ajax_register_user', 'register_user' );
     add_action( 'wp_ajax_nopriv_register_user', 'register_user' );
+    add_action( 'wp_ajax_lost_password', 'lost_password' );
+    add_action( 'wp_ajax_nopriv_lost_password', 'lost_password' );
     add_action( 'wp_ajax_check_email', 'check_email' );
     add_action( 'wp_ajax_nopriv_check_email', 'check_email' );
     add_action( 'wp_ajax_get_next_reviews', 'get_next_reviews' );
@@ -286,6 +290,27 @@ function remove_user_favorites() {
     wp_die();
 }
 
+function login_user() {
+    $username = sanitize_email($_POST['login']);
+    if ($username) {
+        if (username_exists($username)) {
+            $user = get_user_by('login', $username);
+            $password = sanitize_text_field($_POST['password']);
+            if ($user && wp_check_password($password, $user->data->user_pass, $user->ID)) {
+                wp_clear_auth_cookie();
+                wp_set_current_user ( $user->ID );
+                wp_set_auth_cookie  ( $user->ID, $_POST['remember'] );
+                echo 'success';
+            } else {
+                echo 'password_error';
+            }
+        } else {
+            echo 'login_error';
+        }
+    }
+    wp_die();
+}
+
 function register_user() {
     if ($_POST['reg']) {
         $reg_form = $_POST['reg'];
@@ -298,6 +323,11 @@ function register_user() {
         update_user_meta($user_id, 'billing_first_name', $userdata['first_name']);
         update_user_meta($user_id, 'billing_last_name', $userdata['last_name']);
     }
+    wp_die();
+}
+
+function lost_password() {
+//    retrieve_password($_POST['email']);
     wp_die();
 }
 

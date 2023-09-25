@@ -319,6 +319,5 @@ get_header(); ?>
             </div>
         </div>
     </div>
-    <?php // the_content(); ?>
 </section>
 <?php get_footer();

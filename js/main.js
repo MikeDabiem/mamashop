@@ -7,8 +7,6 @@ jQuery(function($) {
   const body = $('body');
   const ajaxURL = ajaxurl;
 
-  body.removeClass('d-none');
-
   // header scroll event
   const header = $(".header");
   let currentMenuScroll = $(window).scrollTop();
@@ -1126,6 +1124,42 @@ jQuery(function($) {
     });
   });
 
+  // login form
+  const loginForm = $('#loginform');
+  loginForm.on('submit', function(e) {
+    e.preventDefault();
+    const userLoginInput = $('#user_login');
+    const userPasswordInput = $('#user_pass');
+    if (!userLoginInput.val()) {
+      showInputError(userLoginInput);
+    } else if (!userLoginInput.val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      showInputError(userLoginInput);
+      userLoginInput.siblings('.input--error-text').text('Невірний формат email');
+    } else {
+      const data = {
+        action: 'login_user',
+        login: userLoginInput.val(),
+        password: userPasswordInput.val(),
+        remember: $('#rememberme').is(':checked')
+      }
+      $.post(ajaxURL.url, data, function (response) {
+        switch (response) {
+          case 'login_error':
+            showInputError(userLoginInput);
+            userLoginInput.siblings('.input--error-text').text('Такого користувача не зареєстровано');
+            break;
+          case 'password_error':
+            showInputError(userPasswordInput);
+            userPasswordInput.siblings('.input--error-text').text('Невірний пароль');
+            break;
+          default:
+            location.reload();
+            break;
+        }
+      });
+    }
+  });
+
   // register form
   $('#registerform').on('submit', function(e) {
     e.preventDefault();
@@ -1172,6 +1206,17 @@ jQuery(function($) {
       });
     }
   });
+
+  // reset password
+  $('.lost-password').on('click', function() {
+    const data = {
+      action: 'lost_password',
+      email: ''
+    }
+    $.post(ajaxURL.url, data, function () {
+
+    });
+  })
 
   // get more reviews
   let revOffset = 3;

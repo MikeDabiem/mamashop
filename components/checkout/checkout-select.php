@@ -14,8 +14,9 @@
         </div>
         <div class="checkout-select__menu">
             <?php if (isset($select_type)) {
-                $name = $select_type === 'city' ? 'cty-srch' : $select_type . '-search'; ?>
-                <input name="<?= $name ?>" id="<?= $name ?>" class="select-search-input checkout__input-item font-13-16 fw-400" type="text" placeholder="Пошук">
+                $name = $select_type === 'city' ? 'cty-srch' : $select_type . '-search';
+                $placeholder = $select_type === 'ukrposhta_depart' ? 'Введіть поштовий індекс відділення' : 'Пошук'; ?>
+                <input name="<?= $name ?>" id="<?= $name ?>" class="select-search-input checkout__input-item font-13-16 fw-400" type="text" placeholder="<?= $placeholder ?>">
                 <div class="checkout-select__menu__items"></div>
             <?php } else { ?>
                 <div class="checkout-select__menu__items">
