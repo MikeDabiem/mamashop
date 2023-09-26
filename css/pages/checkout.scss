@@ -73,21 +73,8 @@
     }
     &__input {
       width: calc((100% - 24px) / 2);
-      label {
-        color: $black-light;
-      }
       &-item {
         margin-top: 8px;
-        width: 100%;
-        background: $bg-color;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        padding: 17px 16px;
-        outline: none;
-        &:focus {
-          background: $white;
-          border-color: $main-purple;
-        }
       }
     }
     &-change-button {

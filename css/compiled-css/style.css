@@ -682,6 +682,32 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
+.input__wrapper label {
+  font-size: 13px;
+  line-height: 140%;
+  font-weight: 500;
+  color: #5E5E62;
+}
+.input__wrapper input {
+  width: 100%;
+  background: #F7F7F8;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 17px 16px;
+  font-size: 13px;
+  line-height: 140%;
+  font-weight: 400;
+  transition: all 0.3s ease-in-out;
+}
+.input__wrapper input::placeholder {
+  color: #B2B2B7;
+}
+.input__wrapper input:focus {
+  border-color: #6757A9;
+  background: #FFFFFF;
+}
+
 .header {
   position: fixed;
   width: 100%;
@@ -1286,6 +1312,41 @@ h1, h2, h3, h4, h5, h6, p {
   opacity: 0.8;
 }
 
+.lostpassword {
+  max-width: 480px;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.lostpassword-subtitle {
+  margin-top: 24px;
+  color: #5E5E62;
+}
+.lostpassword .input__wrapper {
+  margin-top: 16px;
+}
+.lostpassword-button {
+  margin-top: 24px;
+}
+.lostpassword-cancel-button {
+  margin: 18px auto;
+}
+.lostpassword-success {
+  display: none;
+}
+.lostpassword-success-image {
+  margin-inline: auto;
+  width: 140px;
+  height: 140px;
+}
+.lostpassword-success-text {
+  margin-top: 8px;
+  color: #5E5E62;
+}
+.lostpassword-success-button {
+  margin-top: 24px;
+}
+
 .user-login {
   width: 100%;
   max-width: 480px;
@@ -1437,30 +1498,8 @@ h1, h2, h3, h4, h5, h6, p {
 .user-login .input__wrapper:not(:first-child) {
   margin-top: 16px;
 }
-.user-login .input__wrapper label {
-  font-size: 13px;
-  line-height: 140%;
-  color: #5E5E62;
-}
 .user-login .input__wrapper input {
   margin-top: 8px;
-  width: 100%;
-  background: #F7F7F8;
-  outline: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 17px 16px;
-  font-size: 13px;
-  line-height: 140%;
-  font-weight: 400;
-  transition: all 0.3s ease-in-out;
-}
-.user-login .input__wrapper input::placeholder {
-  color: #B2B2B7;
-}
-.user-login .input__wrapper input:focus {
-  border-color: #6757A9;
-  background: #FFFFFF;
 }
 
 .banner {
@@ -2912,21 +2951,8 @@ h1, h2, h3, h4, h5, h6, p {
 .checkout-page .checkout__input {
   width: calc((100% - 24px) / 2);
 }
-.checkout-page .checkout__input label {
-  color: #5E5E62;
-}
 .checkout-page .checkout__input-item {
   margin-top: 8px;
-  width: 100%;
-  background: #F7F7F8;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 17px 16px;
-  outline: none;
-}
-.checkout-page .checkout__input-item:focus {
-  background: #FFFFFF;
-  border-color: #6757A9;
 }
 .checkout-page .checkout-change-button {
   display: none;
@@ -3611,6 +3637,25 @@ h1, h2, h3, h4, h5, h6, p {
 .account-page__empty .empty-button {
   margin: 20px auto 0;
   width: fit-content;
+}
+
+.lost-password-page {
+  display: grid;
+  place-content: center;
+  height: calc(100vh - 180px);
+}
+.lost-password-page #resetpassform {
+  max-width: 480px;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.lost-password-page #resetpassform .input__wrapper {
+  margin-top: 16px;
+}
+.lost-password-page #resetpassform #resetpass-button {
+  margin-top: 24px;
+  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

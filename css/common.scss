@@ -585,3 +585,31 @@ h1, h2, h3, h4, h5, h6, p {
     }
   }
 }
+
+.input__wrapper {
+  label {
+    font-size: 13px;
+    line-height: 140%;
+    font-weight: 500;
+    color: $black-light;
+  }
+  input {
+    width: 100%;
+    background: $bg-color;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 17px 16px;
+    font-size: 13px;
+    line-height: 140%;
+    font-weight: 400;
+    transition: all .3s ease-in-out;
+    &::placeholder {
+      color: $grey;
+    }
+    &:focus {
+      border-color: $main-purple;
+      background: $white;
+    }
+  }
+}

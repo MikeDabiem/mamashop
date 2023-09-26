@@ -16,8 +16,8 @@ get_header(); ?>
                         foreach ( $fields as $key => $field ) {
                             $hide = $key === 'billing_country' || $key === 'billing_address_1' || $key === 'billing_address_2' || $key === 'billing_city' ? 'd-none' : ''; ?>
                             <div id="<?= $key; ?>_field" class="checkout__input input__wrapper <?= $hide; ?>">
-                                <label for="<?= $key; ?>" class="font-13-16 fw-500 d-block"><?= $field['label']; if ($field['required'] ): ?><abbr class="text-decoration-none" title="Обов'язкове поле">*</abbr><?php endif; ?></label>
-                                <input type="text" name="<?= $key; ?>" id="<?= $key; ?>" class="checkout__input-item font-13-16 fw-400 transition-default" placeholder="<?php isset($field['placeholder']) ? print $field['placeholder'] : print ''; ?>" value="<?= $checkout->get_value($key); ?>" <?php if ($field['required']): ?>required<?php endif; ?>>
+                                <label for="<?= $key; ?>" class="d-block"><?= $field['label']; if ($field['required'] ): ?><abbr class="text-decoration-none" title="Обов'язкове поле">*</abbr><?php endif; ?></label>
+                                <input type="text" name="<?= $key; ?>" id="<?= $key; ?>" class="checkout__input-item" placeholder="<?php isset($field['placeholder']) ? print $field['placeholder'] : print ''; ?>" value="<?= $checkout->get_value($key); ?>" <?php if ($field['required']): ?>required<?php endif; ?>>
                                 <?php if ($key === 'billing_email') { ?>
                                     <p class="input--error-text font-9-11 fw-400">Невірний формат адреси електронної пошти</p>
                                 <?php } else { ?>
@@ -135,12 +135,12 @@ get_header(); ?>
                                 $areas[$item->description] = $item->ref;
                             }
                             $city_arr = explode(', ', $checkout->get_value('billing_city'));
-                            $chosen_option = empty($city_arr) ? ['Київська' => $areas['Київська']] : [$city_arr[0] => $areas[$city_arr[0]]];
+                            $chosen_option = empty($city_arr[0]) ? ['Київська' => $areas['Київська']] : [$city_arr[0] => $areas[$city_arr[0]]];
                             get_template_part('components/checkout/checkout-select', null, ['options' => $areas, 'chosen_option' => $chosen_option, 'input_id' => 'delivery_region-input']); ?>
                         </div>
                         <div id="delivery_city" class="delivery__place__item">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть населений пункт</h6>
-                            <?php if (empty($city_arr) || isset($city_arr[0]) && $city_arr[0] === 'Київська' && !isset($city_arr[1])) {
+                            <?php if (empty($city_arr[0]) || $city_arr[0] === 'Київська' && !isset($city_arr[1])) {
                                 $option = ['Київ' => '8d5a980d-391c-11dd-90d9-001a92567626'];
                             } elseif (isset($city_arr[1])) {
                                 $city_name = $city_arr[1];
@@ -201,11 +201,11 @@ get_header(); ?>
                                                 $apartment_num = $checkout->get_value('billing_address_2');
                                             } ?>
                                             <div class="item__select__address d-flex justify-content-between">
-                                                <div class="item__select__address__item">
+                                                <div class="item__select__address__item input__wrapper">
                                                     <label for="building-number" class="font-13-16 fw-500">Будинок</label>
                                                     <input type="text" name="building-number" id="building-number" class="checkout__input-item font-13-16 fw-400" value="<?= $building_num ?>" placeholder="Номер будинку">
                                                 </div>
-                                                <div class="item__select__address__item">
+                                                <div class="item__select__address__item input__wrapper">
                                                     <label for="apartment-number" class="font-13-16 fw-500">Квартира</label>
                                                     <input type="text" name="apartment-number" id="apartment-number" class="checkout__input-item font-13-16 fw-400" value="<?= $apartment_num ?>" placeholder="Номер квартири">
                                                 </div>
@@ -307,7 +307,7 @@ get_header(); ?>
                 <div class="coupon__body">
                     <div class="input__wrapper">
                         <label for="coupon_code" class="screen-reader-text"><?php esc_html_e('Coupon:', 'woocommerce'); ?></label>
-                        <input type="text" name="coupon_code" class="coupon-input checkout__input-item font-13-16 fw-400 transition-default" placeholder="<?php esc_attr_e('Введіть промокод', 'woocommerce'); ?>" id="coupon_code" value="" />
+                        <input type="text" name="coupon_code" class="coupon-input checkout__input-item" placeholder="<?php esc_attr_e('Введіть промокод', 'woocommerce'); ?>" id="coupon_code" value="" />
                         <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
                     </div>
                     <button type="button" class="coupon-button std-btn purple-btn font-15-18 fw-600 button<?= esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Застосувати', 'woocommerce'); ?>"><?php esc_html_e('Застосувати', 'woocommerce'); ?></button>

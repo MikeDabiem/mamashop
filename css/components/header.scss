@@ -188,3 +188,37 @@
 }
 @import "catalog-menu";
 @import "cart-menu";
+.lostpassword {
+  max-width: 480px;
+  padding: 20px;
+  background: $white;
+  border-radius: 8px;
+  &-subtitle {
+    margin-top: 24px;
+    color: $black-light;
+  }
+  .input__wrapper {
+    margin-top: 16px;
+  }
+  &-button {
+    margin-top: 24px;
+  }
+  &-cancel-button {
+    margin: 18px auto;
+  }
+  &-success {
+    display: none;
+    &-image {
+      margin-inline: auto;
+      width: 140px;
+      height: 140px;
+    }
+    &-text {
+      margin-top: 8px;
+      color: $black-light;
+    }
+    &-button {
+      margin-top: 24px;
+    }
+  }
+}

@@ -842,6 +842,31 @@ jQuery(function($) {
     shippingMethod.on('change', showShipSelector);
   }
 
+  // reset password form validation
+  const resetPassForm = $('#resetpassform');
+  if (resetPassForm.length) {
+    resetPassForm.on('submit', function(e) {
+      const newPass = $('#pass1');
+      const repeatPass = $('#pass2');
+      if (!newPass.val()) {
+        e.preventDefault();
+        showInputError(newPass);
+      } else if (newPass.val().length < 8) {
+        e.preventDefault();
+        showInputError(newPass);
+        newPass.siblings('.input--error-text').text('Пароль має містити не менше 8 символів');
+      }
+      if (!repeatPass.val()) {
+        e.preventDefault();
+        showInputError(repeatPass);
+      } else if (repeatPass.val() !== newPass.val()) {
+        e.preventDefault();
+        showInputError(repeatPass);
+        repeatPass.siblings('.input--error-text').text('Паролі не співпадають');
+      }
+    });
+  }
+
 
 
   //////////
@@ -1126,9 +1151,9 @@ jQuery(function($) {
 
   // login form
   const loginForm = $('#loginform');
+  const userLoginInput = $('#user_login');
   loginForm.on('submit', function(e) {
     e.preventDefault();
-    const userLoginInput = $('#user_login');
     const userPasswordInput = $('#user_pass');
     if (!userLoginInput.val()) {
       showInputError(userLoginInput);
@@ -1182,6 +1207,14 @@ jQuery(function($) {
       } else if (emailExists !== '') {
         errorsCount++;
       } else if (
+        $(this).is('#user_reg_password') &&
+        $(this).val().length < 8
+      ) {
+        $(this).addClass('input--error');
+        $(this).siblings('.input--error-text').text('Пароль має містити не менше 8 символів');
+        $(this).siblings('.input--error-text').fadeIn(300);
+        errorsCount++;
+      } else if (
         $(this).is('#user_reg_password_repeat') &&
         $(this).val() !== $('#user_reg_password').val()
       ) {
@@ -1208,15 +1241,23 @@ jQuery(function($) {
   });
 
   // reset password
+  const lostpassUserLogin = $('#lostpass_user_login');
   $('.lost-password').on('click', function() {
-    const data = {
-      action: 'lost_password',
-      email: ''
+    blurBG.trigger('click');
+    showMenu($('.lostpassword'));
+    if (userLoginInput.val()) {
+      lostpassUserLogin.val(userLoginInput.val());
     }
-    $.post(ajaxURL.url, data, function () {
+  });
 
-    });
-  })
+  $('.lostpassword-cancel-button').on('click', function() {
+    blurBG.trigger('click');
+    showMenu($('.user-login'))
+  });
+
+  $('.lostpassword-success-button').on('click', function() {
+    blurBG.trigger('click');
+  });
 
   // get more reviews
   let revOffset = 3;
@@ -1322,4 +1363,37 @@ jQuery(function($) {
       });
     }
   });
+
+  const lostpasswordForm = $('#lostpasswordform');
+  if (lostpasswordForm.length) {
+    lostpasswordForm.on('submit', function(e) {
+      e.preventDefault();
+      if (!lostpassUserLogin.val()) {
+        showInputError(lostpassUserLogin);
+      } else if (!lostpassUserLogin.val().toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        showInputError(lostpassUserLogin);
+        lostpassUserLogin.siblings('.input--error-text').text('Невірний формат адреси електронної пошти');
+      } else {
+        const data = {
+          action: 'check_email',
+          email: lostpassUserLogin.val()
+        }
+        $.post(ajaxURL.url, data, function(response) {
+          if (response === 'Користувач з таким Email вже існує') {
+            const data = {
+              action: 'lost_password_email',
+              email: lostpassUserLogin.val()
+            }
+            $.post(ajaxURL.url, data, function() {
+              lostpasswordForm.slideUp(300);
+              $('.lostpassword-success').slideDown(300);
+            });
+          } else {
+            showInputError(lostpassUserLogin);
+            lostpassUserLogin.siblings('.input--error-text').text('Цей email не зареєстровано на цьому сайті');
+          }
+        });
+      }
+    });
+  }
 });

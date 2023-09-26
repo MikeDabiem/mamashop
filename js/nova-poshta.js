@@ -24,13 +24,13 @@ jQuery(function ($) {
 
     function ajaxSearch(input, action, ref, type = '') {
       if (input.attr('id') !== 'cty-srch' && !cityName.val()) {
-        input.siblings('.checkout-select__menu__items').html('<p id="no-city-error" class="font-13-16 fw-500">Спочатку оберіть місто</p>');
+        input.parent().siblings('.checkout-select__menu__items').html('<p id="no-city-error" class="font-13-16 fw-500">Спочатку оберіть місто</p>');
         input.on('blur', function() {
           $('#no-city-error').remove();
         });
       } else {
         if (input.val() === '') {
-          input.siblings('.checkout-select__menu__items').empty();
+          input.parent().siblings('.checkout-select__menu__items').empty();
         } else {
           const data = {
             action,
@@ -40,7 +40,7 @@ jQuery(function ($) {
           }
           $.post(ajaxUrl, data, function(response) {
             if (input.val() !== '') {
-              input.siblings('.checkout-select__menu__items').html(response);
+              input.parent().siblings('.checkout-select__menu__items').html(response);
             }
           });
         }

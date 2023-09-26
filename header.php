@@ -9,7 +9,7 @@
 </head>
 <body>
 <?php wp_body_open();
-if (is_page('checkout')) { ?>
+if (is_page('checkout') || is_page('lost-password')) { ?>
     <header class="checkout-header wrapper">
         <a href="<?= home_url(); ?>" class="header-logo d-block">
             <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
@@ -140,5 +140,32 @@ if (is_page('checkout')) { ?>
     </div>
     <div class="header-menu-bg blur-bg transition-default d-flex justify-content-center align-items-center">
         <?php require 'components/login.php'; ?>
+    </div>
+    <div class="header-menu-bg blur-bg transition-default d-flex justify-content-center align-items-center">
+        <div class="lostpassword">
+            <div class="lostpassword__head d-flex">
+                <h4 class="lostpassword-title font-20-24 fw-600">Відновлення пароля</h4>
+                <button class="cart-menu__close close-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"><path stroke="#B4ADAD" stroke-width="2" d="m1.367 1.248 12.767 12.767M14.134 1.248 1.367 14.015"/></svg>
+                </button>
+            </div>
+            <form id="lostpasswordform" class="lostpassword-form" action="<?= wp_lostpassword_url(); ?>" method="post">
+                <p class="lostpassword-subtitle font-15-24 fw-500">Щоб відновити пароль ведіть, будь ласка, свою електронну пошту, вказану вами раніше при реєстрації</p>
+                <div class="input__wrapper">
+                    <label for="lostpass_user_login">Електронна пошта<abbr class="text-decoration-none" title="Обов'язкове поле">*</abbr></label>
+                    <input type="text" name="user_login" id="lostpass_user_login" placeholder="Введіть електронну пошту">
+                    <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
+                </div>
+                <button type="submit" class="lostpassword-button std-btn purple-btn font-16-22 fw-600 w-100">Відновити пароль</button>
+                <button type="button" class="lostpassword-cancel-button std-btn transparent-btn font-16-22 fw-600 d-block">Я згадав(ла) свій пароль</button>
+            </form>
+            <div class="lostpassword-success">
+                <div class="lostpassword-success-image img-wrapper-contain">
+                    <img src="<?php bloginfo('template_url') ?>/images/noinfo.png" alt="success">
+                </div>
+                <p class="lostpassword-success-text font-15-24 fw-500 text-center">На вказану електронну пошту було надіслано<br>посилання для відновлення вашого паролю. Будь ласка, перевірте вашу пошту</p>
+                <button class="lostpassword-success-button std-btn purple-btn font-16-22 fw-600 w-100">Зрозуміло</button>
+            </div>
+        </div>
     </div>
 <?php }

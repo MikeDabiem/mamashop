@@ -43,6 +43,88 @@ add_theme_support('woocommerce');
 add_theme_support('menus');
 add_theme_support('widgets');
 
+// get products
+function fetch_data($posts_per_page) {
+    $sort_args = [];
+    if (isset($_GET['sort'])) {
+        $orderby_value = wc_clean($_GET['sort']);
+        $sort_args = match ($orderby_value) {
+            'new' => [
+                'orderby' => 'date',
+                'order' => 'DESC',
+            ],
+            'price-asc' => [
+                'orderby' => 'meta_value_num',
+                'order' => 'ASC',
+                'meta_key' => '_price',
+            ],
+            'price-desc' => [
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
+                'meta_key' => '_price',
+            ],
+            'rating' => [
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
+                'meta_key' => '_wc_average_rating',
+            ],
+            'price-disc' => [
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
+                'meta_key' => '_discount_value',
+            ],
+            default => [
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
+                'meta_key' => '_total_views_count',
+            ],
+        };
+    }
+    $price_args = [];
+    if (isset($_GET['price'])) {
+        $price_args = [
+            'meta_query' => [
+                [
+                    'key' => '_price',
+                    'value' => wc_clean(explode('-', $_GET['price'])),
+                    'type' => 'numeric',
+                    'compare' => 'BETWEEN'
+                ]
+            ]
+        ];
+    }
+    $filter_args = [
+        'tax_query' => [
+            'relation' => 'AND',
+        ]
+    ];
+    foreach (array_keys($_GET) as $key) {
+        if (str_contains($key, 'pa_')) {
+            $filter_args['tax_query'][] = [
+                'taxonomy' => $key,
+                'field' => 'slug',
+                'terms' => explode(',', $_GET[$key])
+            ];
+        };
+    }
+    if (get_query_var('product_cat')) {
+        $filter_args['tax_query'][] = [
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => get_query_var('product_cat')
+        ];
+    }
+    $args = [
+        'post_type' => 'product',
+        'posts_per_page' => $posts_per_page,
+        'paged' => isset($_GET['page']) ?? 1
+    ];
+    if (isset($_GET['s'])) {
+        $args['s'] = $_GET['s'];
+    }
+    return new WP_Query(array_merge($args, $sort_args, $price_args, $filter_args));
+}
+
 require 'components/ajax.php';
 require 'components/checkout/checkout-settings.php';
 
@@ -223,4 +305,59 @@ function get_count_of_reviews($product_id, $meta_value = 'review') {
 function change_index(&$array, $from, $to) {
     $out = array_splice($array, $from, 1);
     array_splice($array, $to, 0, $out);
+}
+
+// redirect to custom lost-password page
+add_action( 'login_form_lostpassword', 'redirect_to_custom_lostpassword' );
+add_action( 'login_form_rp', 'redirect_to_custom_lostpassword' );
+add_action( 'login_form_resetpass', 'redirect_to_custom_lostpassword' );
+function redirect_to_custom_lostpassword() {
+    if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
+        if ( is_user_logged_in() ) {
+            wp_redirect(wc_get_page_permalink('myaccount') . '/security/');
+            exit;
+        }
+
+        $user = check_password_reset_key( $_REQUEST['key'], $_REQUEST['login'] );
+        if ( !$user || is_wp_error( $user ) ) {
+            if ( $user && $user->get_error_code() === 'expired_key' ) {
+                wp_redirect( home_url( '404?error=expiredkey' ) );
+            } else {
+                wp_redirect( home_url( '404?error=invalidkey' ) );
+            }
+            exit;
+        }
+
+        if (isset( $_REQUEST['password'] ) && $_REQUEST['password'] === 'changed') {
+            wp_redirect( home_url() );
+            exit;
+        }
+
+        $redirect_url = home_url( 'lost-password' );
+        $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST['login'] ), $redirect_url );
+        $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST['key'] ), $redirect_url );
+        wp_redirect( $redirect_url );
+        exit;
+    }
+}
+
+// change retrieve password email message
+add_filter( 'retrieve_password_title', 'replace_retrieve_password_title' );
+function replace_retrieve_password_title($title) {
+    $site = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+    $title = "Зміна паролю на сайті $site";
+    return $title;
+}
+
+// change retrieve password email message
+add_filter( 'retrieve_password_message', 'replace_retrieve_password_message' , 10, 4 );
+function replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
+    $user = get_user_by('email', $user_login);
+    $site = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+    $msg  = "Вітаємо, $user->first_name!" . "\r\n\r\n";
+    $msg .= "Ви подали заявку на зміну паролю на сайті $site" . "\r\n\r\n";
+    $msg .= 'Якщо сталася помилка, або це були не Ви, просто не звертайте увагу на це повідомлення і пароль не буде змінено.' . "\r\n\r\n";
+    $msg .= 'Щоб змінити пароль до Вашого акаунту перейдіть за цим посиланням:' . "\r\n\r\n";
+    $msg .= site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
+    return $msg;
 }
