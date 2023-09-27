@@ -308,13 +308,22 @@ function change_index(&$array, $from, $to) {
 }
 
 // redirect to custom lost-password page
-add_action( 'login_form_lostpassword', 'redirect_to_custom_lostpassword' );
+add_action( 'login_form_lostpassword', 'lostpassword_handle' );
 add_action( 'login_form_rp', 'redirect_to_custom_lostpassword' );
 add_action( 'login_form_resetpass', 'redirect_to_custom_lostpassword' );
+function lostpassword_handle() {
+    print_r($_REQUEST);
+//    wp_redirect(home_url());
+}
 function redirect_to_custom_lostpassword() {
     if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         if ( is_user_logged_in() ) {
             wp_redirect(wc_get_page_permalink('myaccount') . '/security/');
+            exit;
+        }
+
+        if (isset( $_REQUEST['password'] ) && $_REQUEST['password'] === 'changed') {
+            wp_redirect( home_url() );
             exit;
         }
 
@@ -328,16 +337,13 @@ function redirect_to_custom_lostpassword() {
             exit;
         }
 
-        if (isset( $_REQUEST['password'] ) && $_REQUEST['password'] === 'changed') {
-            wp_redirect( home_url() );
-            exit;
-        }
-
         $redirect_url = home_url( 'lost-password' );
         $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST['login'] ), $redirect_url );
         $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST['key'] ), $redirect_url );
         wp_redirect( $redirect_url );
         exit;
+    } elseif ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+        wp_redirect( home_url() );
     }
 }
 

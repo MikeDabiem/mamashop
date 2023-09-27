@@ -1,6 +1,10 @@
 <?php /* Template Name: Lost Password Template */
 get_header(); ?>
 <div class="lost-password-page wrapper filler">
+    <?php echo '<pre>';
+    print_r($_REQUEST);
+    print_r($_SERVER);
+    echo '</pre>'; ?>
     <form name="resetpassform" id="resetpassform" action="<?= site_url( 'wp-login.php?action=resetpass' ); ?>" method="post" autocomplete="off">
         <h2 class="font-20-24 fw-600">Змінити пароль</h2>
         <input type="hidden" id="user_login" name="rp_login" value="<?php echo esc_attr( $_REQUEST['login'] ); ?>" autocomplete="off">
