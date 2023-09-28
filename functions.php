@@ -308,25 +308,21 @@ function change_index(&$array, $from, $to) {
 }
 
 // redirect to custom lost-password page
-add_action( 'login_form_lostpassword', 'lostpassword_handle' );
-add_action( 'login_form_rp', 'redirect_to_custom_lostpassword' );
-add_action( 'login_form_resetpass', 'redirect_to_custom_lostpassword' );
-function lostpassword_handle() {
-    print_r($_REQUEST);
-//    wp_redirect(home_url());
-}
+add_action( 'login_form_lostpassword', 'redirect_to_custom_lostpassword' );
 function redirect_to_custom_lostpassword() {
+    if ( is_user_logged_in() ) {
+        wp_redirect(wc_get_page_permalink('myaccount') . '/security/');
+        exit;
+    }
+
+    wp_redirect( home_url() );
+    exit;
+}
+
+add_action( 'login_form_rp', 'redirect_to_custom_password_reset' );
+add_action( 'login_form_resetpass', 'redirect_to_custom_password_reset' );
+function redirect_to_custom_password_reset() {
     if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
-        if ( is_user_logged_in() ) {
-            wp_redirect(wc_get_page_permalink('myaccount') . '/security/');
-            exit;
-        }
-
-        if (isset( $_REQUEST['password'] ) && $_REQUEST['password'] === 'changed') {
-            wp_redirect( home_url() );
-            exit;
-        }
-
         $user = check_password_reset_key( $_REQUEST['key'], $_REQUEST['login'] );
         if ( !$user || is_wp_error( $user ) ) {
             if ( $user && $user->get_error_code() === 'expired_key' ) {
@@ -343,7 +339,23 @@ function redirect_to_custom_lostpassword() {
         wp_redirect( $redirect_url );
         exit;
     } elseif ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-        wp_redirect( home_url() );
+        $rp_key = $_REQUEST['rp_key'];
+        $rp_login = $_REQUEST['rp_login'];
+        $user = check_password_reset_key( $rp_key, $rp_login );
+        if ( ! $user || is_wp_error( $user ) ) {
+            if ( $user && $user->get_error_code() === 'expired_key' ) {
+                wp_redirect( home_url( '404?error=expiredkey' ) );
+            } else {
+                wp_redirect( home_url( '404?error=invalidkey' ) );
+            }
+            exit;
+        }
+        reset_password( $user, $_POST['pass1'] );
+        $redirect_url = home_url();
+        $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );
+
+        wp_redirect( $redirect_url );
+        exit;
     }
 }
 

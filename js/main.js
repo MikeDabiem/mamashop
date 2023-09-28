@@ -782,6 +782,21 @@ jQuery(function($) {
     cartItemsAJAX(idArr);
   });
 
+  // show changed password message
+  if (window.location.search === '?password=changed') {
+    $('.login-new-password').removeClass('d-none');
+    showMenu($('.user-login'));
+    window.history.replaceState(null, '', window.location.origin);
+  }
+
+  // user register form height
+  const userLoginForm = $('#loginform');
+  const userRegisterForm = $('#registerform');
+  if (userLoginForm.length && userRegisterForm.length) {
+    const height = userLoginForm.height();
+    userRegisterForm.height(height);
+  }
+
   // switch log in/ registration button
   $('.login__switch-button').on('click', function() {
     $(this).addClass('active').siblings().removeClass('active');

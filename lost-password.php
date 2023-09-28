@@ -2,8 +2,7 @@
 get_header(); ?>
 <div class="lost-password-page wrapper filler">
     <?php echo '<pre>';
-    print_r($_REQUEST);
-    print_r($_SERVER);
+    print_r(is_wp_error(check_password_reset_key( $_REQUEST['key'], $_REQUEST['login'] )));
     echo '</pre>'; ?>
     <form name="resetpassform" id="resetpassform" action="<?= site_url( 'wp-login.php?action=resetpass' ); ?>" method="post" autocomplete="off">
         <h2 class="font-20-24 fw-600">Змінити пароль</h2>

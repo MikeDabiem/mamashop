@@ -8,6 +8,7 @@
         <button class="login__switch-button login-signup font-16-22 fw-500 transition-default">Реєстрація</button>
     </div>
     <form name="loginform" id="loginform" class="user-login-form active" action="<?= get_home_url(); ?>/wp-login.php" method="post">
+        <p class="login-new-password font-13-16 fw-400 d-none">Тепер Ви можете увійти до свого кабінету використовуючи новий пароль</p>
         <div class="login-username input__wrapper">
             <label for="user_login">Електронна пошта</label>
             <input type="text" name="log" id="user_login" autocomplete="username" class="input" placeholder="Введіть електронну пошту" required>

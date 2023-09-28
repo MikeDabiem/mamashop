@@ -1426,6 +1426,9 @@ h1, h2, h3, h4, h5, h6, p {
 .user-login .login-submit-button {
   margin-top: 24px;
 }
+.user-login .login-new-password {
+  color: #5E5E62;
+}
 .user-login .remember-input {
   position: relative;
   cursor: pointer;
@@ -1478,7 +1481,6 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .user-login .user-login-form {
   margin-top: 24px;
-  max-height: 433.97px;
   overflow: auto;
 }
 .user-login .user-login-form::-webkit-scrollbar {

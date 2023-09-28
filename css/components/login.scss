@@ -81,6 +81,9 @@
     &-submit-button {
       margin-top: 24px;
     }
+    &-new-password {
+      color: $black-light;
+    }
   }
   .remember {
     &-input {
@@ -136,7 +139,6 @@
   }
   .user-login-form {
     margin-top: 24px;
-    max-height: 433.97px;
     overflow: auto;
     @include scrollbar;
   }
