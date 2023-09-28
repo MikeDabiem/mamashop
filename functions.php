@@ -307,6 +307,13 @@ function change_index(&$array, $from, $to) {
     array_splice($array, $to, 0, $out);
 }
 
+// change login page url
+add_filter( 'login_url', 'change_login_page_url' );
+function change_login_page_url($login_url) {
+    return home_url();
+}
+
+
 // redirect to custom lost-password page
 add_action( 'login_form_lostpassword', 'redirect_to_custom_lostpassword' );
 function redirect_to_custom_lostpassword() {
