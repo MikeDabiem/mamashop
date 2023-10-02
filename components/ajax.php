@@ -110,7 +110,7 @@
                     [
                         'numberposts' => 20,
                         'meta_key'    => '_customer_user',
-                        'meta_value'  => $_POST['user_id'],
+                        'meta_value'  => get_current_user_id(),
                         'post_type'   => wc_get_order_types('view-orders'),
                         'post_status' => $post_status,
                     ]

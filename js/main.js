@@ -39,9 +39,9 @@ jQuery(function($) {
   });
 
   $('.header__btn').on('click', function(e) {
-    if (($(this).hasClass('header__profile') || $(this).hasClass('header__fav')) && $(this).attr('href') === 'login') {
+    if (($(this).hasClass('header__profile') || $(this).hasClass('header__fav')) && $(this).attr('href') === '#') {
       e.preventDefault();
-      showMenu($('.user-login'))
+      showMenu($('.user-login'));
     }
     if ($(this).hasClass('burger')) {
       showMenu(mainMenu);
@@ -460,6 +460,7 @@ jQuery(function($) {
     const checkoutChangeButton = $('.checkout-change-button');
     const buildingNum = $('#building-number');
     const apartmentNum = $('#apartment-number');
+    const billingCityInput = $('#billing_city');
 
     // forbid change value to space
     $('.checkout__input-item').on('input', function() {
@@ -509,13 +510,15 @@ jQuery(function($) {
           const billingAddress = $('#billing_address_1');
           const billingApartment = $('#billing_address_2');
           const parent = $('.shipping_method:checked').closest('.delivery__type__item');
-          if (parent.has('#building-number').length && parent.has('#apartment-number').length) {
-            if (buildingNum.val() && apartmentNum.val()) {
-              billingAddress.val($(this).siblings('.delivery__type').find('.checkout-select-input').val() + ', ' + buildingNum.val());
-              billingApartment.val(apartmentNum.val());
+          billingCityInput.val($('#delivery_region-input').val() + ', ' + $('#delivery_city-input').val());
+          billingAddress.val(parent.find('.checkout-select-input').val());
+          if (parent.has('#building-number').length && parent.has('#apartment-number').length && buildingNum.val()) {
+            if (apartmentNum.val()) {
+              billingApartment.val(`буд. ${buildingNum.val()}, кв. ${apartmentNum.val()}`);
+            } else {
+              billingApartment.val(`буд. ${buildingNum.val()}`);
             }
           } else {
-            billingAddress.val($(this).siblings('.delivery__type').find('.checkout-select-input').val());
             billingApartment.val('');
           }
         }
@@ -558,7 +561,8 @@ jQuery(function($) {
         checkedMethod.parent().siblings('.item__select').find('.checkout-select__chosen-title').text().indexOf('Оберіть') < 0 &&
         (checkedMethod.attr('id') === 'shipping_method_0_nova_poshta_courier7' &&
         buildingNum.val() ||
-        checkedMethod.attr('id') !== 'shipping_method_0_nova_poshta_courier7')
+        checkedMethod.attr('id') !== 'shipping_method_0_nova_poshta_courier7') &&
+        $('#delivery_city-input').val()
       ) {
           nextButton.removeAttr('disabled');
       } else {
@@ -612,8 +616,15 @@ jQuery(function($) {
         checkoutComment.trigger('click');
       });
     }
+    $('.confirm-button').on('click', function() {
+      const countryInput = $('#billing_country');
+      if (countryInput.val() !== 'UA') {
+        countryInput.val('UA');
+      }
+    });
   }
 
+  // coupon using
   const couponBody = $('.coupon__body');
   if (couponBody.length) {
     const couponHeadButton = $('.coupon__head-button');
@@ -652,6 +663,7 @@ jQuery(function($) {
     });
   }
 
+  // checkout select
   const checkoutSelect = $('.checkout-select');
   if (checkoutSelect.length) {
     const checkoutSelectMenu = $('.checkout-select__menu');
@@ -673,6 +685,7 @@ jQuery(function($) {
       }
     });
     body.on('click', '.checkout-select__menu__item', function() {
+      const billingCityInput = $('#billing_city');
       $(this).siblings().removeClass('active');
       $(this).addClass('active');
       $(this).closest('.checkout-select__menu').siblings().find('.checkout-select__chosen-title').text($(this).children('.checkout-select__menu__item-title').text());
@@ -681,13 +694,14 @@ jQuery(function($) {
       checkoutSelectMenu.slideUp(300);
       checkoutSelectChosen.removeClass('active');
 
-      const billingCityInput = $('#billing_city');
       if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_region') {
         billingCityInput.val($(this).children('.checkout-select__menu__item-title').text() + ', ');
         $('#delivery_city').find('.checkout-select__chosen-title').text('Оберіть населений пункт');
       } else if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_city') {
         billingCityInput.val(billingCityInput.val() + $(this).children('.checkout-select__menu__item-title').text());
       }
+
+      activateNextButton();
     });
     body.on('click', (e) => {
       if (!e.target.closest('.checkout-select')) {
@@ -697,6 +711,7 @@ jQuery(function($) {
     });
   }
 
+  // edit account in profile
   const editAccountForm = $('#edit-account');
   if (editAccountForm.length) {
     const firstNameInput = $('#account_first_name');
@@ -789,6 +804,17 @@ jQuery(function($) {
     window.history.replaceState(null, '', window.location.origin);
   }
 
+  // show thank you message
+  if (window.location.search.includes('success-order=')) {
+    showMenu($('.success-message'));
+    window.history.replaceState(null, '', window.location.origin);
+  }
+
+  // hide thank you message
+  body.on('click', '.success-message-button', function() {
+    blurBG.trigger('click');
+  });
+
   // user register form height
   const userLoginForm = $('#loginform');
   const userRegisterForm = $('#registerform');
@@ -797,15 +823,15 @@ jQuery(function($) {
     userRegisterForm.height(height);
   }
 
-  // switch log in/ registration button
+  // switch log in / registration button
   $('.login__switch-button').on('click', function() {
     $(this).addClass('active').siblings().removeClass('active');
     $('.user-login-form').fadeOut(200);
     setTimeout(() => {
       if ($(this).hasClass('login-signin')) {
-        $('#loginform').fadeIn(200);
+        userLoginForm.fadeIn(200);
       } else if ($(this).hasClass('login-signup')) {
-        $('#registerform').fadeIn(200);
+        userRegisterForm.fadeIn(200);
       }
     }, 200);
   });
@@ -1081,7 +1107,7 @@ jQuery(function($) {
         $('.cart-menu__order').removeClass('disabled-check');
         $('.error-min').removeClass('show');
       }
-      if (cartTotal > 250) {
+      if (cartTotal >= 250) {
         $('.error-free').addClass('show');
       }
     });
@@ -1102,7 +1128,7 @@ jQuery(function($) {
       const container = $('.account-page__orders__items');
       const data = {
         action: 'user_orders_sort',
-        post_status: this.id
+        post_status: this.id,
       }
       accPageTabChanger(container, $(this), data);
     }
@@ -1165,9 +1191,8 @@ jQuery(function($) {
   });
 
   // login form
-  const loginForm = $('#loginform');
   const userLoginInput = $('#user_login');
-  loginForm.on('submit', function(e) {
+  userLoginForm.on('submit', function(e) {
     e.preventDefault();
     const userPasswordInput = $('#user_pass');
     if (!userLoginInput.val()) {
@@ -1201,7 +1226,7 @@ jQuery(function($) {
   });
 
   // register form
-  $('#registerform').on('submit', function(e) {
+  userRegisterForm.on('submit', function(e) {
     e.preventDefault();
     let errorsCount = 0;
     $(this).find('.reg_input').each(function() {

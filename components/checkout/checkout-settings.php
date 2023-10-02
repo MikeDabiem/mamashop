@@ -58,7 +58,7 @@ function change_admin_billing_fields( $fields ) {
     $fields['last_name']['show'] = true;
     $fields['address_1']['label'] = 'Адреса / Відділення';
     $fields['address_1']['show'] = true;
-    $fields['address_2']['label'] = 'Кв.';
+    $fields['address_2']['label'] = 'Буд./Кв.';
     $fields['address_2']['show'] = true;
     $fields['city']['label'] = 'Область, Місто';
     $fields['city']['show'] = true;

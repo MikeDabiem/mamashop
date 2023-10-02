@@ -1347,6 +1347,29 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 24px;
 }
 
+.success-message {
+  max-width: 390px;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.success-message-image {
+  width: 35%;
+  margin-inline: auto;
+}
+.success-message-image::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.success-message-title, .success-message-button {
+  margin-top: 20px;
+}
+.success-message-text {
+  margin-top: 12px;
+  color: #5E5E62;
+}
+
 .user-login {
   width: 100%;
   max-width: 480px;
@@ -2862,7 +2885,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 4px;
 }
 @media (hover: hover) {
-  .info-page__menu > ul > li:hover {
+  .info-page__menu > ul > li:not(.current_page_item):hover {
     color: #6757A9;
     border-color: rgba(103, 87, 169, 0.2);
   }

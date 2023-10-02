@@ -30,8 +30,8 @@ if (is_page('checkout') || is_page('lost-password')) { ?>
             </button>
             <?php get_search_form(); ?>
             <div class="header__cab d-flex">
-                <?php $favorites_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') . '/favorites/' : 'login';
-                $profile_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') : 'login'; ?>
+                <?php $favorites_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') . '/favorites/' : '#';
+                $profile_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') : '#'; ?>
                 <a href="<?= $favorites_url; ?>" class="header__fav header__btn std-btn d-flex justify-content-center align-items-center transition-default">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-linecap="round" stroke-width="2" d="M22.166 10.24a5.188 5.188 0 0 0-1.336-2.175c-.522-.517-1.063-.859-1.606-1.065m-7.092-2.163c-1.952-1.239-5.106-2.41-7.829.367C-2.162 11.797 8.924 24.5 14 24.5c5.075 0 16.16-12.703 9.696-19.296-2.723-2.777-5.876-1.606-7.829-.367-1.103.7-2.632.7-3.735 0Z"/></svg>
                 </a>
@@ -166,6 +166,22 @@ if (is_page('checkout') || is_page('lost-password')) { ?>
                 <p class="lostpassword-success-text font-15-24 fw-500 text-center">На вказану електронну пошту було надіслано<br>посилання для відновлення вашого паролю. Будь ласка, перевірте вашу пошту</p>
                 <button class="lostpassword-success-button std-btn purple-btn font-16-22 fw-600 w-100">Зрозуміло</button>
             </div>
+        </div>
+    </div>
+    <div class="header-menu-bg blur-bg transition-default d-flex justify-content-center align-items-center">
+        <div class="success-message text-center">
+            <div class="success-message__head d-flex">
+                <button class="cart-menu__close close-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"><path stroke="#B4ADAD" stroke-width="2" d="m1.367 1.248 12.767 12.767M14.134 1.248 1.367 14.015"/></svg>
+                </button>
+            </div>
+            <div class="success-message-image img-wrapper-contain">
+                <img src="<?php bloginfo('template_url'); ?>/images/shield.png" alt="success">
+            </div>
+            <h4 class="success-message-title font-20-24 fw-600">Дякуємо!</h4>
+            <?php $order_number = isset($_GET['success-order']) ? ' №' . $_GET['success-order'] : ''; ?>
+            <p class="success-message-text font-14-20 fw-400">Ваше замовлення<?= $order_number ?> успішно оформлене. Очікуйте відправку протягом 1-2 днів</p>
+            <button type="button" class="success-message-button std-btn purple-btn font-16-22 fw-600 w-100">Продовжити покупки</button>
         </div>
     </div>
 <?php }

@@ -301,19 +301,6 @@ function get_count_of_reviews($product_id, $meta_value = 'review') {
     ]));
 }
 
-// change index of array element
-function change_index(&$array, $from, $to) {
-    $out = array_splice($array, $from, 1);
-    array_splice($array, $to, 0, $out);
-}
-
-// change login page url
-add_filter( 'login_url', 'change_login_page_url' );
-function change_login_page_url($login_url) {
-    return home_url();
-}
-
-
 // redirect to custom lost-password page
 add_action( 'login_form_lostpassword', 'redirect_to_custom_lostpassword' );
 function redirect_to_custom_lostpassword() {
@@ -385,4 +372,14 @@ function replace_retrieve_password_message( $message, $key, $user_login, $user_d
     $msg .= 'Щоб змінити пароль до Вашого акаунту перейдіть за цим посиланням:' . "\r\n\r\n";
     $msg .= site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
     return $msg;
+}
+
+add_action( 'template_redirect', 'thanks_redirect');
+function thanks_redirect() {
+    if ( is_wc_endpoint_url( 'order-received' ) ) {
+        global $wp;
+        $order_id =  intval( str_replace( 'checkout/order-received/', '', $wp->request ) );
+        wp_redirect(home_url("?success-order=$order_id"));
+        exit;
+    }
 }

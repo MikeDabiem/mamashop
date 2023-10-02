@@ -193,12 +193,13 @@ get_header(); ?>
                                         }
                                         get_template_part('components/checkout/checkout-select', null, ['chosen_option' => $chosen_option, 'input_id' => 'delivery_type-input', 'select_type' => $method->method_id]);
                                         if ($method->method_id === 'nova_poshta_courier') {
-                                            $address_arr = explode(', ', $checkout->get_value('billing_address_1'));
+                                            $address_street = $checkout->get_value('billing_address_1');
+                                            $address_arr = explode(', ', $checkout->get_value('billing_address_2'));
                                             $building_num = '';
                                             $apartment_num = '';
-                                            if ($selected_delivery === 'nova_poshta_courier' && isset($address_arr[1])) {
-                                                $building_num = $address_arr[1];
-                                                $apartment_num = $checkout->get_value('billing_address_2');
+                                            if ($selected_delivery === 'nova_poshta_courier') {
+                                                $building_num = !empty($address_arr[0]) ? str_replace('буд. ', '', $address_arr[0]) : '';
+                                                $apartment_num = !empty($address_arr[1]) ? str_replace('кв. ', '', $address_arr[1]) : '';
                                             } ?>
                                             <div class="item__select__address d-flex justify-content-between">
                                                 <div class="item__select__address__item input__wrapper">
@@ -216,14 +217,12 @@ get_header(); ?>
                             <?php }
                         } ?>
                     </div>
-                    <?php if (isset($address) && $selected_delivery === 'nova_poshta_courier') {
-                        if (isset($address_arr[1])) {
-                            $is_disabled = '';
-                        } else {
+                    <?php if (isset($address)) {
+                        if ($selected_delivery === 'nova_poshta_courier' && empty($address_arr[0])) {
                             $is_disabled = 'disabled';
+                        } else {
+                            $is_disabled = '';
                         }
-                    } elseif (isset($address)) {
-                        $is_disabled = '';
                     } else {
                         $is_disabled = 'disabled';
                     } ?>

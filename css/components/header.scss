@@ -222,3 +222,22 @@
     }
   }
 }
+.success-message {
+  max-width: 390px;
+  padding: 20px;
+  background: $white;
+  border-radius: 8px;
+  &-image {
+    width: 35%;
+    @include flex-height(100);
+    margin-inline: auto;
+  }
+  &-title,
+  &-button {
+    margin-top: 20px;
+  }
+  &-text {
+    margin-top: 12px;
+    color: $black-light;
+  }
+}
