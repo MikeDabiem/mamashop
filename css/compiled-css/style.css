@@ -2970,6 +2970,9 @@ h1, h2, h3, h4, h5, h6, p {
   border-radius: 2px;
   background: #F7F7F8;
 }
+.checkout-page__section__ready .ready__item-text {
+  color: #5E5E62;
+}
 .checkout-page .checkout__inputs {
   gap: 16px 24px;
 }
@@ -3086,6 +3089,21 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .checkout-page .delivery__type__item .item__select__address__item {
   width: calc(50% - 8px);
+}
+.checkout-page .checkout-page__delivery .ready__delivery__logo {
+  margin-bottom: 16px;
+}
+.checkout-page .checkout-page__delivery .ready__delivery__logo-image {
+  display: none;
+  width: 110px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #F7F7F8;
+}
+.checkout-page .checkout-page__delivery .ready__delivery__logo-image::before {
+  content: "";
+  display: block;
+  padding-top: 40%;
 }
 .checkout-page__comment {
   opacity: 1;

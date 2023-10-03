@@ -116,12 +116,12 @@ get_header(); ?>
                     <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
                 </div>
             </section>
-            <section class="checkout-page__section checkout-page__delivery active">
+            <section class="checkout-page__section checkout-page__delivery">
                 <div class="checkout-page__section__head d-flex justify-content-between">
                     <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">3</span>Доставка</h4>
                     <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
                 </div>
-                <div class="checkout-page__section__body delivery__body d-block">
+                <div class="checkout-page__section__body delivery__body">
                     <div class="delivery__place d-flex">
                         <div id="delivery_region" class="delivery__place__item">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть область</h6>
@@ -227,6 +227,32 @@ get_header(); ?>
                         $is_disabled = 'disabled';
                     } ?>
                     <button type="button" class="checkout-next-button std-btn purple-btn" <?= $is_disabled ?>>Продовжити</button>
+                </div>
+                <div class="checkout-page__section__ready">
+                    <div class="ready__delivery__logo">
+                        <div id="np-logo" class="ready__delivery__logo-image img-wrapper-contain">
+                            <img src="<?php bloginfo('template_url'); ?>/images/nova-poshta.png" alt="Нова Пошта">
+                        </div>
+                        <div id="up-logo" class="ready__delivery__logo-image img-wrapper-contain">
+                            <img src="<?php bloginfo('template_url'); ?>/images/ukrposhta.png" alt="Укрпошта">
+                        </div>
+                    </div>
+                    <div class="ready__item d-flex align-items-center">
+                        <div class="ready__item-icon icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+                                <path d="M9.50162 1.77734C5.44483 1.77734 2.14453 5.07765 2.14453 9.13443C2.14453 13.4474 6.15111 16.0942 8.80226 17.8452L9.26099 18.1499C9.3337 18.1984 9.41765 18.2226 9.50074 18.2226C9.58384 18.2226 9.6678 18.1984 9.7405 18.1499L10.1992 17.8452C12.8504 16.0942 16.857 13.4474 16.857 9.13443C16.8587 5.07765 13.5584 1.77734 9.50162 1.77734ZM9.50162 11.2983C8.3063 11.2983 7.33777 10.3297 7.33777 9.13443C7.33777 7.93912 8.3063 6.97058 9.50162 6.97058C10.6969 6.97058 11.6655 7.93912 11.6655 9.13443C11.6655 10.3297 10.6969 11.2983 9.50162 11.2983Z" fill="#29282C"/>
+                            </svg>
+                        </div>
+                        <p class="ready__item-text ready__item--city font-14-20 fw-500"></p>
+                    </div>
+                    <div class="ready__item d-flex align-items-center">
+                        <div class="ready__item-icon icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                                <path d="M18.066 15.7452H17.6378V7.82224C17.6378 6.77898 17.1564 6.21017 16.2005 6.12109C16.0532 6.10739 15.9247 6.23347 15.9247 6.38165V15.7452H14.6399V3.53957C14.6399 1.8265 13.7834 0.969971 12.0703 0.969971H6.9311C5.21804 0.969971 4.3615 1.8265 4.3615 3.53957V15.7452H3.0767V6.38165C3.0767 6.23347 2.9482 6.10739 2.80088 6.12109C1.84499 6.21017 1.36364 6.77898 1.36364 7.82224V15.7452H0.935369C0.580764 15.7452 0.292969 16.033 0.292969 16.3876C0.292969 16.7422 0.580764 17.03 0.935369 17.03H18.066C18.4206 17.03 18.7084 16.7422 18.7084 16.3876C18.7084 16.033 18.4206 15.7452 18.066 15.7452ZM7.5735 4.3961C7.5735 4.0415 7.8613 3.7537 8.2159 3.7537C8.57051 3.7537 8.8583 4.0415 8.8583 4.3961V5.46677H10.1431V4.3961C10.1431 4.0415 10.4309 3.7537 10.7855 3.7537C11.1401 3.7537 11.4279 4.0415 11.4279 4.3961V7.82224C11.4279 8.17684 11.1401 8.46464 10.7855 8.46464C10.4309 8.46464 10.1431 8.17684 10.1431 7.82224V6.75157H8.8583V7.82224C8.8583 8.17684 8.57051 8.46464 8.2159 8.46464C7.8613 8.46464 7.5735 8.17684 7.5735 7.82224V4.3961ZM7.78763 12.9614C7.78763 12.0158 8.55509 11.2484 9.5007 11.2484C10.4463 11.2484 11.2138 12.0158 11.2138 12.9614V15.7452H7.78763V12.9614Z" fill="#29282C"/>
+                            </svg>
+                        </div>
+                        <p class="ready__item-text ready__item--address font-14-20 fw-500"></p>
+                    </div>
                 </div>
             </section>
             <section class="checkout-page__section checkout-page__payment">

@@ -55,3 +55,16 @@
     }
   }
 }
+.checkout-page__delivery {
+  .ready__delivery__logo {
+    margin-bottom: 16px;
+    &-image {
+      display: none;
+      width: 110px;
+      @include flex-height(40);
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: $bg-color;
+    }
+  }
+}

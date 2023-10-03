@@ -456,6 +456,12 @@ jQuery(function($) {
 
   // toggle checkout tabs
   if ($('.checkout-page').length) {
+    body.on('keypress', function(e) {
+      const key = e.which;
+      if(key === 13) {
+        return false;
+      }
+    });
     const checkoutNextButton = $('.checkout-next-button');
     const checkoutChangeButton = $('.checkout-change-button');
     const buildingNum = $('#building-number');
@@ -507,10 +513,13 @@ jQuery(function($) {
           $('.ready__item--email').text($('#billing_email').val());
         }
         if ($(this).parent().hasClass('delivery__body')) {
+          const delRegionInput = $('#delivery_region-input');
+          const delCityInput = $('#delivery_city-input');
           const billingAddress = $('#billing_address_1');
           const billingApartment = $('#billing_address_2');
           const parent = $('.shipping_method:checked').closest('.delivery__type__item');
-          billingCityInput.val($('#delivery_region-input').val() + ', ' + $('#delivery_city-input').val());
+          $('.ready__delivery__logo-image').hide();
+          billingCityInput.val(delRegionInput.val() + ', ' + delCityInput.val());
           billingAddress.val(parent.find('.checkout-select-input').val());
           if (parent.has('#building-number').length && parent.has('#apartment-number').length && buildingNum.val()) {
             if (apartmentNum.val()) {
@@ -521,6 +530,13 @@ jQuery(function($) {
           } else {
             billingApartment.val('');
           }
+          if (parent.attr('id').indexOf('nova_poshta') >= 0) {
+            $('#np-logo').show();
+          } else if (parent.attr('id').indexOf('ukrposhta') >= 0) {
+            $('#up-logo').show();
+          }
+          $('.ready__item--city').text(`${delRegionInput.val()} область, м. ${delCityInput.val()}`);
+          $('.ready__item--address').text(billingAddress.val() + (billingApartment.val() ? ', ' + billingApartment.val() : ''));
         }
         if ($(this).parent().hasClass('payment__body')) {
           $('.checkout-page__confirm').fadeIn(300);
