@@ -532,8 +532,6 @@ jQuery(function($) {
           }
           if (parent.attr('id').indexOf('nova_poshta') >= 0) {
             $('#np-logo').show();
-          } else if (parent.attr('id').indexOf('ukrposhta') >= 0) {
-            $('#up-logo').show();
           }
           $('.ready__item--city').text(`${delRegionInput.val()} область, м. ${delCityInput.val()}`);
           $('.ready__item--address').text(billingAddress.val() + (billingApartment.val() ? ', ' + billingApartment.val() : ''));

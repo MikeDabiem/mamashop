@@ -14,10 +14,9 @@
         </div>
         <div class="checkout-select__menu">
             <?php if (isset($select_type)) {
-                $name = $select_type === 'city' ? 'cty-srch' : $select_type . '-search';
-                $placeholder = $select_type === 'ukrposhta_depart' ? 'Введіть поштовий індекс відділення' : 'Пошук'; ?>
+                $name = $select_type === 'city' ? 'cty-srch' : $select_type . '-search'; ?>
                 <div class="input__wrapper">
-                    <input name="<?= $name ?>" id="<?= $name ?>" class="select-search-input checkout__input-item" type="text" placeholder="<?= $placeholder ?>">
+                    <input name="<?= $name ?>" id="<?= $name ?>" class="select-search-input checkout__input-item" type="text" placeholder="Пошук">
                 </div>
                 <div class="checkout-select__menu__items"></div>
             <?php } else { ?>

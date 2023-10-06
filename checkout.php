@@ -179,7 +179,7 @@ get_header(); ?>
                                     </div>
                                     <div class="item__select">
                                         <?php $delivery_item = match($method->method_id) {
-                                        'nova_poshta_depart', 'ukrposhta_depart' => ['title' => 'Оберіть відділення', 'select' => 'Оберіть відділення'],
+                                        'nova_poshta_depart' => ['title' => 'Оберіть відділення', 'select' => 'Оберіть відділення'],
                                         'nova_poshta_postomat' => ['title' => 'Поштомат', 'select' => 'Оберіть поштомат'],
                                         'nova_poshta_courier' => ['title' => 'Вулиця', 'select' => 'Оберіть вулицю'],
                                         }; ?>
@@ -232,9 +232,6 @@ get_header(); ?>
                     <div class="ready__delivery__logo">
                         <div id="np-logo" class="ready__delivery__logo-image img-wrapper-contain">
                             <img src="<?php bloginfo('template_url'); ?>/images/nova-poshta.png" alt="Нова Пошта">
-                        </div>
-                        <div id="up-logo" class="ready__delivery__logo-image img-wrapper-contain">
-                            <img src="<?php bloginfo('template_url'); ?>/images/ukrposhta.png" alt="Укрпошта">
                         </div>
                     </div>
                     <div class="ready__item d-flex align-items-center">
