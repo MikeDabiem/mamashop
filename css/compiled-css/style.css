@@ -1440,11 +1440,24 @@ h1, h2, h3, h4, h5, h6, p {
   gap: 12px;
 }
 .user-login .login__other__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: calc((100% - 24px) / 3);
   height: 52px;
+  gap: 8px;
   border: 1px solid #F1F1F6;
   border-radius: 4px;
   background: #F7F7F8;
+  text-decoration: none;
+  color: inherit;
+}
+.user-login .login__other__item:hover {
+  border-color: #B2B2B7;
+  color: #6757A9;
+}
+.user-login .login__other__item:active {
+  background: #F1F1F6;
 }
 .user-login .login-submit-button {
   margin-top: 24px;

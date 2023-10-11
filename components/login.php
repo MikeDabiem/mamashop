@@ -34,14 +34,23 @@
         <section class="login__other">
             <h5 class="login__other-title font-14-20 fw-500 text-center">Увійти за допомогою</h5>
             <div class="login__other__items d-flex">
-                <button class="login__other__item">facebook</button>
-                <button class="login__other__item">google</button>
-                <button class="login__other__item">apple</button>
+                <a href="#" class="login__other__item font-14-20 fw-400 transition-default">
+                    <img src="<?php bloginfo('template_url'); ?>/images/facebook-logo.png" alt="facebook" width="21" height="21">
+                    Facebook
+                </a>
+                <a href="https://www.mamashop.brinpl.com/wp-login.php?loginSocial=google" class="login__other__item font-14-20 fw-400 transition-default" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
+                    <img src="<?php bloginfo('template_url'); ?>/images/google-logo.png" alt="google" width="21" height="21">
+                    Google
+                </a>
+                <a href="#" class="login__other__item font-14-20 fw-400 transition-default">
+                    <img src="<?php bloginfo('template_url'); ?>/images/apple-logo.png" alt="apple" width="21" height="21">
+                    Apple
+                </a>
             </div>
         </section>
         <div class="login-submit">
             <?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
-            <input type="submit" name="wp-submit" id="wp-submit" class="login-submit-button std-btn purple-btn w-100" value="Увійти">
+            <input type="submit" name="wp-submit" id="wp-submit" class="login-submit-button std-btn purple-btn transition-default w-100" value="Увійти">
             <input type="hidden" name="redirect_to" value="<?= get_home_url(); ?>">
         </div>
     </form>

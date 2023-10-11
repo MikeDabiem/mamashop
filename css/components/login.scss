@@ -71,11 +71,24 @@
         gap: 12px;
       }
       &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: calc((100% - 24px) / 3);
         height: 52px;
+        gap: 8px;
         border: 1px solid $light-grey;
         border-radius: 4px;
         background: $bg-color;
+        text-decoration: none;
+        color: inherit;
+        &:hover {
+          border-color: $grey;
+          color: $main-purple;
+        }
+        &:active {
+          background: $light-grey;
+        }
       }
     }
     &-submit-button {
