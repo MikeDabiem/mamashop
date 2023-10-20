@@ -4,7 +4,7 @@
     <div class="banner__items">
         <?php for ($i = 0; $i < 4; $i++) { ?>
             <a href="<?= $promos_link; ?>" class="banner__item img-wrapper-contain">
-                <img src="<?php bloginfo("template_url"); ?>/images/promo.jpg" alt="">
+                <img data-lazy="<?php bloginfo("template_url"); ?>/images/promo.jpg" alt="">
             </a>
         <?php } ?>
     </div>

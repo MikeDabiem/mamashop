@@ -9,10 +9,11 @@
   }
   .wrapper {
     gap: 24px;
+    height: 48px;
   }
   &__btn {
-    width: 48px;
-    height: 48px;
+    height: 100%;
+    aspect-ratio: 1/1;
     background: $light-grey;
   }
   .burger {
@@ -56,12 +57,15 @@
     }
   }
   &-logo {
+    display: block;
     width: fit-content;
     max-width: 220px;
-    height: 48px;
+    height: 100%;
+    flex: 0 0 auto;
   }
   &__catalog {
-    padding: 10px 17px;
+    height: 100%;
+    padding: 0 17px;
     svg {
       margin-right: 6px;
     }
@@ -69,6 +73,7 @@
   @import "searchform";
   &__cab {
     gap: 12px;
+    height: 100%;
   }
   &__fav,
   &__profile,
@@ -239,5 +244,62 @@
   &-text {
     margin-top: 12px;
     color: $black-light;
+  }
+}
+
+@media screen and (max-width: 1399px) {
+  .header {
+    .wrapper {
+      gap: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+    &-logo {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    .wrapper {
+      gap: 4px;
+      height: 34px;
+    }
+    &__cab {
+      gap: 4px;
+    }
+    .burger-line {
+      width: 20px;
+      &::before {
+        top: -7px;
+      }
+      &::after {
+        top: 7px;
+      }
+    }
+    &__catalog {
+      svg {
+        scale: .6;
+        margin-top: -3px;
+        margin-right: -4px;
+      }
+    }
+    &__btn {
+      svg {
+        scale: .7;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    .header__catalog {
+      display: none;
+    }
   }
 }

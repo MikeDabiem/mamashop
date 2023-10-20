@@ -11,7 +11,7 @@
 <?php wp_body_open();
 if (is_page('checkout') || is_page('lost-password')) { ?>
     <header class="checkout-header wrapper">
-        <a href="<?= home_url(); ?>" class="header-logo d-block">
+        <a href="<?= home_url(); ?>" class="header-logo">
             <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
         </a>
     </header>
@@ -21,7 +21,7 @@ if (is_page('checkout') || is_page('lost-password')) { ?>
             <button class="burger header__btn std-btn transition-default">
                 <div class="burger-line transition-default"></div>
             </button>
-            <a href="<?= home_url(); ?>" class="header-logo d-block">
+            <a href="<?= home_url(); ?>" class="header-logo">
                 <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
             </a>
             <button class="header__catalog std-btn blue-btn font-15-24 fw-600 transition-default">

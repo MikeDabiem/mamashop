@@ -1,6 +1,9 @@
 <form role="search" method="get" id="search" name="search" class="header-search d-flex" action="<?= home_url('/'); ?>">
     <input type="search" value="<?= get_search_query(); ?>" class="header-search__input font-14-20 transition-default" name="s" placeholder="Я шукаю..." autocomplete="off">
-    <button class="header-search__button std-btn purple-btn transition-default font-15-24 fw-600">Знайти</button>
+    <button class="header-search__button std-btn purple-btn transition-default font-15-24 fw-600">
+        <span>Знайти</span>
+        <i><svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.4526 3.71816C9.06429 1.751 5.53346 2.09246 3.5663 4.48081C1.59915 6.86916 1.9406 10.4 4.32895 12.3672C6.71731 14.3343 10.2481 13.9929 12.2153 11.6045C14.1825 9.21615 13.841 5.68531 11.4526 3.71816ZM2.40658 3.52561C4.90127 0.496758 9.37899 0.0637388 12.4078 2.55843C15.2407 4.89172 15.8028 8.95973 13.8226 11.9545L18.9405 16.1699C19.2607 16.4336 19.3065 16.9071 19.0427 17.2273C18.779 17.5476 18.3055 17.5934 17.9853 17.3296L12.8674 13.1143C10.3076 15.6323 6.20686 15.8603 3.37375 13.5269C0.344903 11.0322 -0.0881168 6.55446 2.40658 3.52561Z" fill="white"/></svg></i>
+    </button>
     <div class="header-search__menu justify-content-between" style="display: none">
         <div class="header-search__menu__col1">
             <section class="search-try">

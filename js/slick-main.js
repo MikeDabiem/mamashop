@@ -20,8 +20,8 @@ jQuery(function($) {
   $('.top__items').slick({
     slidesToShow: 5,
     slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
+    // autoplay: true,
+    // autoplaySpeed: 5000,
     infinite: true,
     swipeToSlide: true,
     prevArrow: $('.top__prev'),
@@ -31,6 +31,10 @@ jQuery(function($) {
         breakpoint: 768,
         settings: {
           arrows: false,
+          slidesToShow: 2,
+          rows: 2,
+          slidesPerRow: 1,
+          slidesToScroll: 2
         }
       }
     ]
@@ -52,5 +56,9 @@ jQuery(function($) {
         }
       }
     ]
+  });
+
+  $('.section-title').on('click', () => {
+    $('.top__items').slick('unslick')
   });
 });

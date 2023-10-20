@@ -13,7 +13,7 @@ function load_style_script()
     // JS PLUGINS
     wp_enqueue_script('jquery');
     wp_enqueue_script('bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js');
-    wp_enqueue_script('slick', get_template_directory_uri() . '/js/slick.min.js');
+    wp_enqueue_script('slick', get_template_directory_uri() . '/js/slick.js');
     wp_enqueue_script('slick-js', get_template_directory_uri() . '/js/slick-main.js');
     wp_enqueue_script('nova-poshta', get_template_directory_uri() . '/js/nova-poshta.js');
 

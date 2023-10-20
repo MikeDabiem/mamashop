@@ -6,6 +6,7 @@
 }
 
 body {
+  opacity: 0;
   background: $bg-color;
   overflow-x: hidden;
   @include scrollbar;
@@ -16,9 +17,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .wrapper {
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding-inline: 10px;
+  padding-inline: 50px;
 }
 
 .filler {
@@ -197,18 +198,26 @@ h1, h2, h3, h4, h5, h6, p {
 
 .products-slider {
   position: relative;
-  .slick-track {
-    display: flex;
-    gap: 12px;
+  .slick {
+    &-track {
+      display: flex;
+      gap: 12px;
+    }
+    &-slide {
+      height: inherit;
+      & > div {
+        height: 100%;
+      }
+    }
   }
   &__items {
     margin: 30px -6px 0;
   }
   &__prev {
-    left: -55px;
+    left: -50px;
   }
   &__next {
-    right: -55px;
+    right: -50px;
   }
 }
 
@@ -611,5 +620,21 @@ h1, h2, h3, h4, h5, h6, p {
       border-color: $main-purple;
       background: $white;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    max-width: 1300px;
+    padding-inline: 10px;
+  }
+  .std-btn {
+    border-radius: 6px;
+  }
+  .slider-arrow {
+    display: none;
+  }
+  .font-14-20 {
+    font-size: 12px;
   }
 }

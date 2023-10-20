@@ -5,14 +5,6 @@
                 <a href="<?= home_url(); ?>" class="footer-logo d-block">
                     <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
                 </a>
-                <div class="footer__socials">
-                    <h6 class="footer__socials-title font-15-24 fw-500">Ми у соціальних мережах</h6>
-                    <div class="footer__socials__items d-flex">
-                        <?php for ($s = 0; $s < 4; $s++) { ?>
-                            <a href="#" class="d-block img-wrapper-contain"></a>
-                        <?php } ?>
-                    </div>
-                </div>
             </div>
             <div class="footer__top__col2 d-flex justify-content-between">
                 <section class="footer__links">
