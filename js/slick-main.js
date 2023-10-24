@@ -17,6 +17,29 @@ jQuery(function($) {
       }
     ]
   });
+
+  const productsCardsResponsive = [
+    {
+      breakpoint: 1025,
+      settings: {
+        slidesToShow: 4,
+      }
+    },
+    {
+      breakpoint: 769,
+      settings: {
+        slidesToShow: 3,
+      }
+    },
+    {
+      breakpoint: 481,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    }
+  ];
+
   $('.top__items').slick({
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -26,19 +49,9 @@ jQuery(function($) {
     swipeToSlide: true,
     prevArrow: $('.top__prev'),
     nextArrow: $('.top__next'),
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          slidesToShow: 2,
-          rows: 2,
-          slidesPerRow: 1,
-          slidesToScroll: 2
-        }
-      }
-    ]
+    responsive: productsCardsResponsive
   });
+
   $('.hits__items').slick({
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -48,17 +61,6 @@ jQuery(function($) {
     swipeToSlide: true,
     prevArrow: $('.hits__prev'),
     nextArrow: $('.hits__next'),
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-        }
-      }
-    ]
-  });
-
-  $('.section-title').on('click', () => {
-    $('.top__items').slick('unslick')
+    responsive: productsCardsResponsive
   });
 });

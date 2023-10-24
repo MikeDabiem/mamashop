@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .wrapper {
-  max-width: 1400px;
+  max-width: 1380px;
   margin: 0 auto;
   padding-inline: 50px;
 }
@@ -164,7 +164,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .img-wrapper-contain {
   position: relative;
-  &>img {
+  img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -175,7 +175,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .img-wrapper-cover {
   position: relative;
-  &>img {
+  img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -211,7 +211,7 @@ h1, h2, h3, h4, h5, h6, p {
     }
   }
   &__items {
-    margin: 30px -6px 0;
+    margin: 30px 0 0 -6px;
   }
   &__prev {
     left: -50px;
@@ -628,13 +628,45 @@ h1, h2, h3, h4, h5, h6, p {
     max-width: 1300px;
     padding-inline: 10px;
   }
+  .filler {
+    padding-top: 54px;
+    padding-bottom: 55px;
+  }
+  .font-14-20 {
+    font-size: 12px;
+  }
+  .section-title {
+    font-size: 20px;
+  }
   .std-btn {
     border-radius: 6px;
   }
   .slider-arrow {
-    display: none;
+    width: 34px;
+    height: 34px;
+    top: 0;
+    transform: none;
   }
-  .font-14-20 {
-    font-size: 12px;
+  .products-slider {
+    &__prev {
+      left: auto;
+      right: 44px;
+    }
+    &__next {
+      right: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .products-slider {
+    .slick {
+      &-track {
+        gap: 10px;
+      }
+    }
+    &__items {
+      margin-top: 25px;
+    }
   }
 }

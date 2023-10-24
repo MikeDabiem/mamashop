@@ -1,6 +1,6 @@
 <section class="categories">
     <h2 class="section-title">Категорії</h2>
-    <div class="categories__items d-flex">
+    <div class="categories__items d-flex flex-wrap">
         <?php $categories = get_terms('product_cat', ['parent' => 0, 'hide_empty' => false, 'exclude' => 15, 'orderby' => 'id']);
         foreach ($categories as $cat) {
             $catName = $cat->name;

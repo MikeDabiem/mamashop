@@ -3,8 +3,11 @@
     <h2 class="d-none">Акції</h2>
     <div class="banner__items">
         <?php for ($i = 0; $i < 4; $i++) { ?>
-            <a href="<?= $promos_link; ?>" class="banner__item img-wrapper-contain">
-                <img data-lazy="<?php bloginfo("template_url"); ?>/images/promo.jpg" alt="">
+            <a href="<?= $promos_link; ?>" class="banner__item img-wrapper-cover">
+                <picture>
+                    <source srcset="<?php bloginfo("template_url"); ?>/images/promo-small.jpg" media="(max-width: 480px)" />
+                    <img data-lazy="<?php bloginfo("template_url"); ?>/images/promo.jpg" alt="">
+                </picture>
             </a>
         <?php } ?>
     </div>

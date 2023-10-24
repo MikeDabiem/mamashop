@@ -1,6 +1,6 @@
 .banner {
-  margin-top: 40px;
   position: relative;
+  margin-top: 40px;
   &__item {
     @include flex-height(23.5);
     border-radius: 6px;
@@ -34,9 +34,24 @@
       }
     }
   }
-  @media screen and (max-width: 768px) {
-    .slider-arrow {
+  @media screen and (min-width: 481px) and (max-width: 1024px) {
+    margin-top: 20px;
+  }
+  @media screen and (max-width: 480px) {
+    margin-top: 10px;
+    &__item::before {
+      padding-top: 116%;
+    }
+    &__prev,
+    &__next {
       display: none;
+    }
+    &__dots {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      margin: 0;
+      padding: 16px;
     }
   }
 }

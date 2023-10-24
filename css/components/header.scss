@@ -64,7 +64,15 @@
     flex: 0 0 auto;
   }
   &__catalog {
-    height: 100%;
+    &--header {
+      height: 100%;
+    }
+    &--body {
+      display: none;
+      width: 100%;
+      height: 45px;
+      margin-top: 10px;
+    }
     padding: 0 17px;
     svg {
       margin-right: 6px;
@@ -298,8 +306,13 @@
 
 @media screen and (max-width: 480px) {
   .header {
-    .header__catalog {
-      display: none;
+    &__catalog {
+      &--header {
+        display: none;
+      }
+      &--body {
+        display: block;
+      }
     }
   }
 }
