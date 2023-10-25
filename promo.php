@@ -7,7 +7,7 @@ get_header(); ?>
     if ($promos->have_posts()): ?>
         <?php $promos_count = $promos->found_posts; ?>
         <p class="products-count font-14-20 fw-400"><?= $promos_count . ' ' . true_wordform($promos_count, 'акція', 'акції', 'акцій') ?></p>
-        <div class="promo-page__items d-flex flex-wrap">
+        <div class="promo-page__items">
             <?php while ($promos->have_posts()): $promos->the_post();
                 require 'components/promo-item.php';
             endwhile; ?>

@@ -3,7 +3,18 @@
     margin-top: 24px;
   }
   &__items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     margin-top: 32px;
     gap: 16px 12px;
+    @media screen and (max-width: 900px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
   }
 }

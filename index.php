@@ -55,12 +55,12 @@ get_header(); ?>
     if ($promos->have_posts()): ?>
         <section class="promo">
             <h2 class="section-title">Акції</h2>
-            <div class="promo__items d-flex">
+            <div class="promo__items">
                 <?php while ($promos->have_posts()): $promos->the_post();
                     require 'components/promo-item.php';
                 endwhile; ?>
-                <a href="<?= $promos_link; ?>" class="promo__item transition-default d-flex justify-content-center align-items-center">
-                    <p class="promo__item-all font-15-24 fw-600">Усі акції</p>
+                <a href="<?= $promos_link; ?>" class="promo__item promo__item__all transition-default d-flex justify-content-center align-items-center">
+                    <p class="promo__item__all-text font-15-24 fw-600">Усі акції</p>
                     <?php require "components/link-arrow.php"; ?>
                 </a>
             </div>

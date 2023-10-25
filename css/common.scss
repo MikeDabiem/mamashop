@@ -29,8 +29,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .section-title {
-  font-size: 28px;
-  line-height: 36px;
+  font-size: clamp(20px, 3.5vw, 28px);
+  line-height: 130%;
   font-weight: 600;
 }
 
@@ -631,12 +631,6 @@ h1, h2, h3, h4, h5, h6, p {
   .filler {
     padding-top: 54px;
     padding-bottom: 55px;
-  }
-  .font-14-20 {
-    font-size: 12px;
-  }
-  .section-title {
-    font-size: 20px;
   }
   .std-btn {
     border-radius: 6px;

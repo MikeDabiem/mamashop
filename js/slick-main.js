@@ -10,7 +10,7 @@ jQuery(function($) {
     dotsClass: 'banner__dots',
     responsive: [
       {
-        breakpoint: 768,
+        breakpoint: 769,
         settings: {
           arrows: false,
         }
@@ -43,8 +43,8 @@ jQuery(function($) {
   $('.top__items').slick({
     slidesToShow: 5,
     slidesToScroll: 1,
-    // autoplay: true,
-    // autoplaySpeed: 5000,
+    autoplay: true,
+    autoplaySpeed: 5000,
     infinite: true,
     swipeToSlide: true,
     prevArrow: $('.top__prev'),

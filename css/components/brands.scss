@@ -29,4 +29,27 @@
       padding: 4% 12%;
     }
   }
+  @media screen and (max-width: 990px) {
+    &-item {
+      width: calc((100% - 48px) / 5);
+    }
+  }
+  @media screen and (max-width: 840px) {
+    &__items {
+      gap: 11px;
+    }
+    &-item {
+      width: calc((100% - 33px) / 4);
+    }
+  }
+  @media screen and (max-width: 600px) {
+    &-item {
+      width: calc((100% - 22px) / 3);
+    }
+  }
+  @media screen and (max-width: 480px) {
+    &-item {
+      width: calc((100% - 11px) / 2);
+    }
+  }
 }

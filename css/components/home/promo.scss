@@ -1,9 +1,26 @@
 .promo {
   &__items {
     margin-top: 30px;
+    display: grid;
     gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    @media screen and (max-width: 900px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 768px) {
+      gap: 10px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
   }
-  &__item-all {
-    color: $black;
+  &__item__all {
+    @media screen and (max-width: 480px) {
+      padding-block: 16px;
+      &::before {
+        padding-top: 0;
+      }
+    }
   }
 }

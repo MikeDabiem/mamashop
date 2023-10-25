@@ -36,4 +36,13 @@
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    &__items {
+      gap: 10px;
+    }
+    &__item {
+      width: calc((100% - 10px) / 2);
+    }
+  }
 }
