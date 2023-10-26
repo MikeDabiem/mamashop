@@ -45,4 +45,18 @@
       width: calc((100% - 10px) / 2);
     }
   }
+
+  @media screen and (max-width: 480px) {
+    &__items {
+      margin-top: 25px;
+    }
+    &__item {
+      .img-wrapper-contain {
+        @include flex-height(88);
+      }
+      &-title {
+        height: 45px;
+      }
+    }
+  }
 }

@@ -43,7 +43,7 @@
             margin-top: 8px;
           }
           &>a {
-            font-size: 13px;
+            font-size: clamp(12px, 3vw, 13px);
             line-height: 120%;
             font-weight: 500;
             color: inherit;
@@ -101,7 +101,9 @@
 
   @media screen and (max-width: 640px) {
     &__top {
+      padding-bottom: 36px;
       grid-template-columns: repeat(2, 1fr);
+      row-gap: 50px;
     }
     &__logo {
       grid-column: span 2;
@@ -111,12 +113,23 @@
       grid-row: 2;
       justify-self: start;
     }
+    &__links__items {
+      margin-top: 15px;
+    }
     &__pay {
       grid-row: 3;
       grid-column: span 2;
       &__items {
         max-width: 100%;
+        gap: 10px;
       }
+      &-item {
+        width: 81px;
+        height: 45px;
+      }
+    }
+    &__bottom {
+      padding-bottom: 12px;
     }
   }
 }
