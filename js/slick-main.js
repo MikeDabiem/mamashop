@@ -26,13 +26,13 @@ jQuery(function($) {
       }
     },
     {
-      breakpoint: 769,
+      breakpoint: 815,
       settings: {
         slidesToShow: 3,
       }
     },
     {
-      breakpoint: 481,
+      breakpoint: 555,
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2

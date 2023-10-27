@@ -2,6 +2,29 @@
   padding: 15px;
   text-decoration: none;
   gap: 4%;
+  &-text {
+    &--mob {
+      display: none;
+    }
+  }
+  container-type: inline-size;
+  @container (min-width: 105px) and (max-width: 190px) {
+    &-text {
+      &--mob {
+        display: inline;
+      }
+      &--wide {
+        display: none;
+      }
+    }
+  }
+  @container (max-width: 105px) {
+    &-text {
+      &--wide {
+        display: none;
+      }
+    }
+  }
   &--cart {
     svg {
       fill: $black;

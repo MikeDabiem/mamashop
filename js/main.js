@@ -1451,5 +1451,9 @@ jQuery(function($) {
     });
   }
 
-  body.animate({opacity: 1}, 1000);
+  if ($('.banner').length) {
+    body.animate({opacity: 1}, 1000);
+  } else {
+    body.css({opacity: 1});
+  }
 });

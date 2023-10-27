@@ -45,7 +45,7 @@
 }
 
 .font-13-16 {
-  font-size: 13px;
+  font-size: clamp(12px, 3vw, 13px);
   line-height: 120%;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .font-22-26 {
-  font-size: 22px;
+  font-size: clamp(20px, 5vw, 22px);
   line-height: 120%;
 }
 

@@ -6,7 +6,7 @@ require 'components/product-filter-head.php'; ?>
         wp_reset_postdata(); ?>
     </div>
     <div class="search-page__results d-flex flex-column">
-        <div class="search-page__results__items d-flex flex-wrap">
+        <div class="search-page__results__items">
             <?php while ($search->have_posts()): $search->the_post();
                 require "components/product-item.php";
             endwhile;
