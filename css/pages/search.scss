@@ -97,13 +97,20 @@
       }
     }
   }
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 768px) {
     &__filter {
-      display: none;
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: -100%;
+      right: 100%;
+      bottom: 0;
+      background: $white;
       overflow: auto;
       z-index: 1090;
+      &.active {
+        left: 0;
+        right: 0;
+      }
       .product-filter {
         width: 100%;
       }
@@ -118,6 +125,7 @@
     &__results {
       &__items {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
       }
     }
   }

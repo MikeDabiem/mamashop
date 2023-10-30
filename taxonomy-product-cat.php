@@ -22,6 +22,9 @@
         <?php $topProducts = new WP_Query([
             'post_type' => 'product',
             'posts_per_page' => 10,
+            'orderby' => 'meta_value_num',
+            'order' => 'DESC',
+            'meta_key' => '_wc_average_rating',
             'tax_query' => [
                 [
                     'taxonomy' => 'product_cat',

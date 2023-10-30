@@ -7,7 +7,7 @@
         if ($_GET) {
             $query = fetch_data(16);
             if ($query->have_posts()): ?>
-                <div class="search-page__results__items d-flex flex-wrap">
+                <div class="search-page__results__items">
                     <?php while ($query->have_posts()): $query->the_post();
                         get_template_part('components/product-item');
                     endwhile;

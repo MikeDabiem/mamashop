@@ -57,11 +57,12 @@ foreach ($attributes_arr as $attr_id => $attr) {
             ];
         }
     }
-    if (get_query_var('product_cat')) {
+    if (get_query_var('product_cat') || !empty($_GET['category'])) {
+        $terms = get_query_var('product_cat') ?: $_GET['category'];
         $filter_args['tax_query'][] = [
             'taxonomy' => 'product_cat',
             'field' => 'slug',
-            'terms' => get_query_var('product_cat')
+            'terms' => $terms
         ];
     }
 

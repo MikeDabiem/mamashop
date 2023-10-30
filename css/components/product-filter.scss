@@ -242,4 +242,55 @@
       }
     }
   }
+  .product-filter__mob {
+    display: none;
+    &__head {
+      margin-top: 16px;
+      position: relative;
+    }
+    &-close {
+      position: absolute;
+      top: 0;
+      right: 16px;
+      border: none;
+      background: none;
+    }
+    .section-title {
+      margin-top: 0;
+    }
+    .product-filter__chosen {
+      margin-top: 16px;
+      display: block;
+      &__items {
+        margin-top: 12px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    background: $bg-color;
+    width: 100%;
+    .product-filter__mob {
+      display: block;
+    }
+    &-clear {
+      margin-top: 14px;
+      width: 100%;
+      background: inherit;
+    }
+    &__price {
+      margin-top: 10px;
+      padding: 12px 12px 0;
+      border-radius: 4px 4px 0 0;
+      background: $white;
+    }
+    &__filter {
+      padding: 18px 12px 12px;
+      border-radius: 0 0 4px 4px;
+      background: $white;
+    }
+    &__spoiler:first-child {
+      margin-top: 0;
+    }
+  }
 }

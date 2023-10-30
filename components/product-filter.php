@@ -1,5 +1,16 @@
 <?php if (isset($filters) && $filters->have_posts()): ?>
     <div class="product-filter">
+        <section class="product-filter__mob">
+            <div class="product-filter__mob__head">
+                <h2 class="product-filter__mob-title section-title text-center">Фільтр</h2>
+                <button type="button" class="product-filter__mob-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M13.6147 1.41643L12.2823 0.0839844L6.99976 5.36653L1.71721 0.0839844L0.384766 1.41643L5.66731 6.69897L0.384766 11.9815L1.71721 13.314L6.99976 8.03142L12.2823 13.314L13.6147 11.9815L8.3322 6.69897L13.6147 1.41643Z" fill="black"/>
+                    </svg>
+                </button>
+            </div>
+            <?php require 'product-filter-chosen.php' ?>
+        </section>
         <button type="button" class="product-filter-clear font-11-13 fw-400 transition-default">Очистити всі фільтри</button>
         <form class="product-filter__price" type="get">
             <div class="product-filter__spoiler transition-default d-flex justify-content-between align-items-center" data-name="price">

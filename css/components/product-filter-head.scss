@@ -1,8 +1,11 @@
 .product-filter {
   &__head {
     margin-top: 24px;
+    gap: 10px;
   }
   &__chosen {
+    display: flex;
+    align-items: center;
     gap: 8px;
     opacity: 0;
     &.active {
@@ -30,9 +33,9 @@
   }
   &__sort {
     position: relative;
+    width: 280px;
     .sort {
       &__select {
-        width: 280px;
         padding: 16px 20px;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -98,6 +101,34 @@
           }
         }
       }
+    }
+  }
+  &__filter-button {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 13px;
+    width: calc(50% - 5px);
+    border: none;
+    border-radius: 3px;
+    background: $light-grey;
+    &:active {
+      filter: brightness(.9);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    &__head {
+      .product-filter__chosen {
+        display: none;
+      }
+    }
+    &__sort {
+      width: calc(50% - 5px);
+      border-radius: 3px;
+    }
+    &__filter-button {
+      display: flex;
     }
   }
 }

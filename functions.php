@@ -20,19 +20,26 @@ function load_style_script()
     // JS CUSTOM HEADER
     wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js');
 
-    wp_localize_script('main', 'ajaxurl', ['url' => admin_url('admin-ajax.php')]);
     wp_localize_script('nova-poshta', 'ajaxurl', ['url' => admin_url('admin-ajax.php')]);
-    wp_localize_script('main', 'searchHelpArr', [
-        "Порошок для прання",
-        "Пом'якшувач для тканини",
-        "Мило для прання",
-        "Рідкий пральний засіб",
-        "Плямовивідник",
-        "Порошок для посуду",
-        "Порошок для прибирання",
-        "Гель для прання",
-        "Гель для душу",
-        "Шампунь"
+
+    global $wp_query;
+    $wp_query_vars = $wp_query->query_vars;
+    $category = $wp_query_vars['product_cat'] ?? '';
+    wp_localize_script('main', 'phpData', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'searchHelpArr' => [
+            "Порошок для прання",
+            "Пом'якшувач для тканини",
+            "Мило для прання",
+            "Рідкий пральний засіб",
+            "Плямовивідник",
+            "Порошок для посуду",
+            "Порошок для прибирання",
+            "Гель для прання",
+            "Гель для душу",
+            "Шампунь"
+        ],
+        'category'  => $category
     ]);
 }
 add_action("wp_enqueue_scripts", "load_style_script");
@@ -106,11 +113,12 @@ function fetch_data($posts_per_page) {
             ];
         };
     }
-    if (get_query_var('product_cat')) {
+    if (get_query_var('product_cat') || !empty($_GET['category'])) {
+        $terms = get_query_var('product_cat') ?: $_GET['category'];
         $filter_args['tax_query'][] = [
             'taxonomy' => 'product_cat',
             'field' => 'slug',
-            'terms' => get_query_var('product_cat')
+            'terms' => $terms
         ];
     }
     $args = [

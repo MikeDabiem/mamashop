@@ -1,7 +1,7 @@
 <?php $filters = fetch_data(-1);
 require 'components/product-filter-head.php'; ?>
 <div class="search-page__content d-flex align-items-start">
-    <div class="search-page__filter">
+    <div class="search-page__filter transition-default">
         <?php require 'components/product-filter.php';
         wp_reset_postdata(); ?>
     </div>

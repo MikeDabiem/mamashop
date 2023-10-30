@@ -5,7 +5,7 @@ jQuery(function($) {
     };
   });
   const body = $('body');
-  const ajaxURL = ajaxurl;
+  const ajaxURL = phpData.ajaxurl;
 
   // header scroll event
   const header = $(".header");
@@ -73,7 +73,7 @@ jQuery(function($) {
     searchInput.on('input', function(e) {
       let searchHelp = [];
       if (searchInput.val() !== '') {
-        searchHelp = searchHelpArr.filter(el => (el.toLowerCase().includes(e.target.value.toLowerCase())));
+        searchHelp = phpData.searchHelpArr.filter(el => (el.toLowerCase().includes(e.target.value.toLowerCase())));
       }
       if (searchHelpBlock.hasClass('active') && searchInput.val() === '' || searchHelp.length === 0) {
         searchHelpBlock.removeClass('active');
@@ -306,6 +306,74 @@ jQuery(function($) {
       }
     });
   }
+
+  // filter show button
+  const filterShowButton = $('.product-filter__filter-button');
+  if (filterShowButton.length) {
+    const filterBody = $('.search-page__filter');
+
+    // show filter
+    function showFilter() {
+      filterBody.addClass('active');
+      body.addClass('overflow-hidden');
+    }
+
+    // show filter on click filter button
+    filterShowButton.on('click', showFilter);
+
+    // show filter on swipe to right
+    let startX, endX;
+
+    body.on('touchstart', function(e) {
+      startX = e.originalEvent.touches[0].pageX;
+    });
+
+    body.on('touchmove', function(e) {
+      endX = e.originalEvent.touches[0].pageX;
+    });
+
+    body.on('touchend', function() {
+      const threshold = 200;
+      const deltaX = endX - startX;
+      if (Math.abs(deltaX) > threshold && !filterBody.hasClass('active')) {
+        if (deltaX > 0) {
+          showFilter();
+        }
+      }
+    });
+
+    // close filter
+    function closeFilter() {
+      filterBody.removeClass('active');
+      body.removeClass('overflow-hidden');
+    }
+
+    // close filter on click close button
+    $('.product-filter__mob-close').on('click', function() {
+      closeFilter();
+    });
+
+    // close filter on swipe to left
+
+    filterBody.on('touchstart', function(e) {
+      startX = e.originalEvent.touches[0].pageX;
+    });
+
+    filterBody.on('touchmove', function(e) {
+      endX = e.originalEvent.touches[0].pageX;
+    });
+
+    filterBody.on('touchend', function() {
+      const threshold = 100;
+      const deltaX = endX - startX;
+      if (Math.abs(deltaX) > threshold && $(this).hasClass('active')) {
+        if (deltaX < 0) {
+          closeFilter();
+        }
+      }
+    });
+  }
+
 
   // sort menu handler
   const sortSelect = $('.sort__select');
@@ -662,7 +730,7 @@ jQuery(function($) {
           action: 'coupon_check',
           coupon: couponInput.val()
         }
-        $.post(ajaxURL.url, data, function(response) {
+        $.post(ajaxURL, data, function(response) {
           const resp = JSON.parse(response);
           if (!resp.error) {
             $('#discount_value').text(resp.discount + ' грн');
@@ -872,7 +940,7 @@ jQuery(function($) {
         action: 'check_email',
         email: emailInput.val()
       }
-      $.post(ajaxURL.url, data, function(response) {
+      $.post(ajaxURL, data, function(response) {
         emailExists = response;
         if (emailExists !== '') {
           showInputError(emailInput);
@@ -952,6 +1020,7 @@ jQuery(function($) {
 
   const defaultData = {
     action: 'filter',
+    category: phpData.category,
     ...searchString,
     page
   }
@@ -963,13 +1032,19 @@ jQuery(function($) {
     const getParams = new URLSearchParams(ajaxData);
     const search = searchString.s ? `s=${searchString.s}` : '';
     window.history.pushState(null, '', `?${search}&${decodeURIComponent(getParams.toString())}`);
-    $.get(ajaxURL.url, data, function(response) {
+    $.get(ajaxURL, data, function(response) {
       searchResults.empty().append(response).animate({opacity: 1}, 300);
     });
-    $.get(ajaxURL.url, {...data, action: 'hide_filters'}, function(response) {
+    $.get(ajaxURL, {...data, action: 'hide_filters'}, function(response) {
       productFilter.empty().append(response);
       productFilterParent.animate({opacity: 1}, 300);
       spoilFilters();
+      $('.product-filter__chosen-item').each(function() {
+        const forAttribute = $(this).children('label').attr('for');
+        if (!$('#' + forAttribute).length) {
+          $(this).remove();
+        }
+      });
     });
   }
 
@@ -1057,7 +1132,7 @@ jQuery(function($) {
       action: 'handle_cart_item',
       id: idArr
     }
-    $.post(ajaxURL.url, data, function (response) {
+    $.post(ajaxURL, data, function (response) {
       $.each(idArr, function() {
         $(`button[data-id="${this}"]`).replaceWith(
           `<button data-id="${this}" class="buy-button buy-button--cart std-btn blue-btn font-16-22 fw-600 transition-default d-flex justify-content-center align-items-center">
@@ -1079,7 +1154,7 @@ jQuery(function($) {
       action: 'handle_cart_item',
       key: $(this).data('key')
     }
-    $.post(ajaxURL.url, data, function(response) {
+    $.post(ajaxURL, data, function(response) {
       $('.cart-menu__body').empty().html(response);
       $(`button[data-id="${id}"]`).replaceWith(
         `<button data-id="${id}" class="buy-button buy-button--buy std-btn purple-btn font-16-22 fw-600 transition-default d-block">Купити</button>`
@@ -1102,7 +1177,7 @@ jQuery(function($) {
       act,
       value: input.val()
     }
-    $.post(ajaxURL.url, data, function (resp) {
+    $.post(ajaxURL, data, function (resp) {
       const response = JSON.parse(resp);
       $('.cart-menu__value').text(response.allCount);
       input.val(+response.itemCount);
@@ -1131,7 +1206,7 @@ jQuery(function($) {
   function accPageTabChanger(container, button, data) {
     container.animate({opacity: .5}, 200);
     button.addClass('active').siblings('.account-page__tab-button').removeClass('active');
-    $.post(ajaxURL.url, data, function (response) {
+    $.post(ajaxURL, data, function (response) {
       container.html(response).animate({opacity: 1}, 200);
     });
   }
@@ -1166,7 +1241,7 @@ jQuery(function($) {
       action: 'order_repeat',
       id: idArr
     }
-    $.post(ajaxURL.url, data, function(response) {
+    $.post(ajaxURL, data, function(response) {
       window.location.href = response;
     });
   });
@@ -1181,7 +1256,7 @@ jQuery(function($) {
         action: 'user_favorites',
         prod_id: $(this).data('id').split('-')[1]
       }
-      $.post(ajaxURL.url, data, function () {
+      $.post(ajaxURL, data, function () {
         if (button.hasClass('active')) {
           button.removeClass('active');
         } else {
@@ -1199,7 +1274,7 @@ jQuery(function($) {
       prod_id: $(this).data('id').split('-')[1]
     }
     container.animate({opacity: .5}, 200)
-    $.post(ajaxURL.url, data, function (response) {
+    $.post(ajaxURL, data, function (response) {
       container.html(response).animate({opacity: 1}, 200);
     });
   });
@@ -1221,7 +1296,7 @@ jQuery(function($) {
         password: userPasswordInput.val(),
         remember: $('#rememberme').is(':checked')
       }
-      $.post(ajaxURL.url, data, function (response) {
+      $.post(ajaxURL, data, function (response) {
         switch (response) {
           case 'login_error':
             showInputError(userLoginInput);
@@ -1288,7 +1363,7 @@ jQuery(function($) {
         action: 'register_user',
         reg: $(this).serializeArray()
       }
-      $.post(ajaxURL.url, data, function () {
+      $.post(ajaxURL, data, function () {
         location.reload();
       });
     }
@@ -1324,7 +1399,7 @@ jQuery(function($) {
       offset: button.data('type') === 'review' ? revOffset : qOffset,
       type: button.data('type')
     }
-    $.post(ajaxURL.url, data, function(response) {
+    $.post(ajaxURL, data, function(response) {
       button.replaceWith(response);
       if (button.data('type') === 'review') {
         revOffset += 3;
@@ -1346,7 +1421,7 @@ jQuery(function($) {
           action: 'new_comment',
           rev_form: $(this).serializeArray()
         }
-        $.post(ajaxURL.url, data, function() {
+        $.post(ajaxURL, data, function() {
           reviewForm.addClass('d-none');
           reviewSuccessMsg.removeClass('d-none');
         });
@@ -1366,7 +1441,7 @@ jQuery(function($) {
           action: 'new_comment',
           ask_form: $(this).serializeArray()
         }
-        $.post(ajaxURL.url, data, function() {
+        $.post(ajaxURL, data, function() {
           questionForm.addClass('d-none');
           questionSuccessMsg.removeClass('d-none');
         });
@@ -1401,7 +1476,7 @@ jQuery(function($) {
         action: 'change_password',
         data: $(this).serializeArray()
       }
-      $.post(ajaxURL.url, data, function(response) {
+      $.post(ajaxURL, data, function(response) {
         if (response === 'password-error') {
           const currentPassInput = $('#password_current');
           showInputError(currentPassInput);
@@ -1432,13 +1507,13 @@ jQuery(function($) {
           action: 'check_email',
           email: lostpassUserLogin.val()
         }
-        $.post(ajaxURL.url, data, function(response) {
+        $.post(ajaxURL, data, function(response) {
           if (response === 'Користувач з таким Email вже існує') {
             const data = {
               action: 'lost_password_email',
               email: lostpassUserLogin.val()
             }
-            $.post(ajaxURL.url, data, function() {
+            $.post(ajaxURL, data, function() {
               lostpasswordForm.slideUp(300);
               $('.lostpassword-success').slideDown(300);
             });
