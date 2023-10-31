@@ -24,6 +24,8 @@
     background: $white;
     .answer {
       &__head__text {
+        display: flex;
+        align-items: center;
         gap: 8px;
       }
       &-status {
@@ -31,6 +33,22 @@
       }
       &-text {
         margin-top: 16px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 16px 14px;
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+    &-text {
+      margin-top: 14px;
+    }
+    &__answer {
+      margin-top: 14px;
+      .answer__head__text {
+        display: block;
       }
     }
   }

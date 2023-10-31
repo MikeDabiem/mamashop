@@ -6,5 +6,12 @@
     &__more {
       margin-top: 24px;
     }
+
+    @media screen and (max-width: 768px) {
+      &__items,
+      &__more {
+        margin-top: 20px;
+      }
+    }
   }
 }

@@ -39,4 +39,23 @@
   .banner {
     margin-top: 20px;
   }
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    .breadcrumbs {
+      order: -1;
+    }
+    .banner {
+      order: -1;
+      margin-top: 10px;
+    }
+    .header__catalog--body {
+      order: -1;
+      margin-top: 10px;
+    }
+    .section-title {
+      margin-top: 50px;
+    }
+  }
 }

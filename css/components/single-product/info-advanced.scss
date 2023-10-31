@@ -47,4 +47,24 @@
       display: block;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    margin-top: 24px;
+    gap: 50px;
+    &__col1 {
+      width: 100%;
+      padding: 20px;
+      &__heading {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        .tab-button--border {
+          bottom: 20px;
+        }
+      }
+    }
+    &__col2.info__rating {
+      width: 100%;
+    }
+  }
 }

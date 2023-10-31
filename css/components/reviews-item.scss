@@ -22,4 +22,14 @@
     margin-top: 12px;
     line-height: 146%;
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 16px 14px;
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+    &__stars {
+      margin-top: 14px;
+    }
+  }
 }

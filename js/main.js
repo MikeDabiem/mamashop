@@ -335,10 +335,8 @@ jQuery(function($) {
     body.on('touchend', function() {
       const threshold = 200;
       const deltaX = endX - startX;
-      if (Math.abs(deltaX) > threshold && !filterBody.hasClass('active')) {
-        if (deltaX > 0) {
-          showFilter();
-        }
+      if (Math.abs(deltaX) > threshold && !filterBody.hasClass('active') && $(window).width() < 769 && deltaX > 0) {
+        showFilter();
       }
     });
 
@@ -370,6 +368,12 @@ jQuery(function($) {
         if (deltaX < 0) {
           closeFilter();
         }
+      }
+    });
+
+    $(window).on('resize', function() {
+      if (filterBody.hasClass('active') && $(window).width() > 768) {
+        closeFilter();
       }
     });
   }
@@ -421,12 +425,16 @@ jQuery(function($) {
   // single-product tabs
   const tabButton = $('.tab-button');
   if (tabButton.length) {
-    const tabButtonBorder = $('.tab-button--border');
+    function tabButtonBorder() {
+      const tabTitle = $('.tab-button.active');
+      $('.tab-button--border').width(tabTitle.outerWidth()).css({left: tabTitle.position().left - 2});
+    }
+    $(window).on('resize', tabButtonBorder);
     tabButton.on('click', function() {
       const id = $(this).attr('id');
       tabButton.removeClass('active');
       $(this).addClass('active');
-      tabButtonBorder.width($(this).outerWidth()).css({left: $(this).position().left - 2});
+      tabButtonBorder();
       $('.info__advanced__tab').animate({opacity: 0}, 200, function () {
         $(this).removeClass('active');
         $(`.info__advanced__tab[data-name="${id}"]`)

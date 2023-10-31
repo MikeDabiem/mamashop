@@ -66,7 +66,7 @@ foreach ($attributes_arr as $attr_id => $attr) {
         ];
     }
 
-    $args['s'] = get_search_query();
+    $args['s'] = $_GET['s'] ?? '';
     $args['post_type'] = 'product';
     $args['posts_per_page'] = -1;
 

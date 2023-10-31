@@ -11,10 +11,7 @@ $page_id = get_the_ID(); ?>
             ]); ?>
         </div>
         <div class="info-page__content__col2">
-            <?php if(is_page('Питання та відповіді')) { ?>
-                <h1 class="section-title">Питання та відповіді</h1>
-                <div class="info-page__content__item wysiwyg-styles"><?php the_content(); ?></div>
-            <?php } elseif (is_page('Доставка')) { ?>
+            <?php if(is_page('Доставка')) { ?>
                 <h1 class="section-title">Доставка</h1>
                 <div class="info-page__content__item wysiwyg-styles"><?php the_content(); ?></div>
             <?php } elseif (is_page('Оплата')) { ?>

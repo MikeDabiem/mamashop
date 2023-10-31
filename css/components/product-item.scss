@@ -68,12 +68,24 @@
   .buy-button {
     margin-top: 16px;
   }
+
   @media screen and (max-width: 768px) {
     &__title {
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
+    }
+  }
+  @media screen and (max-width: 375px) {
+    padding: 7px;
+    border-radius: 4px;
+    &__title {
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+    .buy-button {
+      margin-top: 12px;
     }
   }
 }

@@ -8,7 +8,7 @@ $date = get_comment_date('d.m.Y', $review->comment_ID);
 $stars = get_comment_meta($review->comment_ID, 'rating', true);
 $review_content = $review->comment_content; ?>
 <div class="reviews__item">
-    <div class="reviews__item-head d-flex justify-content-between">
+    <div class="reviews__item-head d-flex justify-content-between align-items-center">
         <h4 class="reviews__item-name font-15-18 fw-500"><?= $name; ?></h4>
         <time class="reviews__item-date font-11-13 fw-400"><?= $date; ?></time>
     </div>

@@ -20,7 +20,7 @@ $question_content = $question->comment_content; ?>
             $date = get_comment_date('d.m.Y', $question->comment_ID);
             $answer_content = $answer->comment_content; ?>
             <div class="answer__head d-flex justify-content-between">
-                <div class="answer__head__text d-flex align-items-baseline">
+                <div class="answer__head__text">
                     <h5 class="answer-name font-13-16 fw-500">Представник Mamashop</h5>
                     <span class="answer-status font-11-13 fw-400">Відповідь</span>
                 </div>

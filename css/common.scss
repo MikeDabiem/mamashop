@@ -632,6 +632,9 @@ h1, h2, h3, h4, h5, h6, p {
     padding-top: 54px;
     padding-bottom: 55px;
   }
+  .breadcrumbs {
+    margin-top: 10px;
+  }
   .std-btn {
     border-radius: 6px;
   }
@@ -653,6 +656,13 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 @media screen and (max-width: 480px) {
+  .pagination {
+    .page-numbers {
+      width: 34px;
+      height: 34px;
+      font-size: 14px;
+    }
+  }
   .products-slider {
     .slick {
       &-track {

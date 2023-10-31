@@ -13,4 +13,15 @@
   .blur-bg {
     z-index: 1020;
   }
+  @media screen and (max-width: 768px) {
+    .single-product__info {
+      margin-top: 20px;
+    }
+    .top {
+      margin-top: 50px;
+      .section-title {
+        max-width: 75%;
+      }
+    }
+  }
 }

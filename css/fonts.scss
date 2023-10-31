@@ -90,7 +90,7 @@
 }
 
 .font-32-45 {
-  font-size: 32px;
+  font-size: clamp(20px, 3vw, 32px);
   line-height: 140%;
 }
 
