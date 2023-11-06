@@ -1074,6 +1074,9 @@ jQuery(function($) {
   if (priceFilter.length) {
     $('.product-filter__price__send').on('click', function() {
       priceFilter.trigger('change');
+      if ($(window).width() < 769) {
+        closeFilter();
+      }
     });
     priceFilter.on('change', function(e) {
       if (e.target.closest('.product-filter__price__inputs') || e.target.closest('.product-filter__price__range')) {
