@@ -85,7 +85,7 @@
 }
 
 .font-28-36 {
-  font-size: 28px;
+  font-size: clamp(18px, 5vw, 28px);
   line-height: 130%;
 }
 

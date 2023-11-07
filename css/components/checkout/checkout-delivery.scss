@@ -1,13 +1,15 @@
 .delivery {
   &__place {
+    display: flex;
     gap: 24px;
     &__item {
       width: calc(50% - 12px);
       &-title {
+        margin-bottom: 8px;
         color: $black-light;
       }
       .checkout-select {
-        margin-top: 8px;
+        margin-top: auto;
       }
     }
     #delivery_city {
@@ -50,6 +52,29 @@
               width: calc(50% - 8px);
             }
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    &__place {
+      gap: 12px;
+      &__item {
+        width: calc(50% - 6px);
+        &-title {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 400px) {
+    &__place {
+      display: block;
+      &__item {
+        width: 100%;
+        &:not(:first-child) {
+          margin-top: 20px;
         }
       }
     }

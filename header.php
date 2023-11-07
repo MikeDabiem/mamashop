@@ -11,7 +11,7 @@
 <?php wp_body_open();
 if (is_page('checkout') || is_page('lost-password')) { ?>
     <header class="checkout-header wrapper">
-        <a href="<?= home_url(); ?>" class="header-logo">
+        <a href="<?= home_url(); ?>" class="header-logo checkout-header-logo">
             <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
         </a>
     </header>
@@ -175,7 +175,7 @@ if (is_page('checkout') || is_page('lost-password')) { ?>
             </div>
             <h4 class="success-message-title font-20-24 fw-600">Дякуємо!</h4>
             <?php $order_number = isset($_GET['success-order']) ? ' №' . $_GET['success-order'] : ''; ?>
-            <p class="success-message-text font-14-20 fw-400">Ваше замовлення<?= $order_number ?> успішно оформлене. Очікуйте відправку протягом 1-2 днів</p>
+            <p class="success-message-text font-14-20 fw-500">Ваше замовлення<?= $order_number ?> успішно оформлене. Очікуйте відправку протягом 1-2 днів</p>
             <button type="button" class="success-message-button std-btn purple-btn font-16-22 fw-600 w-100">Продовжити покупки</button>
         </div>
     </div>

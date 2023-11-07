@@ -2,7 +2,7 @@
 get_header(); ?>
 <section class="checkout-page wrapper filler">
     <h1 class="checkout-page-title font-28-36 fw-600">Оформлення замовлення</h1>
-    <div class="checkout-page__body d-flex">
+    <div class="checkout-page__body">
         <form name="checkout" method="post" id="checkout-form" class="checkout-page__body__col1 checkout__form checkout woocommerce-checkout" action="https://www.mamashop.brinpl.com/checkout/" enctype="multipart/form-data" novalidate="novalidate">
             <section class="checkout-page__section checkout-page__contacts active">
                 <div class="checkout-page__section__head d-flex justify-content-between">
@@ -10,7 +10,7 @@ get_header(); ?>
                     <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
                 </div>
                 <div class="checkout-page__section__body contacts__body">
-                    <div class="checkout__inputs d-flex flex-wrap">
+                    <div class="checkout__inputs">
                         <?php $checkout = WC()->checkout();
                         $fields = $checkout->get_checkout_fields('billing');
                         foreach ( $fields as $key => $field ) {
@@ -26,7 +26,7 @@ get_header(); ?>
                             </div>
                         <?php } ?>
                     </div>
-                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                    <button type="button" class="checkout-next-button std-btn purple-btn font-15-24 fw-600">Продовжити</button>
                 </div>
                 <div class="checkout-page__section__ready">
                     <div class="ready__item d-flex align-items-center">
@@ -113,7 +113,7 @@ get_header(); ?>
                             } ?>
                         </tbody>
                     </table>
-                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                    <button type="button" class="checkout-next-button std-btn purple-btn font-15-24 fw-600">Продовжити</button>
                 </div>
             </section>
             <section class="checkout-page__section checkout-page__delivery">
@@ -122,8 +122,8 @@ get_header(); ?>
                     <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
                 </div>
                 <div class="checkout-page__section__body delivery__body">
-                    <div class="delivery__place d-flex">
-                        <div id="delivery_region" class="delivery__place__item">
+                    <div class="delivery__place">
+                        <div id="delivery_region" class="delivery__place__item d-flex flex-column">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть область</h6>
                             <?php global $wpdb;
                             $areas = [];
@@ -138,7 +138,7 @@ get_header(); ?>
                             $chosen_option = empty($city_arr[0]) ? ['Київська' => $areas['Київська']] : [$city_arr[0] => $areas[$city_arr[0]]];
                             get_template_part('components/checkout/checkout-select', null, ['options' => $areas, 'chosen_option' => $chosen_option, 'input_id' => 'delivery_region-input']); ?>
                         </div>
-                        <div id="delivery_city" class="delivery__place__item">
+                        <div id="delivery_city" class="delivery__place__item d-flex flex-column">
                             <h6 class="delivery__place__item-title font-13-16 fw-500">Оберіть населений пункт</h6>
                             <?php if (empty($city_arr[0]) || $city_arr[0] === 'Київська' && !isset($city_arr[1])) {
                                 $option = ['Київ' => '8d5a980d-391c-11dd-90d9-001a92567626'];
@@ -174,7 +174,7 @@ get_header(); ?>
                                         } else {
                                             printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) );
                                         }
-                                        printf( '<label for="shipping_method_%1$s_%2$s">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) );
+                                        printf( '<label for="shipping_method_%1$s_%2$s" class="font-14-20 fw-500">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) );
                                         ?>
                                     </div>
                                     <div class="item__select">
@@ -226,7 +226,7 @@ get_header(); ?>
                     } else {
                         $is_disabled = 'disabled';
                     } ?>
-                    <button type="button" class="checkout-next-button std-btn purple-btn" <?= $is_disabled ?>>Продовжити</button>
+                    <button type="button" class="checkout-next-button std-btn purple-btn font-15-24 fw-600" <?= $is_disabled ?>>Продовжити</button>
                 </div>
                 <div class="checkout-page__section__ready">
                     <div class="ready__delivery__logo">
@@ -261,7 +261,7 @@ get_header(); ?>
                     <?php $available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
                     if (!empty($available_gateways)) {
                         foreach ($available_gateways as $gateway) { ?>
-                            <div class="payment__item wc_payment_method payment_method_<?= esc_attr($gateway->id); ?> d-flex align-items-center">
+                            <div class="payment__item wc_payment_method payment_method_<?= esc_attr($gateway->id); ?> d-flex flex-wrap align-items-center">
                                 <input id="payment_method_<?= esc_attr($gateway->id); ?>" type="radio" class="payment_method input-radio" name="payment_method" value="<?= esc_attr($gateway->id); ?>" <?php checked($gateway->chosen, true); ?> data-order_button_text="<?= esc_attr($gateway->order_button_text); ?>" />
                                 <label for="payment_method_<?= esc_attr($gateway->id); ?>" class="payment__item-label font-14-20 fw-400">
                                     <?= $gateway->get_title(); ?> <?= $gateway->get_icon(); ?>
@@ -274,7 +274,7 @@ get_header(); ?>
                     } else { ?>
                         <p><?php wc_print_notice(apply_filters('woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__('Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce') : esc_html__('Please fill in your details above to see available payment methods.', 'woocommerce')), 'notice'); ?></p>
                     <?php } ?>
-                    <button type="button" class="checkout-next-button std-btn purple-btn">Продовжити</button>
+                    <button type="button" class="checkout-next-button std-btn purple-btn font-15-24 fw-600">Продовжити</button>
                 </div>
                 <div class="checkout-page__section__ready">
                     <div class="ready__item d-flex align-items-center">
@@ -291,7 +291,7 @@ get_header(); ?>
                 <h5 class="comment-title font-14-20 fw-500 transition-default">Додати коментар до замовлення</h5>
                 <div class="checkout-page__section__body comment__body">
                     <textarea name="order_comments" id="order_comments" class="comment-textarea font-13-16 fw-400 d-block" placeholder="Наприклад: відправте, будь ласка, завтра"></textarea>
-                    <button type="button" class="comment-button std-btn purple-btn">Додати</button>
+                    <button type="button" class="comment-button std-btn purple-btn font-15-24 fw-600">Додати</button>
                 </div>
                 <div class="checkout-page__section__ready comment__ready">
                     <p class="comment__ready-text font-14-20 fw-500"></p>
@@ -337,7 +337,7 @@ get_header(); ?>
             </div>
             <div class="checkout-page__confirm">
                 <button type="submit" form="checkout-form" name="woocommerce_checkout_place_order" id="place_order" class="confirm-button std-btn purple-btn font-15-18 fw-600 w-100" data-value="Замовлення підтверджую">Замовлення підтверджую</button>
-                <p class="confirm-text font-11-13 fw-400">Підтверджуючи замовлення я приймаю <a href="<?= get_privacy_policy_url(); ?>">умови сайту</a> та надаю згоду на <a href="<?= get_privacy_policy_url(); ?>">обробку моїх персональних даних.</a></p>
+                <p class="confirm-text font-11-13 fw-500">Підтверджуючи замовлення я приймаю <a href="<?= get_privacy_policy_url(); ?>">умови сайту</a> та надаю згоду на <a href="<?= get_privacy_policy_url(); ?>">обробку моїх персональних даних.</a></p>
             </div>
         </div>
     </div>

@@ -11,6 +11,16 @@
       margin-top: 20px;
       width: 100%;
     }
+
+    @media screen and (max-width: 480px) {
+      &-title,
+      &__head-button {
+        font-size: 14px;
+      }
+      &-button {
+        margin-top: 14px;
+      }
+    }
   }
   .woocommerce-error {
     display: none;
