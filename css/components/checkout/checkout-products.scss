@@ -4,53 +4,47 @@
       color: inherit;
       margin-bottom: 20px;
     }
-    &__table {
-      width: 100%;
-      th {
-        color: inherit;
-        font-weight: inherit;
-        &:not(.table-name) {
-          text-align: end;
-        }
-      }
-      td {
-        &:not(.products__table__item-count) {
-          color: inherit;
-        }
-        &:not(.products__table__item-count, .products__table__item-info) {
-          text-align: end;
-        }
-        font-weight: inherit;
+    &__list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 4% 51% repeat(3, 15%);
+      &__head,
+      &__body,
+      &__item {
+        display: grid;
+        grid-template-columns: subgrid;
       }
       &__head {
+        grid-column: 2 / span 4;
         color: $grey;
-        .table {
-          &-num {
-            width: 4%;
-          }
-          &-name {
-            width: 51%;
-          }
-          &-col {
-            width: 15%;
-          }
+        &>p {
+          color: inherit;
         }
       }
-      tbody {
-        border-top: 16px solid transparent;
+      &__body {
+        margin-top: 24px;
+        grid-column: span 5;
+        row-gap: 16px;
       }
       &__item {
+        grid-column: span 5;
+        &-count {
+          align-self: center;
+          color: $dark-grey;
+        }
         &-image {
           width: 58px;
           height: 58px;
           margin-right: 12px;
         }
-        &-count {
+        &-brand {
+          margin-top: 8px;
           color: $dark-grey;
         }
-        &-brand {
-          color: $dark-grey;
-          margin-top: 8px;
+      }
+      @media screen and (max-width: 480px) {
+        .list-col {
+          display: none;
         }
       }
     }

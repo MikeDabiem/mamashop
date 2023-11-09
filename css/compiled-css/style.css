@@ -3675,51 +3675,47 @@ h1, h2, h3, h4, h5, h6, p {
   color: inherit;
   margin-bottom: 20px;
 }
-.checkout-page__products .products__table {
-  width: 100%;
+.checkout-page__products .products__list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 4% 51% repeat(3, 15%);
 }
-.checkout-page__products .products__table th {
-  color: inherit;
-  font-weight: inherit;
+.checkout-page__products .products__list__head, .checkout-page__products .products__list__body, .checkout-page__products .products__list__item {
+  display: grid;
+  grid-template-columns: subgrid;
 }
-.checkout-page__products .products__table th:not(.table-name) {
-  text-align: end;
-}
-.checkout-page__products .products__table td {
-  font-weight: inherit;
-}
-.checkout-page__products .products__table td:not(.products__table__item-count) {
-  color: inherit;
-}
-.checkout-page__products .products__table td:not(.products__table__item-count, .products__table__item-info) {
-  text-align: end;
-}
-.checkout-page__products .products__table__head {
+.checkout-page__products .products__list__head {
+  grid-column: 2/span 4;
   color: #B2B2B7;
 }
-.checkout-page__products .products__table__head .table-num {
-  width: 4%;
+.checkout-page__products .products__list__head > p {
+  color: inherit;
 }
-.checkout-page__products .products__table__head .table-name {
-  width: 51%;
+.checkout-page__products .products__list__body {
+  margin-top: 24px;
+  grid-column: span 5;
+  row-gap: 16px;
 }
-.checkout-page__products .products__table__head .table-col {
-  width: 15%;
+.checkout-page__products .products__list__item {
+  grid-column: span 5;
 }
-.checkout-page__products .products__table tbody {
-  border-top: 16px solid transparent;
+.checkout-page__products .products__list__item-count {
+  align-self: center;
+  color: #848589;
 }
-.checkout-page__products .products__table__item-image {
+.checkout-page__products .products__list__item-image {
   width: 58px;
   height: 58px;
   margin-right: 12px;
 }
-.checkout-page__products .products__table__item-count {
+.checkout-page__products .products__list__item-brand {
+  margin-top: 8px;
   color: #848589;
 }
-.checkout-page__products .products__table__item-brand {
-  color: #848589;
-  margin-top: 8px;
+@media screen and (max-width: 480px) {
+  .checkout-page__products .products__list .list-col {
+    display: none;
+  }
 }
 .checkout-page .delivery__place {
   display: flex;

@@ -58,24 +58,21 @@ get_header(); ?>
                     </div>
                 </div>
             </section>
-            <section class="checkout-page__section checkout-page__products">
+            <section class="checkout-page__section checkout-page__products active">
                 <div class="checkout-page__section__head d-flex justify-content-between">
                     <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">2</span>Товари для оформлення</h4>
                     <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
                 </div>
-                <div class="checkout-page__section__body products__body">
-                    <table class="products__table caption-top">
-                        <caption class="products-title font-15-24 fw-600 p-0">Ваше замовлення</caption>
-                        <thead>
-                            <tr class="products__table__head font-12-16 fw-400">
-                                <th class="table-num"></th>
-                                <th class="table-name">Товар</th>
-                                <th class="table-col">Вартість</th>
-                                <th class="table-col">Кількість</th>
-                                <th class="table-col">Сума</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <section class="checkout-page__section__body products__body d-block">
+                    <h4 class="products__list-title font-15-24 fw-600">Ваше замовлення</h4>
+                    <div class="products__list">
+                        <div class="products__list__head font-12-16 fw-400">
+                            <p class="list-name">Товар</p>
+                            <p class="list-col text-end">Вартість</p>
+                            <p class="list-col text-end">Кількість</p>
+                            <p class="list-col text-end">Сума</p>
+                        </div>
+                        <div class="products__list__body">
                             <?php $prod_num = 1;
                             foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                                 $id = $cart_item['data']->id;
@@ -90,31 +87,31 @@ get_header(); ?>
                                 $image_id = $cart_item['data']->image_id;
                                 $image_url = wp_get_attachment_image_url($image_id);
                                 $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true); ?>
-                                <tr class="products__table__item font-13-16 fw-500">
-                                    <td class="products__table__item-count"><?= $prod_num; ?></td>
-                                    <td class="products__table__item-info d-flex align-items-center">
-                                        <div class="products__table__item-image img-wrapper-contain">
+                                <div class="products__list__item font-13-16 fw-500">
+                                    <p class="products__list__item-count"><?= $prod_num; ?></p>
+                                    <div class="products__list__item-info d-flex align-items-center">
+                                        <div class="products__list__item-image img-wrapper-contain">
                                             <?php if ($image_url) { ?>
                                                 <img src="<?= $image_url; ?>" alt="<?= $alt; ?>">
                                             <?php } else { ?>
                                                 <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image">
                                             <?php } ?>
                                         </div>
-                                        <div class="products__table__item__text">
-                                            <p class="products__table__item-name"><?= $name; ?></p>
-                                            <p class="products__table__item-brand font-12-16"><?= $brand; ?></p>
+                                        <div class="products__list__item__text">
+                                            <p class="products__list__item-name"><?= $name; ?></p>
+                                            <p class="products__list__item-brand font-12-16"><?= $brand; ?></p>
                                         </div>
-                                    </td>
-                                    <td><?= $sale_price ?: $price; ?> грн</td>
-                                    <td><?= $quantity; ?> шт.</td>
-                                    <td><?= $sale_price ? $sale_price * $quantity : $price * $quantity; ?> грн</td>
-                                </tr>
+                                    </div>
+                                    <p class="text-end"><?= $sale_price ?: $price; ?> грн</p>
+                                    <p class="text-end"><?= $quantity; ?> шт.</p>
+                                    <p class="text-end"><?= $sale_price ? $sale_price * $quantity : $price * $quantity; ?> грн</p>
+                                </div>
                                 <?php $prod_num++;
                             } ?>
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                     <button type="button" class="checkout-next-button std-btn purple-btn font-15-24 fw-600">Продовжити</button>
-                </div>
+                </section>
             </section>
             <section class="checkout-page__section checkout-page__delivery">
                 <div class="checkout-page__section__head d-flex justify-content-between">
