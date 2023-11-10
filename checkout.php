@@ -58,12 +58,12 @@ get_header(); ?>
                     </div>
                 </div>
             </section>
-            <section class="checkout-page__section checkout-page__products active">
+            <section class="checkout-page__section checkout-page__products">
                 <div class="checkout-page__section__head d-flex justify-content-between">
                     <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">2</span>Товари для оформлення</h4>
-                    <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Змінити</button>
+                    <button type="button" class="checkout-change-button transparent-btn font-14-20 fw-500">Переглянути</button>
                 </div>
-                <section class="checkout-page__section__body products__body d-block">
+                <section class="checkout-page__section__body products__body">
                     <h4 class="products__list-title font-15-24 fw-600">Ваше замовлення</h4>
                     <div class="products__list">
                         <div class="products__list__head font-12-16 fw-400">
@@ -103,8 +103,8 @@ get_header(); ?>
                                         </div>
                                     </div>
                                     <p class="text-end"><?= $sale_price ?: $price; ?> грн</p>
-                                    <p class="text-end"><?= $quantity; ?> шт.</p>
-                                    <p class="text-end"><?= $sale_price ? $sale_price * $quantity : $price * $quantity; ?> грн</p>
+                                    <p class="text-end products__list__item-qty"><?= $quantity; ?> шт.</p>
+                                    <p class="text-end products__list__item-eq"><?= $sale_price ? $sale_price * $quantity : $price * $quantity; ?> грн</p>
                                 </div>
                                 <?php $prod_num++;
                             } ?>

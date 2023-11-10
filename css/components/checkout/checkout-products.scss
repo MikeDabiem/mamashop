@@ -33,7 +33,7 @@
           color: $dark-grey;
         }
         &-image {
-          width: 58px;
+          flex: 0 0 58px;
           height: 58px;
           margin-right: 12px;
         }
@@ -42,7 +42,35 @@
           color: $dark-grey;
         }
       }
-      @media screen and (max-width: 480px) {
+      @media screen and (max-width: 480px), screen and (min-width: 769px) and (max-width: 900px) {
+        grid-template-columns: 5% 75% 20%;
+        &__head {
+          grid-column: 2;
+        }
+        &__body {
+          grid-column: span 3;
+          row-gap: 22px;
+        }
+        &__item {
+          grid-column: span 3;
+          grid-template-rows: repeat(3, 1fr);
+          row-gap: 10px;
+          &-count,
+          &-info {
+            grid-row: span 3;
+          }
+          &-qty::before,
+          &-eq::before {
+            margin-right: 4px;
+            color: $grey;
+          }
+          &-qty::before {
+            content: "\d7";
+          }
+          &-eq::before {
+            content: "=";
+          }
+        }
         .list-col {
           display: none;
         }
