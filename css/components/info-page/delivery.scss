@@ -1,0 +1,64 @@
+&__delivery {
+  &__logo-image {
+    margin-top: 20px;
+    max-width: 100px;
+    @include flex-height(40);
+  }
+  &__list {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    .list__item {
+      &:not(:first-child) {
+        margin-top: 12px;
+      }
+      &::marker {
+        color: $main-purple;
+      }
+      &-title {
+        font-size: inherit;
+        color: $main-purple;
+      }
+      &-text {
+        margin-top: 4px;
+        a {
+          color: $main-purple;
+          text-decoration: none;
+          &:hover {
+            color: $hover-purple;
+          }
+        }
+      }
+    }
+  }
+  &-text {
+    margin-top: 20px;
+    &--bottom {
+      margin-top: 30px;
+    }
+  }
+  &__contacts {
+    margin-top: 20px;
+    .contacts__item {
+      &:not(:first-child) {
+        margin-top: 12px;
+      }
+      a:hover {
+        color: $hover-purple;
+      }
+    }
+  }
+  @media screen and (max-width: 900px) {
+    &__logo-image {
+      margin-top: 12px;
+    }
+    &-text {
+      margin-top: 12px;
+      &--bottom {
+        margin-top: 24px;
+      }
+    }
+    &__contacts {
+      margin-top: 12px;
+    }
+  }
+}

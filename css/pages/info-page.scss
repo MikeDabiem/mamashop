@@ -36,6 +36,21 @@
         }
       }
     }
+    &__select {
+      margin-top: 8px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: $opacity-purple;
+      border-radius: 4px;
+      span {
+        color: $main-purple;
+      }
+      svg {
+        rotate: -180deg;
+      }
+    }
   }
   &__content {
     @media screen and (min-width: 901px) {
@@ -48,6 +63,10 @@
     &__col1 {
       grid-column: 1;
       grid-row: 1 / 3;
+      &-title {
+        color: $black-light;
+        display: none;
+      }
     }
     &-title {
       grid-column: 2;
@@ -66,7 +85,7 @@
           background: $opacity-purple;
         }
         &__text {
-          color: inherit;
+          color: $black-light;
         }
       }
       &__additional {
@@ -124,56 +143,8 @@
       }
     }
   }
-  &__delivery {
-    &__logo-image {
-      margin-top: 20px;
-      max-width: 100px;
-      @include flex-height(40);
-    }
-    &__list {
-      margin: 12px 0 0;
-      padding-left: 20px;
-      .list__item {
-        &:not(:first-child) {
-          margin-top: 12px;
-        }
-        &::marker {
-          color: $main-purple;
-        }
-        &-title {
-          font-size: inherit;
-          color: $main-purple;
-        }
-        &-text {
-          margin-top: 4px;
-          a {
-            color: $main-purple;
-            text-decoration: none;
-            &:hover {
-              color: $hover-purple;
-            }
-          }
-        }
-      }
-    }
-    &-text {
-      margin-top: 20px;
-      &--bottom {
-        margin-top: 30px;
-      }
-    }
-    &__contacts {
-      margin-top: 20px;
-      .contacts__item {
-        &:not(:first-child) {
-          margin-top: 12px;
-        }
-        a:hover {
-          color: $hover-purple;
-        }
-      }
-    }
-  }
+  @import "../components/info-page/delivery";
+  @import "../components/info-page/payment";
 
   @media screen and (max-width: 900px) {
     &__content {
@@ -182,7 +153,12 @@
       &__col1 {
         margin-top: 16px;
         padding: 20px 14px;
+        background: $white;
+        border-radius: 4px;
         position: relative;
+        &-title {
+          display: block;
+        }
       }
       &__col2 {
         margin-top: 10px;
@@ -192,11 +168,21 @@
       }
     }
     &__menu {
-      //position: absolute;
+      display: none;
+      position: absolute;
       left: 0;
-      top: 100%;
+      top: calc(100% + 8px);
       width: 100%;
       z-index: 1;
+      box-shadow: $shadow;
+      &__select {
+        display: flex;
+        &.active {
+          svg {
+            rotate: 0deg;
+          }
+        }
+      }
     }
   }
 }

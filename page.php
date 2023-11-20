@@ -3,8 +3,15 @@ $page_id = get_the_ID(); ?>
 <div class="info-page wrapper filler">
     <?php woocommerce_breadcrumb(); ?>
     <div class="info-page__content">
-        <h1 class="info-page-title section-title"><?php the_title(); ?></h1>
+        <h1 class="info-page-title section-title"><?php the_title() ?></h1>
         <div class="info-page__content__col1">
+            <h4 class="info-page__content__col1-title font-16-22 fw-500">Оберіть тему питання:</h4>
+            <div class="info-page__menu__select">
+                <span class="font-16-22 fw-500"><?php the_title() ?></span>
+                <svg class="transition-default" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 0.515625L12 6.51563L10.5953 7.92037L6 3.32512L1.40475 7.92037L0 6.51562L6 0.515625Z" fill="#35237C"/>
+                </svg>
+            </div>
             <?php wp_nav_menu([
                 'menu' => 'Info Page Menu',
                 'container' => 'nav',
@@ -14,7 +21,7 @@ $page_id = get_the_ID(); ?>
         <div class="info-page__content__col2">
             <?php if(is_page('Доставка')) { ?>
                 <div class="info-page__content__body info-page__delivery">
-                    <p class="font-16-22 fw-500">Дорогі клієнти, ми прагнемо забезпечити Вас найкращою доставкою для Вашої зручності.<br>Ось декілька способів, які ми пропонуємо:</p>
+                    <p class="info-page__delivery-title font-16-22 fw-500">Дорогі клієнти, ми прагнемо забезпечити Вас найкращою доставкою для Вашої зручності.<br>Ось декілька способів, які ми пропонуємо:</p>
                     <div id="np-logo" class="info-page__delivery__logo-image img-wrapper-contain">
                         <img src="<?php bloginfo('template_url'); ?>/images/nova-poshta.png" alt="Нова Пошта">
                     </div>
@@ -60,10 +67,27 @@ $page_id = get_the_ID(); ?>
                     <p class="info-page__delivery-text--bottom font-14-20 fw-500">Дякуємо, що обрали наш магазин для Ваших покупок. Ми робимо все можливе, щоб забезпечити Вас найкращим обслуговуванням.</p>
                 </div>
             <?php } elseif (is_page('Оплата')) { ?>
-                <h1 class="section-title">Оплата</h1>
-                <div class="info-page__content__item wysiwyg-styles"><?php the_content(); ?></div>
+                <div class="info-page__content__body info-page__payment">
+                    <p class="info-page__payment-title font-16-22 fw-500">Ми розуміємо важливість безпечних і зручних способів оплати для наших клієнтів. Ось способи оплати, які ми пропонуємо:</p>
+                    <div class="info-page__payment__images d-flex align-items-center">
+                        <div class="img-wrapper">
+                            <img src="<?php bloginfo('template_url'); ?>/images/mastercard.png" alt="MasterCard">
+                        </div>
+                        <div class="img-wrapper">
+                            <img src="<?php bloginfo('template_url'); ?>/images/visa.png" alt="VISA">
+                        </div>
+                    </div>
+                    <ol class="info-page__payment__list font-14-20">
+                        <li class="list-item">На сайті за допомогою платіжної картки Visa/MasterCard при оформленні замовлення</li>
+                        <li class="list-item">У відділенні компанії-перевізника (післяплата) за допомогою платіжної картки Visa/MasterCard або готівкою</li>
+                    </ol>
+                    <p class="info-page__payment-title font-16-22 fw-500">Політика безпеки платежів при оформленні замовлення:</p>
+                    <div class="info-page__payment__advanced">
+                        <p class="advanced-text font-14-20 fw-400">При оплаті замовлення банківською картою, обробка платежу (включаючи введення номера карти) відбувається на захищеній сторінці процесингової системи. Це означає, що ваші конфіденційні дані (реквізити карти, реєстраційні дані та ін.) не надходять до нас, їх обробка повністю захищена і ніхто не може отримати персональні і банківські дані клієнта.</p>
+                        <p class="advanced-text font-14-20 fw-400">При роботі з картковими даними застосовується стандарт захисту інформації, розроблений міжнародними платіжними системами Visa та MasterCard — Payment Card Industry Data Security Standard (PCI DSS), що забезпечує безпечну обробку реквізитів Банківської карти Власника. Така технологія передачі даних гарантує безпеку по операціях з банківськими картами шляхом використання протоколів Secure Sockets Layer (SSL).</p>
+                    </div>
+                </div>
             <?php } elseif (is_page('Повернення та гарантія')) { ?>
-                <h1 class="section-title">Повернення та гарантія</h1>
                 <div class="info-page__content__item wysiwyg-styles">
                     <div class="item__icontext d-flex align-items-center">
                         <div class="item__icontext-icon">
@@ -102,16 +126,10 @@ $page_id = get_the_ID(); ?>
                     </ol>
                 </div>
             <?php } elseif (is_page('Про нас')) { ?>
-                <h1 class="section-title">Про нас</h1>
-                <?php $about_us = get_field('about_us');
-                foreach ($about_us as $item) { ?>
-                    <div class="info-page__content__item wysiwyg-styles">
-                        <h4><?= $item['title']; ?></h4>
-                        <p><?= $item['text']; ?></p>
-                    </div>
-                <?php } ?>
+                <div class="info-page__content__body info-page__about">
+
+                </div>
             <?php } elseif (is_page('Умови використання')) { ?>
-                <h1 class="section-title">Умови використання</h1>
                 <div class="info-page__content__item wysiwyg-styles">
                     <div class="item__icontext d-flex align-items-center">
                         <div class="item__icontext-icon">

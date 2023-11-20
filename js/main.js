@@ -998,6 +998,27 @@ jQuery(function($) {
     });
   }
 
+  // show menu on info page
+  const infoPageMenuSelect = $('.info-page__menu__select');
+  if (infoPageMenuSelect.length) {
+    const infoPageMenu = $('.info-page__menu');
+    infoPageMenuSelect.on('click', function() {
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        infoPageMenu.slideUp(300);
+      } else {
+        $(this).addClass('active');
+        infoPageMenu.slideDown(300);
+      }
+    });
+    $(window).on('resize', function() {
+      if ($(window).width() > 900 && infoPageMenu[0].hasAttribute('style')) {
+        infoPageMenuSelect.removeClass('active');
+        infoPageMenu.removeAttr('style');
+      }
+    });
+  }
+
 
 
   //////////

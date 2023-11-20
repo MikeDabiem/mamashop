@@ -5,11 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php wp_title(); ?></title>
-  <?php wp_head(); ?>
+    <?php wp_head(); ?>
 </head>
 <body>
-<?php wp_body_open();
-if (is_page('checkout') || is_page('lost-password')) { ?>
+<?php wp_body_open(); ?>
+<noscript class="d-flex justify-content-center align-items-center">
+    <style>
+        body {
+            opacity: 1;
+            overflow: hidden;
+        }
+    </style>
+    <h1>Вам потрібно дозволити використання JavaScript в браузері для перегляду цього сайту</h1>
+</noscript>
+<?php if (is_page('checkout') || is_page('lost-password')) { ?>
     <header class="checkout-header wrapper">
         <a href="<?= home_url(); ?>" class="header-logo checkout-header-logo">
             <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
@@ -28,7 +37,9 @@ if (is_page('checkout') || is_page('lost-password')) { ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-width="2" d="M3.53 7.458c0-1.22 0-1.83.2-2.31A2.617 2.617 0 0 1 5.146 3.73c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.265 1.15.775 1.417 1.416.199.481.199 1.09.199 2.31s0 1.83-.2 2.311a2.618 2.618 0 0 1-1.416 1.416c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2A2.617 2.617 0 0 1 3.73 9.768c-.2-.481-.2-1.09-.2-2.31ZM16.618 7.458c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.416c.2.481.2 1.09.2 2.31s0 1.83-.2 2.311a2.617 2.617 0 0 1-1.416 1.416c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.481-.2-1.09-.2-2.31ZM3.53 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.266 1.15.775 1.417 1.417.199.48.199 1.09.199 2.31s0 1.83-.2 2.31a2.618 2.618 0 0 1-1.416 1.417c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2a2.618 2.618 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31ZM16.618 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.417c.2.48.2 1.09.2 2.31s0 1.83-.2 2.31a2.617 2.617 0 0 1-1.416 1.417c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31Z"/></svg>
                 Каталог
             </button>
-            <?php get_search_form(); ?>
+<!--            <search>-->
+                <?php get_search_form(); ?>
+<!--            </search>-->
             <div class="header__cab d-flex">
                 <?php $favorites_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') . '/favorites/' : '#';
                 $profile_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') : '#'; ?>
