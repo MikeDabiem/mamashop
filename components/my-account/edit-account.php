@@ -1,7 +1,7 @@
 <h2 class="account-page-title font-28-36 fw-600">Персональні данні</h2>
 <form id="edit-account" class="woocommerce-EditAccountForm edit-account" method="post" <?php do_action('woocommerce_edit_account_form_tag'); ?> >
-    <fieldset class="edit-account__personal d-flex flex-wrap">
-        <legend class="font-16-22 fw-600 w-100 m-0">Особиста інформація</legend>
+    <fieldset class="edit-account__personal">
+        <legend class="font-16-22 fw-600 w-100">Особиста інформація</legend>
         <div class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first input__wrapper">
             <label for="account_first_name"><?php esc_html_e('Ім’я', 'woocommerce'); ?><abbr class="text-decoration-none" title="Обов'язкове поле">*</abbr></label>
             <input type="text" class="woocommerce-Input woocommerce-Input--text input-text transition-default required" name="account_first_name" id="account_first_name" autocomplete="given-name" value="<?= esc_attr($user->first_name); ?>" />

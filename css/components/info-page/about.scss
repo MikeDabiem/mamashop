@@ -1,0 +1,20 @@
+&__about {
+  .about {
+    &__item {
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+      .icon-text {
+        &__icon {
+          background: $opacity-purple;
+        }
+        &__text {
+          color: $main-purple;
+        }
+      }
+      &__text {
+        margin-top: 12px;
+      }
+    }
+  }
+}

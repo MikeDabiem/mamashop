@@ -56,7 +56,6 @@
     @media screen and (min-width: 901px) {
       display: grid;
       grid-template-columns: 26% 72%;
-      grid-template-rows: auto auto;
       gap: 2%;
       margin-top: 30px;
     }
@@ -81,63 +80,17 @@
       .icon-text {
         gap: 12px;
         &__icon {
-          border-radius: 4px;
-          background: $opacity-purple;
+          flex: 0 0 auto;
+          width: 32px;
+          height: 32px;
+          border-radius: 2px;
+          overflow: hidden;
         }
-        &__text {
+        &__link {
           color: $black-light;
-        }
-      }
-      &__additional {
-        margin-top: 24px;
-        padding: 12px 16px;
-        border-radius: 4px;
-        background: $opacity-purple;
-        gap: 10px;
-        &-text {
-          color: $main-purple;
-        }
-      }
-      &__num-list {
-        margin: 24px 0 0;
-        padding-left: 18px;
-      }
-      &__dot-list {
-        padding-left: 4px;
-        &>li {
-          list-style: disc;
-        }
-      }
-      .contacts {
-        &__icontext {
-          gap: 12px;
-          &:first-child {
-            margin-top: 16px;
-          }
-          &:not(:first-child) {
-            margin-top: 12px;
-          }
-          &>a {
-            text-decoration: none;
-            color: $black-light;
-            @media (hover: hover) {
-              &:hover {
-                color: $main-purple;
-              }
-            }
-          }
-        }
-        &-additional {
-          margin-top: 24px;
-          color: $black-light;
-          &::before {
-            content: '';
-            display: inline-block;
-            width: 5px;
-            height: 5px;
-            background: $black-light;
-            border-radius: 5px;
-            margin: 2px 12px;
+          text-decoration: none;
+          &:hover {
+            color: $hover-purple;
           }
         }
       }
@@ -145,6 +98,9 @@
   }
   @import "../components/info-page/delivery";
   @import "../components/info-page/payment";
+  @import "../components/info-page/return";
+  @import "../components/info-page/about";
+  @import "../components/info-page/contacts";
 
   @media screen and (max-width: 900px) {
     &__content {

@@ -9,7 +9,7 @@
     padding-left: 20px;
     .list__item {
       &:not(:first-child) {
-        margin-top: 12px;
+        margin-top: 1em;
       }
       &::marker {
         color: $main-purple;
@@ -32,9 +32,6 @@
   }
   &-text {
     margin-top: 20px;
-    &--bottom {
-      margin-top: 30px;
-    }
   }
   &__contacts {
     margin-top: 20px;
@@ -42,8 +39,8 @@
       &:not(:first-child) {
         margin-top: 12px;
       }
-      a:hover {
-        color: $hover-purple;
+      .icon-text__icon {
+        background: $opacity-purple;
       }
     }
   }
@@ -53,9 +50,6 @@
     }
     &-text {
       margin-top: 12px;
-      &--bottom {
-        margin-top: 24px;
-      }
     }
     &__contacts {
       margin-top: 12px;

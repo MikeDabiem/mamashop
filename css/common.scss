@@ -673,7 +673,7 @@ h1, h2, h3, h4, h5, h6, p {
   input[type=text],
   input[type=number],
   input[type=search] {
-    font-size: 16px;
+    font-size: 16px !important;
   }
   .input__wrapper label {
     font-size: 14px;

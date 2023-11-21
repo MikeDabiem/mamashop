@@ -860,6 +860,36 @@ jQuery(function($) {
         }
       });
     }
+
+    // show menu on account page on mobile screen
+    const accMenu = $('.account-page__col1');
+    const accContent = $('.account-page__col2');
+    function showAccMenu() {
+      if ($(window).width() < 641) {
+        accMenu.show();
+        accContent.hide();
+      } else {
+        accMenu.removeAttr('style');
+        accContent.removeAttr('style');
+      }
+    }
+    showAccMenu();
+
+    $('.menu__item[href*="edit-account"]').on('click', function(e) {
+      if ($(window).width() < 641) {
+        e.preventDefault();
+        accMenu.hide().addClass('hidden');
+        accContent.show();
+        history.pushState(null, null);
+      }
+    });
+
+    $(window).on('popstate', function() {
+      if (accMenu.hasClass('hidden')) {
+        location.reload();
+      }
+    });
+    $(window).on('resize', showAccMenu);
   }
 
   // account orders sort

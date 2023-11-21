@@ -1,0 +1,39 @@
+&__contacts {
+  .contacts {
+    &__item {
+      margin-top: 12px;
+      .icon-text {
+        &__icon {
+          background: $bg-color;
+        }
+        &__link {
+          span {
+            color: $black-light;
+          }
+        }
+      }
+    }
+    &__info {
+      width: fit-content;
+      margin-top: 12px;
+      padding: 16px;
+      background: $white;
+      border: 1px solid $main-purple;
+      border-radius: 6px;
+    }
+    &__legal {
+      margin-top: 20px;
+      .legal__item {
+        margin-top: 12px;
+        .icon-text {
+          &__icon {
+            background: $bg-color;
+          }
+          &__text {
+            color: $black-light;
+          }
+        }
+      }
+    }
+  }
+}

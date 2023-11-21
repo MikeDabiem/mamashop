@@ -7,6 +7,13 @@
     background: $white;
     gap: 20px;
   }
+  &__personal {
+    display: flex;
+    flex-wrap: wrap;
+    legend {
+      margin: 0;
+    }
+  }
   &__birthday {
     margin-top: 12px;
     &-subtitle {
@@ -47,5 +54,26 @@
   }
   .woocommerce-Button {
     margin-top: 24px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    &__personal {
+      display: block;
+      legend {
+        margin-bottom: 20px;
+      }
+    }
+    &__birthday-input {
+      margin-top: 0;
+    }
+    .input__wrapper {
+      margin-top: 20px;
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .woocommerce-Button {
+      width: 100%;
+    }
   }
 }

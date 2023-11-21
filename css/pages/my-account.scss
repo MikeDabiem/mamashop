@@ -1,8 +1,10 @@
 .account-page {
   &__content {
     margin-top: 30px;
+    gap: 20px;
   }
   &__col1 {
+    min-width: 260px;
     width: 25%;
   }
   &__col2 {
@@ -62,14 +64,19 @@
       border-radius: 6px;
       padding: 20px;
       &-image {
+        flex: 0 0 auto;
         width: 52px;
         height: 52px;
         border-radius: 50%;
         overflow: hidden;
       }
+      &-name {
+        word-break: break-word;
+      }
       &-email {
         margin-top: 2px;
         color: $dark-grey;
+        word-break: break-word;
       }
     }
   }
@@ -109,6 +116,21 @@
         margin: 20px auto 0;
         width: fit-content;
       }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    &__content {
+      gap: 12px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    &__col1 {
+      display: none;
+      width: 100%;
+    }
+    &__col2 {
+      width: 100%;
     }
   }
 }
