@@ -27,20 +27,18 @@ foreach ($customer_orders as $customer_order) {
         ],
     }; ?>
     <div class="account-page__orders__item transition-default">
-        <div class="account-page__orders__item__head d-flex justify-content-between align-items-center">
-            <div class="item__info">
-                <p class="item__info__row1 font-13-16 fw-400">Замовлення
-                    №<?= $order->get_order_number(); ?></p>
-                <p class="item__info__row1 font-13-16 fw-400">Дата замовлення</p>
-                <p class="item__info__row1 font-13-16 fw-400">Усього</p>
-                <p class="item__info-status font-13-16 fw-400">Статус: <span
-                    class="<?= $order_status['class']; ?>"><?= $order_status['title']; ?></span></p>
-                <time class="font-13-16 fw-500"
-                    datetime="<?php echo esc_attr($order->get_date_created()->date('c')); ?>"><?php echo esc_html(wc_format_datetime($order->get_date_created())); ?></time>
-                <p class="font-13-16 fw-500"><?= $order->get_total(); ?> грн</p>
-            </div>
+        <div class="account-page__orders__item__head">
+            <p class="item__info__row1 item__info__number font-13-16 fw-400">Замовлення
+                №<?= $order->get_order_number(); ?></p>
+            <p class="item__info__row1 item__info__date-title font-13-16 fw-400">Дата замовлення</p>
+            <p class="item__info__row1 item__info__total-title font-13-16 fw-400">Усього</p>
+            <p class="item__info__status font-13-16 fw-400">Статус: <span
+                class="<?= $order_status['class']; ?>"><?= $order_status['title']; ?></span></p>
+            <time class="item__info__date font-13-16 fw-500"
+                datetime="<?php echo esc_attr($order->get_date_created()->date('c')); ?>"><?php echo esc_html(wc_format_datetime($order->get_date_created())); ?></time>
+            <p class="item__info__total font-13-16 fw-500"><?= $order->get_total(); ?> грн</p>
             <div class="item__thumbs d-flex align-items-center">
-                <p class="item__count font-12-16 fw-400"><?= $items_count > 3 ? '+' . $items_count - 3 : null; ?></p>
+                <p class="item__count<?= $items_count < 4 ? ' --empty' : null; ?> font-12-16 fw-400"><?= $items_count > 3 ? '+' . $items_count - 3 : null; ?></p>
                 <?php $items_preview_arr = array_slice($order_items, 0, 3);
                 foreach ($items_preview_arr as $item_thumb) {
                     $product_id = $item_thumb->get_product_id();
@@ -73,7 +71,7 @@ foreach ($customer_orders as $customer_order) {
                     $thumb = get_the_post_thumbnail_url($product_id, "medium");
                     $thumbID = get_post_thumbnail_id($product_id);
                     $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true); ?>
-                    <div data-id="prod-<?= $product_id ?>" class="item__product d-flex justify-content-between align-items-center">
+                    <div data-id="prod-<?= $product_id ?>" class="item__product">
                         <a href="<?= $link ?>" class="item__product-image img-wrapper-contain d-block">
                             <?php if ($thumb) { ?>
                                 <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
@@ -82,8 +80,10 @@ foreach ($customer_orders as $customer_order) {
                             <?php } ?>
                         </a>
                         <div class="item__product__info">
+                            <?php $brand_name = $product->get_attribute('pa_brand');
+                            $brand_link = wc_get_page_permalink('shop') . '?pa_brand=' . get_term_by('name', $brand_name, 'pa_brand')->slug; ?>
                             <a href="<?= $link ?>" class="item__product__info-title font-14-20 fw-500 transition-default d-block"><?= get_the_title($product_id); ?></a>
-                            <a href="<?= $link ?>" class="item__product__info-subtitle font-14-20 fw-500 transition-default d-block"><?= $product->get_attribute('pa_brand'); ?></a>
+                            <a href="<?= $brand_link ?>" class="item__product__info-subtitle font-14-20 fw-500 transition-default d-block"><?= $brand_name ?></a>
                         </div>
                         <div class="item__product__price">
                             <p class="font-14-20 fw-500"><?= $product->get_price(); ?> грн</p>
@@ -97,7 +97,7 @@ foreach ($customer_orders as $customer_order) {
                     </div>
                 <?php } ?>
             </div>
-            <div class="item__footer d-flex justify-content-between align-items-center">
+            <div class="item__footer">
                 <div class="item__footer__totals">
                     <p class="totals-qty font-14-20 fw-400"><?= $items_count . ' ' . true_wordform($items_count, 'товар', 'товари', 'товарів') ?> на суму</p>
                     <p class="totals-price font-16-22 fw-500"><?= $order->get_total(); ?> грн</p>

@@ -34,6 +34,11 @@
     &__head {
       padding: 15px 24px;
       cursor: pointer;
+      display: grid;
+      grid-template-columns: 24% 17% 11% 25% 20px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
     }
     &__body {
       display: none;
@@ -41,15 +46,10 @@
     }
     .item {
       &__info {
-        width: 65%;
-        display: grid;
-        grid-template-columns: 37% 27% 20%;
-        justify-content: space-between;
-        row-gap: 8px;
         &__row1 {
           color: $dark-grey;
         }
-        &-status {
+        &__status {
           .purple {
             color: $main-purple;
           }
@@ -66,21 +66,29 @@
         min-width: 40px;
       }
       &__thumbs {
-        width: 25%;
+        grid-row: 1 / 3;
+        grid-column: 4;
+        gap: 4px;
         &-image {
           width: 50px;
           height: 50px;
         }
       }
+      &__arrow {
+        grid-row: 1 / 3;
+        grid-column: 5;
+      }
       &__product {
+        display: grid;
+        grid-template-columns: 60px 40% repeat(3, 15%);
+        justify-content: space-between;
+        align-items: center;
         padding: 15px 0;
         border-bottom: 2px solid $light-grey;
         &-image {
-          width: 10%;
           @include flex-height(100);
         }
         &__info {
-          width: 40%;
           a {
             text-decoration: none;
           }
@@ -106,11 +114,23 @@
         &__price,
         &__qty,
         &__total {
-          width: 10%;
           text-align: center;
+          p::before {
+            margin-right: 4px;
+            color: $grey;
+          }
+        }
+        &__qty p::before {
+          content: "\d7";
+        }
+        &__total p::before {
+          content: "=";
         }
       }
       &__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-top: 24px;
         .totals {
           &-qty {
@@ -124,4 +144,140 @@
     }
   }
   @import "orders-empty";
+
+  @media screen and (max-width: 1024px) {
+    &__item {
+      &__head {
+        grid-template-columns: 50px repeat(2, 1fr);
+        justify-content: start;
+        gap: 12px 0;
+      }
+      .item {
+        &__info {
+          &__number {
+            grid-row: 1;
+            grid-column: 1 / 3;
+          }
+          &__status {
+            grid-row: 2;
+            grid-column: 1 / 3;
+          }
+          &__date {
+            &-title {
+              grid-row: 1;
+              grid-column: 3;
+              justify-self: end;
+              text-align: end;
+            }
+            grid-row: 2;
+            grid-column: 3;
+            justify-self: end;
+          }
+          &__total {
+            &-title {
+              grid-row: 4;
+              grid-column: 1;
+              &::after {
+                content: ':';
+              }
+            }
+            grid-row: 4;
+            grid-column: 2;
+          }
+        }
+        &__thumbs {
+          grid-row: 3;
+          grid-column: 1 / 3;
+        }
+        &__count.--empty {
+          display: none;
+        }
+        &__arrow {
+          grid-row: 4;
+          grid-column: 3;
+          justify-self: end;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 900px) {
+    &__item {
+      .item {
+        &__product {
+          grid-template-columns: 60px 50% 25%;
+          grid-template-rows: repeat(3, 1fr);
+          gap: 10px 3%;
+          &-image {
+            grid-column: 1;
+            grid-row: span 3;
+          }
+          &__info {
+            grid-column: 2;
+            grid-row: span 3;
+          }
+          &__price,
+          &__qty,
+          &__total {
+            grid-column: 3;
+            text-align: end;
+          }
+          &__price {
+            grid-row: 1;
+            p {
+              color: $black-light;
+            }
+          }
+          &__qty {
+            grid-row: 2;
+            p {
+              color: $black-light;
+            }
+          }
+          &__total {
+            grid-row: 3;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 785px) {
+    &__sort {
+      gap: 8px;
+    }
+  }
+  @media screen and (max-width: 420px) {
+    &-count {
+      margin-top: 6px;
+    }
+    &__sort {
+      margin-top: 20px;
+    }
+    &__items {
+      margin-top: 20px;
+    }
+    &__item {
+      &__head,
+      &__body {
+        padding: 12px;
+      }
+      .item {
+        &__product {
+          padding-block: 8px;
+        }
+        &__footer {
+          margin-top: 20px;
+          display: block;
+          &__totals {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .order-repeat {
+            margin-top: 20px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
 }

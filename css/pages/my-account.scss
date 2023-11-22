@@ -133,4 +133,9 @@
       width: 100%;
     }
   }
+  @media screen and (max-width: 420px) {
+    &__tab-button {
+      padding: 5px 20px;
+    }
+  }
 }
