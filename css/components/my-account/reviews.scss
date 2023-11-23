@@ -19,7 +19,6 @@
     &__product {
       display: grid;
       grid-template-columns: 42px 1fr;
-      grid-template-rows: repeat(2, 1fr);
       column-gap: 12px;
       row-gap: 8px;
       .product {
@@ -65,6 +64,27 @@
     &-subtitle {
       margin-top: 12px;
       color: $black-light;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    &__sort {
+      margin-top: 20px;
+    }
+    &__items {
+      margin-top: 20px;
+    }
+    &__item {
+      padding: 20px;
+    }
+    .reviews,
+    .questions {
+      &__item {
+        margin-top: 14px;
+      }
+    }
+    .answer-text {
+      margin-top: 12px;
     }
   }
 }

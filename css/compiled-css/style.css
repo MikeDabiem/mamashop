@@ -762,6 +762,8 @@ h1, h2, h3, h4, h5, h6, p {
 @media screen and (max-width: 480px) {
   input[type=text],
   input[type=number],
+  input[type=email],
+  input[type=password],
   input[type=search] {
     font-size: 16px !important;
   }
@@ -4253,7 +4255,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .account-page__menu .menu__item {
   gap: 12px;
-  padding: 16px 20px;
+  padding: 11px 20px;
   text-decoration: none;
   color: #29282C;
   border: 1px solid transparent;
@@ -4364,22 +4366,8 @@ h1, h2, h3, h4, h5, h6, p {
   line-height: 140%;
   color: #5E5E62;
 }
-.account-page .edit-account .input__wrapper .woocommerce-Input {
-  padding: 17px 16px;
-  width: 100%;
-  outline: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background: #F7F7F8;
-  font-size: 13px;
-  line-height: 140%;
-}
 .account-page .edit-account .input__wrapper .woocommerce-Input:not(#birthday) {
   margin-top: 8px;
-}
-.account-page .edit-account .input__wrapper .woocommerce-Input:focus {
-  border-color: #6757A9;
-  background: #FFFFFF;
 }
 .account-page .edit-account .woocommerce-Button {
   margin-top: 24px;
@@ -4401,7 +4389,13 @@ h1, h2, h3, h4, h5, h6, p {
 }
 @media screen and (max-width: 640px) {
   .account-page .edit-account .woocommerce-Button {
+    margin-top: 20px;
     width: 100%;
+  }
+}
+@media screen and (max-width: 640px) {
+  .account-page .edit-account__personal, .account-page .edit-account__birthday {
+    padding: 12px;
   }
 }
 .account-page .account-page__orders-count {
@@ -4674,21 +4668,52 @@ h1, h2, h3, h4, h5, h6, p {
 .account-page .account-page__favorites .favorites__footer {
   margin-top: 32px;
 }
+@media screen and (min-width: 481px) {
+  .account-page .account-page__favorites .favorites__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 .account-page .account-page__favorites .favorites__footer__info-count {
   color: #5E5E62;
 }
-.account-page .account-page__favorites .favorites__footer__info-total {
-  margin-top: 4px;
+@media screen and (min-width: 481px) {
+  .account-page .account-page__favorites .favorites__footer__info-total {
+    margin-top: 4px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .account-page .account-page__favorites .favorites__items {
+    margin-top: 20px;
+  }
+  .account-page .account-page__favorites .favorites__footer {
+    margin-top: 20px;
+  }
+  .account-page .account-page__favorites .favorites__footer__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .account-page .account-page__favorites .favorites__footer__info-count, .account-page .account-page__favorites .favorites__footer__info-total {
+    font-size: 16px;
+  }
+  .account-page .account-page__favorites .favorites__footer-button {
+    margin-top: 20px;
+    width: 100%;
+  }
 }
 .account-page .account-page__favorites .favorites__item {
-  width: calc(50% - 10px);
+  width: calc(50% - 6px);
   padding: 12px;
   background: #FFFFFF;
   border-radius: 6px;
   gap: 16px;
 }
 .account-page .account-page__favorites .favorites__item__image {
-  width: 50%;
+  width: 30%;
+  min-width: 98px;
+  max-width: 140px;
 }
 .account-page .account-page__favorites .favorites__item__image::before {
   content: "";
@@ -4697,12 +4722,17 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .account-page .account-page__favorites .favorites__item__info {
   position: relative;
+  width: 70%;
 }
 .account-page .account-page__favorites .favorites__item-title {
   width: fit-content;
-  margin-right: 50px;
+  margin-right: 44px;
   margin-bottom: 8px;
   color: #29282C;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 @media (hover: hover) {
   .account-page .account-page__favorites .favorites__item-title:hover {
@@ -4743,6 +4773,11 @@ h1, h2, h3, h4, h5, h6, p {
 .account-page .account-page__favorites .favorites__item .buy-button {
   margin-top: 12px;
 }
+@media screen and (max-width: 1024px) {
+  .account-page .account-page__favorites .favorites__item {
+    width: 100%;
+  }
+}
 .account-page .account-page__reviews__subtitle {
   margin-top: 8px;
   color: #5E5E62;
@@ -4764,7 +4799,6 @@ h1, h2, h3, h4, h5, h6, p {
 .account-page .account-page__reviews__item__product {
   display: grid;
   grid-template-columns: 42px 1fr;
-  grid-template-rows: repeat(2, 1fr);
   column-gap: 12px;
   row-gap: 8px;
 }
@@ -4809,25 +4843,50 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 12px;
   color: #5E5E62;
 }
+@media screen and (max-width: 480px) {
+  .account-page .account-page__reviews__sort {
+    margin-top: 20px;
+  }
+  .account-page .account-page__reviews__items {
+    margin-top: 20px;
+  }
+  .account-page .account-page__reviews__item {
+    padding: 20px;
+  }
+  .account-page .account-page__reviews .reviews__item,
+  .account-page .account-page__reviews .questions__item {
+    margin-top: 14px;
+  }
+  .account-page .account-page__reviews .answer-text {
+    margin-top: 12px;
+  }
+}
 .account-page .account-page__security {
   padding: 32px 32px 40px;
   border-radius: 8px;
   background: #FFFFFF;
 }
-.account-page .account-page__security .input__wrapper {
-  width: 50%;
-}
-.account-page .account-page__security .input__wrapper:first-child {
-  margin-top: 24px;
-}
-.account-page .account-page__security .input__wrapper:not(:first-child) {
-  margin-top: 20px;
+@media screen and (min-width: 901px) {
+  .account-page .account-page__security .input__wrapper {
+    width: 50%;
+    min-width: 300px;
+    margin-top: 20px;
+  }
 }
 .account-page .account-page__security .security-submit-button {
   margin-top: 40px;
 }
 .account-page .account-page__security .security-submit-button.success {
   background: #38A757;
+}
+@media screen and (max-width: 480px) {
+  .account-page .account-page__security {
+    padding: 12px;
+  }
+  .account-page .account-page__security .security-submit-button {
+    margin-top: 20px;
+    width: 100%;
+  }
 }
 .account-page__empty {
   margin-top: 24px;

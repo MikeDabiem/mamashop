@@ -3,11 +3,9 @@
   border-radius: 8px;
   background: $white;
   .input__wrapper {
-    width: 50%;
-    &:first-child {
-      margin-top: 24px;
-    }
-    &:not(:first-child) {
+    @media screen and (min-width: 901px) {
+      width: 50%;
+      min-width: 300px;
       margin-top: 20px;
     }
   }
@@ -15,6 +13,13 @@
     margin-top: 40px;
     &.success {
       background: $green;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    padding: 12px;
+    .security-submit-button {
+      margin-top: 20px;
+      width: 100%;
     }
   }
 }

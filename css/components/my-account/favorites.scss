@@ -9,12 +9,41 @@
     }
     &__footer {
       margin-top: 32px;
+      @media screen and (min-width: 481px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
       &__info {
         &-count {
           color: $black-light;
         }
         &-total {
-          margin-top: 4px;
+          @media screen and (min-width: 481px) {
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 480px) {
+      &__items {
+        margin-top: 20px;
+      }
+      &__footer {
+        margin-top: 20px;
+        &__info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          &-count,
+          &-total {
+            font-size: 16px;
+          }
+
+        }
+        &-button {
+          margin-top: 20px;
+          width: 100%;
         }
       }
     }

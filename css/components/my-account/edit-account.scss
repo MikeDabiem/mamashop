@@ -38,18 +38,6 @@
       &:not(#birthday) {
         margin-top: 8px;
       }
-      padding: 17px 16px;
-      width: 100%;
-      outline: none;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      background: $bg-color;
-      font-size: 13px;
-      line-height: 140%;
-      &:focus {
-        border-color: $main-purple;
-        background: $white;
-      }
     }
   }
   .woocommerce-Button {
@@ -73,7 +61,14 @@
   }
   @media screen and (max-width: 640px) {
     .woocommerce-Button {
+      margin-top: 20px;
       width: 100%;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    &__personal,
+    &__birthday {
+      padding: 12px;
     }
   }
 }

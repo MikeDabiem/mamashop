@@ -13,7 +13,7 @@
                 require 'favorites-item.php';
             } ?>
         </div>
-        <div class="favorites__footer d-flex justify-content-between align-items-center">
+        <div class="favorites__footer">
             <div class="favorites__footer__info">
                 <p class="favorites__footer__info-count font-14-20 fw-400"><?= $fav_count . ' ' . true_wordform($fav_count, 'товар', 'товари', 'товарів') ?> на суму</p>
                 <p class="favorites__footer__info-total font-16-22 fw-500"><?= $total ?> грн</p>

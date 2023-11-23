@@ -1,21 +1,28 @@
 .favorites__item {
-  width: calc(50% - 10px);
+  width: calc(50% - 6px);
   padding: 12px;
   background: $white;
   border-radius: 6px;
   gap: 16px;
   &__image {
-    width: 50%;
+    width: 30%;
+    min-width: 98px;
+    max-width: 140px;
     @include flex-height(120);
   }
   &__info {
     position: relative;
+    width: 70%;
   }
   &-title {
     width: fit-content;
-    margin-right: 50px;
+    margin-right: 44px;
     margin-bottom: 8px;
     color: $black;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     @media (hover: hover) {
       &:hover {
         color: $main-purple;
@@ -55,5 +62,8 @@
   }
   .buy-button {
     margin-top: 12px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 100%;
   }
 }
