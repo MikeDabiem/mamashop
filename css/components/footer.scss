@@ -10,7 +10,8 @@
   &__logo {
     width: fit-content;
     max-width: 228px;
-    height: 48px;
+    height: 100%;
+    max-height: 42px;
   }
   &__pay {
     grid-row: 2;

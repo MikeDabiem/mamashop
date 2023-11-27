@@ -236,6 +236,7 @@
             update_user_meta($user_id, 'billing_phone', $userdata['user_phone']);
             update_user_meta($user_id, 'billing_first_name', $userdata['first_name']);
             update_user_meta($user_id, 'billing_last_name', $userdata['last_name']);
+            update_user_meta($user_id, 'billing_country', 'UA');
         }
         wp_die();
     }

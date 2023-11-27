@@ -1,0 +1,25 @@
+&__terms {
+  &:not(:first-child) {
+    margin-top: 12px;
+  }
+  .icon-text__icon {
+    background: $bg-color;
+  }
+  .terms__item {
+    &__text {
+      margin-top: 24px;
+      line-height: 140%;
+      p:not(:first-child) {
+        margin-top: 1em;
+      }
+      ul {
+        margin: 1em 0 0;
+        padding: 0 0 0 20px;
+      }
+
+      @media screen and (max-width: 480px) {
+        margin-top: 12px;
+      }
+    }
+  }
+}

@@ -843,6 +843,7 @@ h1, h2, h3, h4, h5, h6, p {
   width: fit-content;
   max-width: 220px;
   height: 100%;
+  max-height: 42px;
   flex: 0 0 auto;
 }
 .header__catalog {
@@ -2698,7 +2699,8 @@ h1, h2, h3, h4, h5, h6, p {
 .footer__logo {
   width: fit-content;
   max-width: 228px;
-  height: 48px;
+  height: 100%;
+  max-height: 42px;
 }
 .footer__pay {
   grid-row: 2;
@@ -3709,6 +3711,28 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .info-page__about .about__item__text {
   margin-top: 12px;
+}
+.info-page__terms:not(:first-child) {
+  margin-top: 12px;
+}
+.info-page__terms .icon-text__icon {
+  background: #F7F7F8;
+}
+.info-page__terms .terms__item__text {
+  margin-top: 24px;
+  line-height: 140%;
+}
+.info-page__terms .terms__item__text p:not(:first-child) {
+  margin-top: 1em;
+}
+.info-page__terms .terms__item__text ul {
+  margin: 1em 0 0;
+  padding: 0 0 0 20px;
+}
+@media screen and (max-width: 480px) {
+  .info-page__terms .terms__item__text {
+    margin-top: 12px;
+  }
 }
 .info-page__contacts .contacts__item {
   margin-top: 12px;

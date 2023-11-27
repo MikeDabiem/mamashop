@@ -21,7 +21,7 @@
 <?php if (is_page('checkout') || is_page('lost-password')) { ?>
     <header class="checkout-header wrapper">
         <a href="<?= home_url(); ?>" class="header-logo checkout-header-logo">
-            <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
+            <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="contain-img">
         </a>
     </header>
 <?php } else { ?>
@@ -31,7 +31,7 @@
                 <div class="burger-line transition-default"></div>
             </button>
             <a href="<?= home_url(); ?>" class="header-logo">
-                <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
+                <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="contain-img">
             </a>
             <button class="header__catalog header__catalog--header std-btn blue-btn font-15-24 fw-600 transition-default">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-width="2" d="M3.53 7.458c0-1.22 0-1.83.2-2.31A2.617 2.617 0 0 1 5.146 3.73c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.265 1.15.775 1.417 1.416.199.481.199 1.09.199 2.31s0 1.83-.2 2.311a2.618 2.618 0 0 1-1.416 1.416c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2A2.617 2.617 0 0 1 3.73 9.768c-.2-.481-.2-1.09-.2-2.31ZM16.618 7.458c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.416c.2.481.2 1.09.2 2.31s0 1.83-.2 2.311a2.617 2.617 0 0 1-1.416 1.416c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.481-.2-1.09-.2-2.31ZM3.53 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.266 1.15.775 1.417 1.417.199.48.199 1.09.199 2.31s0 1.83-.2 2.31a2.618 2.618 0 0 1-1.416 1.417c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2a2.618 2.618 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31ZM16.618 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.417c.2.48.2 1.09.2 2.31s0 1.83-.2 2.31a2.617 2.617 0 0 1-1.416 1.417c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31Z"/></svg>
@@ -57,7 +57,7 @@
         <div class="main-menu header-menu transition-default">
             <div class="main-menu__head d-flex justify-content-between align-items-center">
                 <a href="<?= home_url(); ?>" class="main-menu-logo d-block">
-                    <img src="<?php bloginfo("template_url"); ?>/images/logo.png" alt="logo" class="contain-img">
+                    <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="contain-img">
                 </a>
                 <button class="main-menu__close close-menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"><path stroke="#B4ADAD" stroke-width="2" d="m1.367 1.248 12.767 12.767M14.134 1.248 1.367 14.015"/></svg>

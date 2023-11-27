@@ -1,7 +1,19 @@
 <?php /* Template Name: Account Template */
 if (is_user_logged_in()) {
-get_header();
 global $wp;
+$redirect = true;
+$endpoints = ['edit-account', 'orders', 'favorites', 'reviews', 'security'];
+foreach ($endpoints as $key) {
+    if (isset($wp->query_vars[$key])) {
+        $redirect = false;
+        break;
+    }
+}
+if ($redirect) {
+    wp_redirect(wc_get_page_permalink('myaccount') . 'edit-account/');
+    exit;
+}
+get_header();
 $user_id = get_current_user_id();
 $user = get_userdata($user_id); ?>
 <div class="account-page wrapper filler">
@@ -68,7 +80,7 @@ $user = get_userdata($user_id); ?>
                 } elseif (isset($wp->query_vars['security'])) {
                     require 'components/my-account/security.php';
                 } else {
-                    wp_redirect(wc_get_page_permalink('myaccount') . '/edit-account/');
+                    exit;
                 }
             } ?>
         </div>
@@ -77,4 +89,5 @@ $user = get_userdata($user_id); ?>
 <?php get_footer();
 } else {
     wp_redirect(get_home_url());
+    exit;
 }
