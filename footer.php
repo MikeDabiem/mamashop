@@ -2,7 +2,7 @@
     <?php if (!is_page('lost-password')) { ?>
         <div class="footer__top wrapper">
             <a href="<?= home_url(); ?>" class="footer__logo d-block">
-                <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="contain-img">
+                <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="logo-img">
             </a>
             <div class="footer__pay">
                 <h6 class="footer__pay-title font-15-18 fw-500">Приймаємо до оплати</h6>

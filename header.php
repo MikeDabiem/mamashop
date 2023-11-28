@@ -21,7 +21,7 @@
 <?php if (is_page('checkout') || is_page('lost-password')) { ?>
     <header class="checkout-header wrapper">
         <a href="<?= home_url(); ?>" class="header-logo checkout-header-logo">
-            <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="contain-img">
+            <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="logo-img">
         </a>
     </header>
 <?php } else { ?>
@@ -31,7 +31,7 @@
                 <div class="burger-line transition-default"></div>
             </button>
             <a href="<?= home_url(); ?>" class="header-logo">
-                <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="contain-img">
+                <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="logo-img">
             </a>
             <button class="header__catalog header__catalog--header std-btn blue-btn font-15-24 fw-600 transition-default">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-width="2" d="M3.53 7.458c0-1.22 0-1.83.2-2.31A2.617 2.617 0 0 1 5.146 3.73c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.265 1.15.775 1.417 1.416.199.481.199 1.09.199 2.31s0 1.83-.2 2.311a2.618 2.618 0 0 1-1.416 1.416c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2A2.617 2.617 0 0 1 3.73 9.768c-.2-.481-.2-1.09-.2-2.31ZM16.618 7.458c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.416c.2.481.2 1.09.2 2.31s0 1.83-.2 2.311a2.617 2.617 0 0 1-1.416 1.416c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.481-.2-1.09-.2-2.31ZM3.53 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.266 1.15.775 1.417 1.417.199.48.199 1.09.199 2.31s0 1.83-.2 2.31a2.618 2.618 0 0 1-1.416 1.417c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2a2.618 2.618 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31ZM16.618 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.417c.2.48.2 1.09.2 2.31s0 1.83-.2 2.31a2.617 2.617 0 0 1-1.416 1.417c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31Z"/></svg>
@@ -41,6 +41,9 @@
             <div class="header__cab d-flex">
                 <?php $favorites_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') . '/favorites/' : '#';
                 $profile_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') : '#'; ?>
+                <a href="#" class="header-search--button header__btn std-btn transition-default">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 18" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.4526 3.71816C9.06429 1.751 5.53346 2.09246 3.5663 4.48081C1.59915 6.86916 1.9406 10.4 4.32895 12.3672C6.71731 14.3343 10.2481 13.9929 12.2153 11.6045C14.1825 9.21615 13.841 5.68531 11.4526 3.71816ZM2.40658 3.52561C4.90127 0.496758 9.37899 0.0637388 12.4078 2.55843C15.2407 4.89172 15.8028 8.95973 13.8226 11.9545L18.9405 16.1699C19.2607 16.4336 19.3065 16.9071 19.0427 17.2273C18.779 17.5476 18.3055 17.5934 17.9853 17.3296L12.8674 13.1143C10.3076 15.6323 6.20686 15.8603 3.37375 13.5269C0.344903 11.0322 -0.0881168 6.55446 2.40658 3.52561Z" stroke="none"/></svg>
+                </a>
                 <a href="<?= $favorites_url; ?>" class="header__fav header__btn std-btn d-flex justify-content-center align-items-center transition-default">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-linecap="round" stroke-width="2" d="M22.166 10.24a5.188 5.188 0 0 0-1.336-2.175c-.522-.517-1.063-.859-1.606-1.065m-7.092-2.163c-1.952-1.239-5.106-2.41-7.829.367C-2.162 11.797 8.924 24.5 14 24.5c5.075 0 16.16-12.703 9.696-19.296-2.723-2.777-5.876-1.606-7.829-.367-1.103.7-2.632.7-3.735 0Z"/></svg>
                 </a>
@@ -57,7 +60,7 @@
         <div class="main-menu header-menu transition-default">
             <div class="main-menu__head d-flex justify-content-between align-items-center">
                 <a href="<?= home_url(); ?>" class="main-menu-logo d-block">
-                    <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="contain-img">
+                    <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="logo-img">
                 </a>
                 <button class="main-menu__close close-menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"><path stroke="#B4ADAD" stroke-width="2" d="m1.367 1.248 12.767 12.767M14.134 1.248 1.367 14.015"/></svg>

@@ -9,10 +9,18 @@
         left: -124px;
         right: -124px;
       }
-      @media screen and (max-width: 480px) {
-        left: -48px;
-        right: -124px;
-      }
+      //@media screen and (max-width: 480px) {
+      //  left: -48px;
+      //  right: -124px;
+      //}
+    }
+  }
+  &--button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (min-width: 901px) {
+      display: none;
     }
   }
   &__form {
