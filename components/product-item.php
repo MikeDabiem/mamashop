@@ -14,11 +14,11 @@
 <div class="product-item card-hover transition-default d-flex flex-column">
     <?php $fav_btn_classes = 'product-item__heart';
     require 'fav-button.php'; ?>
-    <a href="<?= $link; ?>" class="product-item__image img-wrapper-contain d-block">
+    <a href="<?= $link; ?>" class="product-item__image img-wrapper-contain d-block" aria-label="Фото товару">
         <?php if($thumb) { ?>
             <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
         <?php } else { ?>
-            <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image" class="no-image">
+            <img src="<?php bloginfo('template_url'); ?>/images/logo-min.svg" alt="no image" class="no-image">
         <?php } ?>
     </a>
     <a href="<?= $link; ?>" class="product-item__title font-14-20 fw-500" title="<?= $title; ?>" aria-label="<?= $title; ?>"><?= $title; ?></a>

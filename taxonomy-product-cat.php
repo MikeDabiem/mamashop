@@ -8,13 +8,6 @@
         <div class="subcategory__items d-flex flex-wrap">
             <?php foreach ($term_children as $term_child_id) { ?>
                 <a href="<?= get_term_link($term_child_id); ?>" class="subcategory__item card-hover transition-default d-block">
-                    <?php $thumb_id = get_term_meta($term_child_id, 'thumbnail_id', true);
-                    $thumb_id = $thumb_id ?: get_term_meta($term_id, 'thumbnail_id', true);
-                    $term_img = wp_get_attachment_url($thumb_id);
-                    $alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true); ?>
-                    <div class="subcategory__item-image img-wrapper-contain">
-                        <img src="<?= $term_img; ?>" alt="<?= $alt; ?>">
-                    </div>
                     <h4 class="subcategory__item-title font-18-22 fw-600"><?= get_term($term_child_id)->name; ?></h4>
                 </a>
             <?php } ?>

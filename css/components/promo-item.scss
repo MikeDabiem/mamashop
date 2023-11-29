@@ -35,6 +35,10 @@
     margin-top: 4px;
     color: $white;
   }
+  img.no-image {
+    object-fit: contain;
+  }
+
   @media screen and (min-width: 768px) and (max-width: 900px) {
     &:nth-child(3) {
       display: none;

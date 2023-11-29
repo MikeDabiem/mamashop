@@ -1,6 +1,6 @@
 <div class="user-login">
     <h4 class="login-title font-20-24 fw-600">Авторизація</h4>
-    <button class="login__close close-menu">
+    <button class="login__close close-menu" aria-label="Закрити меню">
         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"><path stroke="#B4ADAD" stroke-width="2" d="m1.367 1.248 12.767 12.767M14.134 1.248 1.367 14.015"/></svg>
     </button>
     <div class="login__switch transition-default d-flex">

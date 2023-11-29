@@ -8,7 +8,7 @@
     if ($image) { ?>
         <img src="<?= $image; ?>" alt="<?= $alt; ?>">
     <?php } else { ?>
-        <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image" class="no-image">
+        <img src="<?php bloginfo('template_url'); ?>/images/logo-min.svg" alt="no image" class="no-image">
     <?php } ?>
     <div class="promo__item__content">
         <h4 class="promo__item-title font-22-26 fw-600"><?= $title; ?></h4>

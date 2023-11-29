@@ -14,7 +14,7 @@ $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true); ?>
         <?php if($thumb) { ?>
             <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
         <?php } else { ?>
-            <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image" class="no-image">
+            <img src="<?php bloginfo('template_url'); ?>/images/logo-min.svg" alt="no image" class="no-image">
         <?php } ?>
     </a>
     <div class="favorites__item__info d-flex flex-column">

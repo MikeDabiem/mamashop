@@ -21,10 +21,10 @@ get_header(); ?>
             endwhile; endif;
             wp_reset_postdata(); ?>
         </div>
-        <button type="button" class="top__prev products-slider__prev slider-arrow transition-default">
+        <button type="button" class="top__prev products-slider__prev slider-arrow transition-default" aria-label="Попередні товари">
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="M8 13 2 7l6-6"/></svg>
         </button>
-        <button type="button" class="top__next products-slider__next slider-arrow transition-default">
+        <button type="button" class="top__next products-slider__next slider-arrow transition-default" aria-label="Ще товари">
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
         </button>
     </section>
@@ -43,10 +43,10 @@ get_header(); ?>
             endwhile; endif;
             wp_reset_postdata(); ?>
         </div>
-        <button type="button" class="hits__prev products-slider__prev slider-arrow transition-default">
+        <button type="button" class="hits__prev products-slider__prev slider-arrow transition-default" aria-label="Попередні товари">
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="M8 13 2 7l6-6"/></svg>
         </button>
-        <button type="button" class="hits__next products-slider__next slider-arrow transition-default">
+        <button type="button" class="hits__next products-slider__next slider-arrow transition-default" aria-label="Ще товари">
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
         </button>
     </section>

@@ -1,11 +1,11 @@
 <div class="catalog-menu header-menu transition-default">
     <div class="catalog__head d-flex justify-content-between position-relative">
         <h4 class="catalog__title font-20-24 fw-600 transition-default">Каталог товарів</h4>
-        <button class="catalog__back font-20-24 fw-600 transition-default">
+        <button class="catalog__back font-20-24 fw-600 transition-default" aria-label="Повернутись до категорій">
             <svg class="catalog__back-arrow transition-default" xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#494558" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
             <h4 class="catalog__back-title font-20-24 fw-600"></h4>
         </button>
-        <button class="catalog__close close-menu">
+        <button class="catalog__close close-menu" aria-label="Закрити меню">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"><path stroke="#B4ADAD" stroke-width="2" d="m1.367 1.248 12.767 12.767M14.134 1.248 1.367 14.015"/></svg>
         </button>
     </div>

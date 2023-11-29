@@ -94,7 +94,7 @@ get_header(); ?>
                                             <?php if ($image_url) { ?>
                                                 <img src="<?= $image_url; ?>" alt="<?= $alt; ?>">
                                             <?php } else { ?>
-                                                <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image">
+                                                <img src="<?php bloginfo('template_url'); ?>/images/logo-min.svg" alt="no image">
                                             <?php } ?>
                                         </div>
                                         <div class="products__list__item__text">

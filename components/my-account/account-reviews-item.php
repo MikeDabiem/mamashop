@@ -17,7 +17,7 @@
                 $alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true); ?>
                 <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
             <?php } else { ?>
-                <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image" class="no-image">
+                <img src="<?php bloginfo('template_url'); ?>/images/logo-min.svg" alt="no image" class="no-image">
             <?php } ?>
         </a>
         <a href="<?= $link; ?>" class="product__title font-13-16 fw-400 transition-default text-decoration-none"><?= $title; ?></a>

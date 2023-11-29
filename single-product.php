@@ -24,7 +24,7 @@ $rev_count = get_count_of_reviews($product_id);
                             $alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true); ?>
                             <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
                         <?php } else { ?>
-                            <img src="<?php bloginfo('template_url'); ?>/images/eye-slash.svg" alt="no image" class="no-image">
+                            <img src="<?php bloginfo('template_url'); ?>/images/logo-min.svg" alt="no image" class="no-image">
                         <?php } ?>
                     </div>
                     <?php if ($thumb) {

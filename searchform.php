@@ -39,7 +39,7 @@
                                 <?php if ($thumb) { ?>
                                     <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
                                 <?php } else { ?>
-                                    <img src="<?php bloginfo("template_url") ?>/images/eye-slash.svg" alt="eye">
+                                    <img src="<?php bloginfo("template_url") ?>/images/logo-min.svg" class="no-image" alt="no image">
                                 <?php } ?>
                             </div>
                             <div class="search-popular__item__info">
