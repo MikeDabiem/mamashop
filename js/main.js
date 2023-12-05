@@ -1606,28 +1606,18 @@ jQuery(function($) {
     let typingTimer;
     const doneTypingInterval = 500;
 
-    $(window).on('resize', function() {
-      if ($(window).width() > 640) {
-        if (mobSearchInput.val()) {
-          $('#mobile-search').trigger('submit');
-        } else {
-          document.location.href = "/";
-        }
-      }
-    });
-
     mobSearchInput.on('keyup', function () {
       clearTimeout(typingTimer);
       if (mobSearchInput.val()) {
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
       } else {
-        doneTyping();
+        mobSearchContent.empty();
       }
     });
 
     function doneTyping () {
       mobSearchInput.val(mobSearchInput.val().trimStart());
-      if (mobSearchInput.val() && mobSearchInput.val().length > 2) {
+      if (mobSearchInput.val().length > 2) {
         const data = {
           action: 'mobile_search',
           search: mobSearchInput.val().trim()

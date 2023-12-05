@@ -1,4 +1,5 @@
 .mobile-search {
+  max-width: 640px;
   &__search {
     margin-top: 22px;
     padding: 20px 12px;
@@ -81,8 +82,5 @@
   &__button {
     margin-top: 22px;
     width: 100%;
-  }
-  @media screen and (min-width: 641px) {
-    opacity: 0;
   }
 }

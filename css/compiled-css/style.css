@@ -3021,6 +3021,9 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
+.mobile-search {
+  max-width: 640px;
+}
 .mobile-search__search {
   margin-top: 22px;
   padding: 20px 12px;
@@ -3101,11 +3104,6 @@ h1, h2, h3, h4, h5, h6, p {
 .mobile-search__button {
   margin-top: 22px;
   width: 100%;
-}
-@media screen and (min-width: 641px) {
-  .mobile-search {
-    opacity: 0;
-  }
 }
 
 .single-product-page .single-product__info {
