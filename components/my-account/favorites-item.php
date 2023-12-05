@@ -1,4 +1,5 @@
-<?php $id = $favorite;
+<?php $id = $favorite ?? get_the_ID();
+$total = $total ?? 0;
 $title = get_the_title($id);
 $link = get_permalink($id);
 $product = wc_get_product($id);

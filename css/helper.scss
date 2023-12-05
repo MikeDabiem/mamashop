@@ -11,7 +11,7 @@ $sort-black: #3F383A;
 $grey: #B2B2B7;
 $dark-grey: #848589;
 $light-grey: #F1F1F6;
-$burger-grey: #D6CECF;
+$button-grey: #E8E8EF;
 $pale-grey: #B4B5B8;
 $hover-grey: #D6D4DA;
 $footer-grey: #F1F1F6;
@@ -55,7 +55,7 @@ $shadow: 0 2px 30px 0 rgba(223, 213, 215, 0.40);
     background-color: #E1DEDF;
     border-radius: 4px;
     &:hover {
-      background-color: $burger-grey;
+      background-color: #D6CECF;
     }
   }
 }

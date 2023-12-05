@@ -28,14 +28,6 @@
             <p class="input--error-text font-9-11 fw-400">Заповніть будь ласка поле</p>
         </div>
     </fieldset>
-    <fieldset class="edit-account__birthday">
-        <legend class="font-16-22 fw-600 w-100 m-0">Дата народження</legend>
-        <p class="edit-account__birthday-subtitle font-13-16 fw-400">Ми хочемо вас привітати!</p>
-        <div class="input__wrapper">
-            <?php $type = esc_attr($user->birthday) ? 'date' : 'text'; ?>
-            <input type="<?= $type; ?>" class="edit-account__birthday-input woocommerce-Input woocommerce-Input--text input-text font-13-16 fw-400 transition-default" name="birthday" id="birthday" value="<?= esc_attr($user->birthday); ?>" placeholder="ДД.ММ.РРРР" />
-        </div>
-    </fieldset>
     <p>
         <?php wp_nonce_field('save_account_details', 'save-account-details-nonce'); ?>
         <button type="submit" class="std-btn purple-btn font-16-22 fw-600 transition-default woocommerce-Button button<?= esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="save_account_details" value="<?php esc_attr_e('Зберегти зміни', 'woocommerce'); ?>"><?php esc_html_e('Зберегти зміни', 'woocommerce'); ?></button>

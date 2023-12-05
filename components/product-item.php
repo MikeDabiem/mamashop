@@ -11,7 +11,7 @@
     $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true);
     $rev_count = get_count_of_reviews($id) ?: '';
 ?>
-<div class="product-item card-hover transition-default d-flex flex-column">
+<div class="product-item card-hover transition-default">
     <?php $fav_btn_classes = 'product-item__heart';
     require 'fav-button.php'; ?>
     <a href="<?= $link; ?>" class="product-item__image img-wrapper-contain d-block" aria-label="Фото товару">

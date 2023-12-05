@@ -1,4 +1,6 @@
 .product-item {
+  display: flex !important;
+  flex-direction: column;
   position: relative;
   padding: 10px;
   border-radius: 6px;
@@ -52,6 +54,10 @@
     color: $black;
     margin-top: 12px;
     margin-bottom: 8px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
   .rating {
     margin-top: auto;
@@ -69,14 +75,6 @@
     margin-top: 16px;
   }
 
-  @media screen and (max-width: 768px) {
-    &__title {
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-    }
-  }
   @media screen and (max-width: 375px) {
     padding: 7px;
     border-radius: 4px;

@@ -75,7 +75,7 @@
               border-radius: 2px;
               background: $main-purple;
               position: absolute;
-              top: 8px;
+              top: 4px;
               left: -24px;
             }
           }
@@ -94,6 +94,12 @@
     &__results {
       &__items {
         grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    &__not-found {
+      &__col1,
+      &__col2 {
+        width: 100%;
       }
     }
   }
@@ -126,6 +132,15 @@
       &__items {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
+      }
+    }
+    &__not-found {
+      &__col1,
+      &__col2 {
+        padding: 20px 14px;
+      }
+      .col1__content-help-variants {
+        grid-template-columns: auto;
       }
     }
   }

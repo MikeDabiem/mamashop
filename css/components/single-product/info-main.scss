@@ -117,7 +117,7 @@
       }
       @media (hover: hover) {
         &:hover {
-          background: #E8E8EF;
+          background: $button-grey;
           svg {
             stroke: $main-purple;
           }

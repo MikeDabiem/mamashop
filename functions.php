@@ -268,9 +268,6 @@ function save_additional_account_details( $user_id ) {
     if (isset($_POST['billing_phone'])) {
         update_user_meta($user_id, 'billing_phone', sanitize_text_field($_POST['billing_phone']));
     }
-    if (isset($_POST['birthday'])) {
-        update_user_meta($user_id, 'birthday', sanitize_text_field($_POST['birthday']));
-    }
 }
 
 // login after registration

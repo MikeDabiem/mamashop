@@ -18,14 +18,19 @@
   }
   .burger {
     &:hover {
-      background: $burger-grey;
-    }
-    &:active {
-      background: $black;
+      background: $button-grey;
       .burger-line,
       .burger-line::before,
       .burger-line::after {
-        background: $burger-grey;
+        background: $main-purple;
+      }
+    }
+    &:active {
+      background: $main-purple;
+      .burger-line,
+      .burger-line::before,
+      .burger-line::after {
+        background: $white;
       }
     }
     &-line {
@@ -94,7 +99,7 @@
     }
     @media (hover: hover) {
       &:hover {
-        background: #E8E8EF;
+        background: $button-grey;
         svg {
           stroke: $main-purple;
         }
@@ -267,17 +272,6 @@
   }
 }
 
-@media screen and (max-width: 900px) {
-  .header {
-    &-search {
-      display: none;
-    }
-    &__catalog {
-      margin-left: auto;
-    }
-  }
-}
-
 @media screen and (max-width: 768px) {
   .header {
     .wrapper {
@@ -310,6 +304,17 @@
       svg {
         scale: .7;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .header {
+    &-search {
+      display: none;
+    }
+    &__catalog {
+      margin-left: auto;
     }
   }
 }

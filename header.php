@@ -33,6 +33,8 @@
             <a href="<?= home_url(); ?>" class="header-logo">
                 <picture>
                     <source srcset="<?php bloginfo("template_url"); ?>/images/logo-min.svg" media="(max-width: 360px)" />
+                    <source srcset="<?php bloginfo("template_url"); ?>/images/logo.svg" media="(max-width: 768px)" />
+                    <source srcset="<?php bloginfo("template_url"); ?>/images/logo-min.svg" media="(max-width: 900px)" />
                     <img src="<?php bloginfo("template_url"); ?>/images/logo.svg" alt="logo" class="logo-img">
                 </picture>
             </a>
@@ -44,7 +46,7 @@
             <div class="header__cab d-flex">
                 <?php $favorites_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') . '/favorites/' : '#';
                 $profile_url = is_user_logged_in() ? wc_get_page_permalink('myaccount') : '#'; ?>
-                <a href="#" class="header-search--button header__btn std-btn transition-default" aria-label="Пошук">
+                <a href="<?= home_url('/search/') ?>" class="header-search--button header__btn std-btn transition-default" aria-label="Пошук">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 18" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.4526 3.71816C9.06429 1.751 5.53346 2.09246 3.5663 4.48081C1.59915 6.86916 1.9406 10.4 4.32895 12.3672C6.71731 14.3343 10.2481 13.9929 12.2153 11.6045C14.1825 9.21615 13.841 5.68531 11.4526 3.71816ZM2.40658 3.52561C4.90127 0.496758 9.37899 0.0637388 12.4078 2.55843C15.2407 4.89172 15.8028 8.95973 13.8226 11.9545L18.9405 16.1699C19.2607 16.4336 19.3065 16.9071 19.0427 17.2273C18.779 17.5476 18.3055 17.5934 17.9853 17.3296L12.8674 13.1143C10.3076 15.6323 6.20686 15.8603 3.37375 13.5269C0.344903 11.0322 -0.0881168 6.55446 2.40658 3.52561Z" stroke="none"/></svg>
                 </a>
                 <a href="<?= $favorites_url; ?>" class="header__fav header__btn std-btn d-flex justify-content-center align-items-center transition-default" aria-label="Улюблене">
@@ -53,7 +55,7 @@
                 <a href="<?= $profile_url; ?>" class="header__profile header__btn std-btn d-flex justify-content-center align-items-center transition-default" aria-label="Особистий кабінет">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-width=".1" d="M17.802 6.818c0 2.1-1.702 3.802-3.802 3.802v2a5.802 5.802 0 0 0 5.802-5.802h-2ZM14 10.62a3.802 3.802 0 0 1-3.802-3.802h-2A5.802 5.802 0 0 0 14 12.62v-2Zm-3.802-3.802c0-2.1 1.702-3.802 3.802-3.802v-2a5.802 5.802 0 0 0-5.802 5.802h2ZM14 3.016c2.1 0 3.802 1.702 3.802 3.802h2A5.802 5.802 0 0 0 14 1.016v2ZM10.4 16.22h7.203v-2h-7.203v2Zm7.203 7.605h-7.203v2h7.203v-2Zm-7.203 0a3.802 3.802 0 0 1-3.802-3.803h-2a5.802 5.802 0 0 0 5.802 5.803v-2Zm11.005-3.803c0 2.1-1.702 3.803-3.802 3.803v2a5.802 5.802 0 0 0 5.802-5.803h-2Zm-3.802-3.802c2.1 0 3.802 1.703 3.802 3.802h2a5.802 5.802 0 0 0-5.802-5.802v2Zm-7.203-2a5.802 5.802 0 0 0-5.802 5.802h2c0-2.1 1.702-3.802 3.802-3.802v-2Z"/></svg>
                 </a>
-                <button type="button" class="header__cart header__btn std-btn" aria-label="Корзина покупок">
+                <button type="button" class="header__cart header__btn std-btn transition-default" aria-label="Корзина покупок">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-width=".1" d="m24.882 17.302 1.263-7.685a3.466 3.466 0 0 0-.75-2.85l-.036.03.037-.03a3.47 3.47 0 0 0-2.671-1.249H6.665l-.109-.753a3.494 3.494 0 0 0-3.442-2.986h-.332a.985.985 0 0 0 0 1.97h.33c.746 0 1.387.556 1.493 1.294l1.882 13.168a3.494 3.494 0 0 0 3.442 2.986h10.303c1.74 0 2.822-.517 3.51-1.267.687-.75.975-1.724 1.14-2.628Zm-.677-8.022-.816 4.962h-8.143a.985.985 0 0 0 0 1.97h7.819l-.124.754c-.141.779-.331 1.34-.724 1.708-.391.368-.994.553-1.985.553H9.929a1.515 1.515 0 0 1-1.492-1.294L6.944 7.487h15.78a1.507 1.507 0 0 1 1.481 1.793Zm-13.92 17.526a1.609 1.609 0 0 0 0-3.216h-.012c-.888 0-1.601.72-1.601 1.608 0 .888.728 1.608 1.614 1.608Zm9.972-3.216h-.013c-.887 0-1.601.72-1.601 1.608 0 .887.727 1.608 1.614 1.608a1.609 1.609 0 0 0 0-3.216Z"/></svg>
                 </button>
             </div>

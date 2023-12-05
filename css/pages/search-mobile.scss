@@ -1,0 +1,88 @@
+.mobile-search {
+  &__search {
+    margin-top: 22px;
+    padding: 20px 12px;
+    background: $white;
+    border-radius: 4px;
+    &__title {
+      color: $black-light;
+    }
+  }
+  &__form {
+    margin-top: 12px;
+    &__input {
+      flex: 1 1 auto;
+      margin-right: -6px;
+      padding-inline: 10px;
+      line-height: 140%;
+      outline: none;
+      border: 1px solid transparent;
+      border-radius: 4px 0 0 4px;
+      background: $light-grey;
+      min-width: 100px;
+      &:focus {
+        border-color: $main-purple;
+        background: $white;
+      }
+    }
+    &__button {
+      width: 40px;
+      height: 40px;
+      background: $main-purple;
+      border-radius: 4px;
+    }
+  }
+  &__content {
+    margin-top: 12px;
+  }
+  &__categories {
+    &__list {
+      margin-top: 10px;
+      gap: 8px 12px;
+    }
+    &__link {
+      text-decoration: none;
+      color: $black-light;
+      font-size: 14px;
+      line-height: 140%;
+      font-weight: 500;
+    }
+  }
+  &__popular {
+    margin-top: 22px;
+    &__items {
+      margin-top: 12px;
+      .product-item {
+        display: grid !important;
+        grid-template-columns: 29% auto;
+        gap: 8px 16px;
+        height: auto;
+        &:not(:first-child) {
+          margin-top: 12px;
+        }
+        &__image {
+          grid-column: 1;
+          grid-row: 1 / 5;
+        }
+        &__title {
+          margin-right: 32px;
+          margin-bottom: 0;
+        }
+        &__price {
+          margin: 0;
+        }
+        .buy-button {
+          margin-top: 4px;
+          padding: 12px;
+        }
+      }
+    }
+  }
+  &__button {
+    margin-top: 22px;
+    width: 100%;
+  }
+  @media screen and (min-width: 641px) {
+    opacity: 0;
+  }
+}

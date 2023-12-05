@@ -445,4 +445,59 @@
         }
         wp_die();
     }
+
+    // mobile search
+    add_action( 'wp_ajax_mobile_search', 'mobile_search' );
+    add_action( 'wp_ajax_nopriv_mobile_search', 'mobile_search' );
+    function mobile_search() {
+        $search = $_GET['search'];
+        if ($search) {
+            $categories = new WP_Query([
+                'post_type' => 'product',
+                'posts_per_page' => -1,
+                's' => $search
+            ]);
+            if ($categories->have_posts()): ?>
+                <section class="mobile-search__categories">
+                    <h2 class="mobile-search__section-title font-20-24 fw500">Категорії</h2>
+                    <div class="mobile-search__categories__list d-flex flex-wrap">
+                        <?php $categories_arr = [];
+                        while ($categories->have_posts()): $categories->the_post();
+                            $id = get_the_ID();
+                            $terms = get_the_terms( $id, 'product_cat' );
+                            foreach ($terms as $term) {
+                                $categories_arr[$term->term_id]['name'] = $term->name;
+                                $categories_arr[$term->term_id]['link'] = get_term_link($term);
+                            }
+                        endwhile;
+                        wp_reset_postdata();
+
+                        foreach ($categories_arr as $category) { ?>
+                            <a href="<?= $category['link'] ?>" class="mobile-search__categories__link"><?= $category['name'] ?></a>
+                        <?php } ?>
+                    </div>
+                </section>
+            <?php endif;
+            $popular = new WP_Query([
+                'post_type' => 'product',
+                'posts_per_page' => 2,
+                'meta_key' => 'total_sales',
+                'orderby' => 'meta_value_num',
+                's' => $search
+            ]);
+            if ($popular->have_posts()): ?>
+                <section class="mobile-search__popular">
+                    <h2 class="mobile-search__section-title font-20-24 fw500">Популярні товари</h2>
+                    <div class="mobile-search__popular__items">
+                        <?php while ($popular->have_posts()): $popular->the_post();
+                            get_template_part('components/product-item');
+                        endwhile;
+                        wp_reset_postdata(); ?>
+                    </div>
+                </section>
+                <button class="mobile-search__button std-btn purple-btn" form="mobile-search">Переглянути всі результати пошуку</button>
+            <?php endif; ?>
+        <?php }
+        wp_die();
+    }
 }

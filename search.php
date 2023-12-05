@@ -11,7 +11,7 @@ $search = fetch_data(16); ?>
     <?php if ($search->have_posts()):
         require 'shop.php';
     else: ?>
-        <div class="search-page__not-found d-flex justify-content-between">
+        <div class="search-page__not-found d-flex justify-content-between flex-wrap">
             <div class="search-page__not-found__col1 d-flex">
                 <div class="search-page__not-found-image img-wrapper-contain">
                     <img src="<?php bloginfo('template_url'); ?>/images/not-found.png" alt="not found">
@@ -29,7 +29,7 @@ $search = fetch_data(16); ?>
             </div>
             <div class="search-page__not-found__col2">
                 <h4 class="col2__advice-title">Поради для успішного пошуку:</h4>
-                <ul class="col2__advice__list">
+                <ul class="col2__advice__list font-13-16 fw-400">
                     <li class="col2__advice__list-item">Розширте пошуковий запит, використовуючи більше або менше загальних слів</li>
                     <li class="col2__advice__list-item">Спробуйте шукати за типом продукту, брендом, номером моделі або функцією продукту</li>
                     <li class="col2__advice__list-item">Перевірте правопис ключових слів</li>

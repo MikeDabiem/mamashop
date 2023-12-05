@@ -5,21 +5,15 @@
   container-type: inline-size;
   @container (max-width: 480px) {
     .header-search__menu {
-      @media screen and (max-width: 1399px) {
-        left: -124px;
-        right: -124px;
-      }
-      //@media screen and (max-width: 480px) {
-      //  left: -48px;
-      //  right: -124px;
-      //}
+      left: -124px;
+      right: -124px;
     }
   }
   &--button {
     display: flex;
     justify-content: center;
     align-items: center;
-    @media screen and (min-width: 901px) {
+    @media screen and (min-width: 641px) {
       display: none;
     }
   }
@@ -59,6 +53,7 @@
     }
   }
   &__menu {
+    display: none;
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
@@ -70,6 +65,9 @@
     padding: 16px;
     box-shadow: $shadow;
     @include scrollbar;
+    &.active {
+      display: flex;
+    }
     &__col1 {
       width: 50%;
       .search {
