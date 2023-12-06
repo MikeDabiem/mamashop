@@ -637,6 +637,13 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
+.two-str {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 @media screen and (max-width: 768px) {
   .wrapper {
     max-width: 1300px;

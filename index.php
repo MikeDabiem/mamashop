@@ -58,7 +58,8 @@ get_header(); ?>
             <div class="promo__items">
                 <?php while ($promos->have_posts()): $promos->the_post();
                     require 'components/promo-item.php';
-                endwhile; ?>
+                endwhile;
+                wp_reset_postdata(); ?>
                 <a href="<?= $promos_link; ?>" class="promo__item promo__item__all transition-default d-flex justify-content-center align-items-center">
                     <p class="promo__item__all-text font-15-24 fw-600">Усі акції</p>
                     <?php require "components/link-arrow.php"; ?>

@@ -19,7 +19,7 @@ $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true); ?>
         <?php } ?>
     </a>
     <div class="favorites__item__info d-flex flex-column">
-        <a href="<?= $link ?>" class="favorites__item-title font-14-20 fw-500 transition-default text-decoration-none" title="<?= $title ?>"><?= $title ?></a>
+        <a href="<?= $link ?>" class="favorites__item-title font-14-20 fw-500 two-str transition-default text-decoration-none" title="<?= $title ?>"><?= $title ?></a>
         <a href="<?= wc_get_page_permalink('shop') . '?pa_brand=' . $brand_slug ?>" class="favorites__item-brand font-14-20 fw-400 transition-default d-block text-decoration-none"><?= $brand ?></a>
         <div class="favorites__item__price d-flex align-items-center">
             <p class="favorites__item__price-value font-15-24 fw-500"><?= $salePrice ?: $price; ?> грн</p>

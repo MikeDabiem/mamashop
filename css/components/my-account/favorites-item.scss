@@ -19,10 +19,6 @@
     margin-right: 44px;
     margin-bottom: 8px;
     color: $black;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
     @media (hover: hover) {
       &:hover {
         color: $main-purple;

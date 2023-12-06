@@ -12,50 +12,37 @@
                     <div class="search-try__items"></div>
                 </section>
                 <section class="search-cat">
-                    <h5 class="search-try__title font-13-16 fw-600">Популярні категорії</h5>
-                    <?php $home_url = get_home_url(); ?>
-                    <a href="<?= $home_url ?>/category/prannja/suhi-poroshki/" class="search-try__item search-try__link font-14-20 fw-400 d-block">Порошки для прання</a>
-                    <a href="<?= $home_url ?>/category/prannja/pljamovividniki/" class="search-try__item search-try__link font-14-20 fw-400 d-block">Плямовивідники </a>
-                    <a href="<?= $home_url ?>/category/prannja/geli-dla-prannia/" class="search-try__item search-try__link font-14-20 fw-400 d-block">Гелі для прання</a>
+                    <h5 class="search-cat__title font-13-16 fw-600">Популярні категорії</h5>
+                    <div class="search-cat__items">
+                        <?php $topCats = new WP_Query([
+                            'post_type' => 'product',
+                            'posts_per_page' => 3,
+                            'orderby' => 'meta_value_num',
+                            'order' => 'DESC',
+                            'meta_key' => '_wc_average_rating'
+                        ]);
+                        if ($topCats->have_posts()):
+                            $categories_arr = categories_from_query($topCats);
+                            foreach ($categories_arr as $category) { ?>
+                                <a href="<?= $category['link'] ?>" class="search-try__item search-try__link font-14-20 fw-400 d-block"><?= $category['name'] ?></a>
+                            <?php }
+                        endif;
+                        wp_reset_postdata(); ?>
+                    </div>
                 </section>
             </div>
             <section class="header-search__menu__col2 search-popular">
-                <div class="search-popular__title font-13-16 fw-600">Популярні товари</div>
+                <h5 class="search-popular__title font-13-16 fw-600">Популярні товари</h5>
                 <div class="search-popular__items">
-                    <?php $searchProducts = new WP_Query(['post_type' => 'product', 'posts_per_page' => 5]);
+                    <?php $searchProducts = new WP_Query([
+                        'post_type' => 'product',
+                        'posts_per_page' => 5,
+                        'meta_key' => 'total_sales',
+                        'orderby' => 'meta_value_num',
+                    ]);
                     if ($searchProducts->have_posts()): while ($searchProducts->have_posts()): $searchProducts->the_post();
-                        $id = get_the_ID();
-                        $title = get_the_title();
-                        $product = wc_get_product();
-                        $brand = $product->get_attribute('brand');
-                        $price = $product->get_regular_price();
-                        $salePrice = $product->get_sale_price();
-                        $productLink = get_permalink();
-                        $thumb = get_the_post_thumbnail_url($id, "medium_large");
-                        $thumbID = get_post_thumbnail_id($id);
-                        $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true); ?>
-                        <a href="<?= $productLink; ?>" class="search-popular__item d-flex align-items-start">
-                            <div class="search-popular__item-image img-wrapper-contain">
-                                <?php if ($thumb) { ?>
-                                    <img src="<?= $thumb; ?>" alt="<?= $alt; ?>">
-                                <?php } else { ?>
-                                    <img src="<?php bloginfo("template_url") ?>/images/logo-min.svg" class="no-image" alt="no image">
-                                <?php } ?>
-                            </div>
-                            <div class="search-popular__item__info">
-                                <h6 class="search-popular__item__info-title font-13-16 fw-400"><?= $title; ?></h6>
-                                <?php if ($salePrice) { ?>
-                                    <div class="search-popular__item__info__disc">
-                                        <span class="search-popular__item__info__disc-value font-12-16 fw-400"><?= $price; ?> грн</span>
-                                        <span class="search-popular__item__info__disc-perc font-12-16 fw-600">
-                                            <?= '-' . get_post_meta($id, '_discount_value', true) . '%' ?>
-                                        </span>
-                                    </div>
-                                <?php } ?>
-                                <p class="search-popular__item__info-price font-14-20 fw-500"><?= $salePrice ? $salePrice : $price; ?> грн</p>
-                            </div>
-                        </a>
-                    <?php endwhile; endif;
+                        get_template_part('components/search-product');
+                    endwhile; endif;
                     wp_reset_postdata(); ?>
                 </div>
             </section>

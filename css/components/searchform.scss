@@ -112,8 +112,10 @@
             width: 60px;
             @include flex-height(113);
             flex: 0 0 auto;
+            align-self: start;
           }
           &__info {
+            align-self: center;
             &__disc {
               margin-top: 5px;
               &-value {

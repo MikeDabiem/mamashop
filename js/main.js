@@ -54,9 +54,10 @@ jQuery(function($) {
   // header search
   const searchInput = $('.header-search__input');
   const searchMenu = $('.header-search__menu');
+  const searchForm = $('#search');
   if (searchInput.length) {
     // stop submit if empty
-    $('#search').on('submit', e => {
+    searchForm.on('submit', e => {
       searchInput.val(searchInput.val().trim());
       if (searchInput.val() === '') {
         e.preventDefault();
@@ -1598,37 +1599,50 @@ jQuery(function($) {
     });
   }
 
+  // wait for finish input
+  function inputWaiter(input, respTarget, ajaxAction, strLen, needClear = true) {
+    let typingTimer;
+    const doneTypingInterval = 500;
+
+    input.on('keyup', function () {
+      clearTimeout(typingTimer);
+      if (input.val()) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      } else if (needClear) {
+        respTarget.empty();
+      }
+    });
+
+    function doneTyping () {
+      input.val(input.val().trimStart());
+      if (input.val().length >= strLen) {
+        const data = {
+          action: ajaxAction,
+          search: input.val().trim()
+        }
+        $.get(ajaxURL, data, function(response) {
+          respTarget.html(response);
+        });
+      } else if (needClear) {
+        respTarget.empty();
+      }
+    }
+  }
+
+  // search desktop
+  if (searchForm.length) {
+    const searchCatItems = $('.search-cat__items');
+    const searchProductsList = $('.search-popular__items');
+    inputWaiter(searchInput, searchCatItems, 'search_helper_categories', 0, false);
+    inputWaiter(searchInput, searchProductsList, 'search_helper_products', 0, false);
+  }
 
   // search on mobile search page
   if ($('.mobile-search').length) {
     const mobSearchInput = $('.mobile-search__form__input');
     const mobSearchContent = $('.mobile-search__content');
-    let typingTimer;
-    const doneTypingInterval = 500;
 
-    mobSearchInput.on('keyup', function () {
-      clearTimeout(typingTimer);
-      if (mobSearchInput.val()) {
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
-      } else {
-        mobSearchContent.empty();
-      }
-    });
-
-    function doneTyping () {
-      mobSearchInput.val(mobSearchInput.val().trimStart());
-      if (mobSearchInput.val().length > 2) {
-        const data = {
-          action: 'mobile_search',
-          search: mobSearchInput.val().trim()
-        }
-        $.get(ajaxURL, data, function(response) {
-          mobSearchContent.html(response);
-        });
-      } else {
-        mobSearchContent.empty();
-      }
-    }
+    inputWaiter(mobSearchInput, mobSearchContent,  'mobile_search', 3);
   }
 
   if ($('.banner').length) {

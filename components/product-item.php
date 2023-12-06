@@ -21,7 +21,7 @@
             <img src="<?php bloginfo('template_url'); ?>/images/logo-min.svg" alt="no image" class="no-image">
         <?php } ?>
     </a>
-    <a href="<?= $link; ?>" class="product-item__title font-14-20 fw-500" title="<?= $title; ?>" aria-label="<?= $title; ?>"><?= $title; ?></a>
+    <a href="<?= $link; ?>" class="product-item__title font-14-20 fw-500 two-str" title="<?= $title; ?>" aria-label="<?= $title; ?>"><?= $title; ?></a>
     <div class="rating d-flex align-items-center">
         <div class="rating__stars">
             <div class="rating__stars-bg"></div>

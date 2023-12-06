@@ -25,20 +25,14 @@ function load_style_script()
     global $wp_query;
     $wp_query_vars = $wp_query->query_vars;
     $category = $wp_query_vars['product_cat'] ?? '';
+    $search_helper = get_field('search_helper', 'options');
+    $searchHelpArr = [];
+    foreach ($search_helper as $help) {
+        $searchHelpArr[] = $help['search_helper_text'];
+    }
     wp_localize_script('main', 'phpData', [
         'ajaxurl' => admin_url('admin-ajax.php'),
-        'searchHelpArr' => [
-            "Порошок для прання",
-            "Пом'якшувач для тканини",
-            "Мило для прання",
-            "Рідкий пральний засіб",
-            "Плямовивідник",
-            "Порошок для посуду",
-            "Порошок для прибирання",
-            "Гель для прання",
-            "Гель для душу",
-            "Шампунь"
-        ],
+        'searchHelpArr' => $searchHelpArr,
         'category'  => $category
     ]);
 }
@@ -386,4 +380,18 @@ function thanks_redirect() {
         wp_redirect(home_url("?success-order=$order_id"));
         exit;
     }
+}
+
+// add queried products categories to array
+function categories_from_query(WP_Query $categories): array {
+    $categories_arr = [];
+    while ($categories->have_posts()): $categories->the_post();
+        $id = get_the_ID();
+        $terms = get_the_terms($id, 'product_cat');
+        foreach ($terms as $term) {
+            $categories_arr[$term->term_id]['name'] = $term->name;
+            $categories_arr[$term->term_id]['link'] = get_term_link($term);
+        }
+    endwhile;
+    return $categories_arr;
 }

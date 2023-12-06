@@ -298,7 +298,7 @@
         wp_die();
     }
 
-    // make new product review/question
+    // make product new review/question
     add_action( 'wp_ajax_new_comment', 'new_comment' );
     function new_comment() {
         if ($_POST['rev_form']) {
@@ -446,11 +446,56 @@
         wp_die();
     }
 
+    // desktop search helper for categories
+    add_action( 'wp_ajax_search_helper_categories', 'search_helper_categories' );
+    add_action( 'wp_ajax_nopriv_search_helper_categories', 'search_helper_categories' );
+    function search_helper_categories() {
+        $search = sanitize_text_field($_GET['search']);
+        if ($search) {
+            $categories = new WP_Query([
+                'post_type' => 'product',
+                'posts_per_page' => -1,
+                's' => $search
+            ]);
+            if ($categories->have_posts()): ?>
+                <?php $categories_arr = categories_from_query($categories);
+                wp_reset_postdata();
+
+                for ($i = 0; $i < 3; $i++) {
+                    $category = array_values($categories_arr)[$i]; ?>
+                    <a href="<?= $category['link'] ?>" class="search-try__item search-try__link font-14-20 fw-400 d-block"><?= $category['name'] ?></a>
+                <?php } ?>
+            <?php endif;
+        }
+        wp_die();
+    }
+
+    // desktop search helper for products
+    add_action( 'wp_ajax_search_helper_products', 'search_helper_products' );
+    add_action( 'wp_ajax_nopriv_search_helper_products', 'search_helper_products' );
+    function search_helper_products() {
+        $search = sanitize_text_field($_GET['search']);
+        if ($search) {
+            $popular = new WP_Query([
+                'post_type' => 'product',
+                'posts_per_page' => 5,
+                'meta_key' => 'total_sales',
+                'orderby' => 'meta_value_num',
+                's' => $search
+            ]);
+            if ($popular->have_posts()): while ($popular->have_posts()): $popular->the_post();
+                get_template_part('components/search-product');
+            endwhile; endif;
+            wp_reset_postdata();
+        }
+        wp_die();
+    }
+
     // mobile search
     add_action( 'wp_ajax_mobile_search', 'mobile_search' );
     add_action( 'wp_ajax_nopriv_mobile_search', 'mobile_search' );
     function mobile_search() {
-        $search = $_GET['search'];
+        $search = sanitize_text_field($_GET['search']);
         if ($search) {
             $categories = new WP_Query([
                 'post_type' => 'product',
@@ -461,15 +506,7 @@
                 <section class="mobile-search__categories">
                     <h2 class="mobile-search__section-title font-20-24 fw500">Категорії</h2>
                     <div class="mobile-search__categories__list d-flex flex-wrap">
-                        <?php $categories_arr = [];
-                        while ($categories->have_posts()): $categories->the_post();
-                            $id = get_the_ID();
-                            $terms = get_the_terms( $id, 'product_cat' );
-                            foreach ($terms as $term) {
-                                $categories_arr[$term->term_id]['name'] = $term->name;
-                                $categories_arr[$term->term_id]['link'] = get_term_link($term);
-                            }
-                        endwhile;
+                        <?php $categories_arr = categories_from_query($categories);
                         wp_reset_postdata();
 
                         foreach ($categories_arr as $category) { ?>
@@ -496,8 +533,8 @@
                     </div>
                 </section>
                 <button class="mobile-search__button std-btn purple-btn" form="mobile-search">Переглянути всі результати пошуку</button>
-            <?php endif; ?>
-        <?php }
+            <?php endif;
+        }
         wp_die();
     }
 }
