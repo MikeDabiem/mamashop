@@ -36,7 +36,7 @@
             </a>
         </div>
     <?php } ?>
-    <p class="contacts__info font-14-20 fw-500">Наша служба підтримки працює з <time>9:00</time> до <time>21:00</time> щодня</p>
+    <p class="contacts__info font-14-20 fw-500">Наша служба підтримки працює з <time>10:00</time> до <time>18:00</time> щодня</p>
     <div class="contacts__legal">
         <?php if ($leg_name) { ?>
             <h4 class="legal__title font-16-22 fw-500"><?= $leg_name ?></h4>

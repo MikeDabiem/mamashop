@@ -3823,9 +3823,14 @@ h1, h2, h3, h4, h5, h6, p {
 .info-page__terms .terms__item__text p:not(:first-child) {
   margin-top: 1em;
 }
+.info-page__terms .terms__item__text ol,
 .info-page__terms .terms__item__text ul {
-  margin: 1em 0 0;
+  margin: 2em 0 0;
   padding: 0 0 0 20px;
+}
+.info-page__terms .terms__item__text ol > li,
+.info-page__terms .terms__item__text ul > li {
+  margin: 0.5em 0 0;
 }
 @media screen and (max-width: 480px) {
   .info-page__terms .terms__item__text {
