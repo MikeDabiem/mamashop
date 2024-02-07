@@ -77,11 +77,8 @@
     add_action( 'wp_ajax_change_qty', 'change_qty' );
     add_action( 'wp_ajax_nopriv_change_qty', 'change_qty' );
     function change_qty() {
-        if ($_POST['act'] === 'plus') {
-            WC()->cart->set_quantity($_POST['key'], $_POST['value'] + 1);
-        } else {
-            WC()->cart->set_quantity($_POST['key'], $_POST['value'] - 1);
-        }
+        WC()->cart->set_quantity($_POST['key'], $_POST['value']);
+
         $cart_items_count = absint(WC()->cart->get_cart_contents_count());
         $cart_all_count = $cart_items_count . ' ' . true_wordform($cart_items_count, 'товар', 'товари', 'товарів');
         $cart_item_qty = WC()->cart->get_cart_item($_POST['key'])['quantity'];

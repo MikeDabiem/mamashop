@@ -49,7 +49,7 @@
         </div>
     <?php } ?>
     <div class="footer__bottom wrapper">
-        <p class="footer__copyright font-9-11 fw-500 text-center">© Mamash 2023</p>
+        <p class="footer__copyright font-9-11 fw-500 text-center">© Shop4ik 2023</p>
     </div>
 </footer>
 <?php wp_footer(); ?>

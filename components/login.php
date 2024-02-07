@@ -38,7 +38,7 @@
                     <img src="<?php bloginfo('template_url'); ?>/images/facebook-logo.png" alt="facebook" width="21" height="21">
                     Facebook
                 </a>
-                <a href="https://www.mamashop.brinpl.com/wp-login.php?loginSocial=google" class="login__other__item font-14-20 fw-400 transition-default" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
+                <a href="https://www.shop4ik.com.ua/wp-login.php?loginSocial=google" class="login__other__item font-14-20 fw-400 transition-default" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
                     <img src="<?php bloginfo('template_url'); ?>/images/google-logo.png" alt="google" width="21" height="21">
                     Google
                 </a>

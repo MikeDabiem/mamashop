@@ -1238,41 +1238,52 @@ jQuery(function($) {
   // change cart item quantity
   body.on('click', '.item__qty-button', function () {
     const input = $(this).siblings('.item__qty-num');
-    let act;
-    if ($(this).hasClass('qty_plus')) {
-      act = 'plus';
-    } else {
-      act = 'minus';
-    }
-    const data = {
-      action: 'change_qty',
-      key: $(this).data('key'),
-      act,
-      value: input.val()
-    }
-    $.post(ajaxURL, data, function (resp) {
-      const response = JSON.parse(resp);
-      $('.cart-menu__value').text(response.allCount);
-      input.val(+response.itemCount);
+    if ($(this).hasClass('qty_minus')) {
       if (input.val() > 1) {
-        input.siblings('.qty_minus').removeAttr('disabled');
-      } else {
-        input.siblings('.qty_minus').prop('disabled', true);
+        input.val(+input.val() - 1).trigger('change');
       }
-      $('.cart-menu__order-price > p').html(response.total);
-      const cartTotal = response.total.replace(/\D/g, '');
-      if (cartTotal < 250) {
-        $('.cart-menu__order').addClass('disabled-check');
-        $('.error-min').addClass('show');
-        $('.error-free').removeClass('show');
-      } else {
-        $('.cart-menu__order').removeClass('disabled-check');
-        $('.error-min').removeClass('show');
+      if (input.val() <= 1) {
+        $(this).prop('disabled', true);
       }
-      if (cartTotal >= 250) {
-        $('.error-free').addClass('show');
+    } else {
+      input.val(+input.val() + 1).trigger('change');
+      $(this).siblings('.qty_minus').removeAttr('disabled');
+    }
+  });
+
+  let qtyTimer;
+  body.on('change', '.item__qty-num', function() {
+    const input = $(this);
+    clearTimeout(qtyTimer);
+    qtyTimer = setTimeout(changeQty, 1000);
+
+    function changeQty() {
+      const data = {
+        action: 'change_qty',
+        key: input.data('key'),
+        value: input.val()
       }
-    });
+      $.post(ajaxURL, data, function (resp) {
+        const response = JSON.parse(resp);
+
+        $('.cart-menu__value').text(response.allCount);
+        input.val(+response.itemCount);
+        $('.cart-menu__order-price > p').html(response.total);
+
+        const cartTotal = response.total.replace(/\D/g, '');
+        if (cartTotal < 250) {
+          $('.cart-menu__order').addClass('disabled-check');
+          $('.error-min').addClass('show');
+          $('.error-free').removeClass('show');
+        } else {
+          $('.cart-menu__order').removeClass('disabled-check');
+          $('.error-min').removeClass('show');
+        }
+        if (cartTotal >= 250) {
+          $('.error-free').addClass('show');
+        }
+      });
+    }
   });
 
   // change account page tab

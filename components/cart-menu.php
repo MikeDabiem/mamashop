@@ -48,9 +48,9 @@
                     </div>
                     <div class="item__info__bottom d-flex justify-content-between">
                         <div class="item__qty d-flex align-items-center">
-                            <button class="item__qty-button qty_minus" data-key="<?= $cart_item_key; ?>" <?php $quantity < 2 ? print 'disabled' : null; ?>></button>
-                            <input type="number" class="item__qty-num font-14-20 fw-500" value="<?= $quantity; ?>" disabled>
-                            <button class="item__qty-button qty_plus" data-key="<?= $cart_item_key; ?>"></button>
+                            <button class="item__qty-button qty_minus" <?php $quantity < 2 ? print 'disabled' : null; ?> aria-label="Зменшити кількість"></button>
+                            <input type="number" class="item__qty-num font-14-20 fw-500" value="<?= $quantity; ?>" data-key="<?= $cart_item_key; ?>" aria-label="Кількість" disabled>
+                            <button class="item__qty-button qty_plus" aria-label="Збільшити кількість"></button>
                         </div>
                         <div class="item__price">
                             <?php if ($sale_price) { ?>

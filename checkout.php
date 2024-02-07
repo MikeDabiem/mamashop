@@ -3,7 +3,7 @@ get_header(); ?>
 <section class="checkout-page wrapper filler">
     <h1 class="checkout-page-title font-28-36 fw-600">Оформлення замовлення</h1>
     <div class="checkout-page__body">
-        <form name="checkout" method="post" id="checkout-form" class="checkout-page__body__col1 checkout__form checkout woocommerce-checkout" action="https://www.mamashop.brinpl.com/checkout/" enctype="multipart/form-data" novalidate="novalidate">
+        <form name="checkout" method="post" id="checkout-form" class="checkout-page__body__col1 checkout__form checkout woocommerce-checkout" action="https://www.shop4ik.com.ua/checkout/" enctype="multipart/form-data" novalidate="novalidate">
             <section class="checkout-page__section checkout-page__contacts active">
                 <div class="checkout-page__section__head d-flex justify-content-between">
                     <h4 class="checkout-page__section-title font-18-22 fw-500 d-flex align-items-center"><span class="font-14-20 fw-500 d-flex justify-content-center align-items-center">1</span>Контактні дані</h4>

@@ -21,7 +21,7 @@ $question_content = $question->comment_content; ?>
             $answer_content = $answer->comment_content; ?>
             <div class="answer__head d-flex justify-content-between">
                 <div class="answer__head__text">
-                    <h5 class="answer-name font-13-16 fw-500">Представник Mamashop</h5>
+                    <h5 class="answer-name font-13-16 fw-500">Представник Shop4ik</h5>
                     <span class="answer-status font-11-13 fw-400">Відповідь</span>
                 </div>
                 <time class="questions__item-date font-11-13 fw-400"><?= $date ?></time>
