@@ -1,20 +1,7 @@
 <?php
-//change checkout titles
-add_filter('gettext', 'wc_billing_ua_titles', 20, 3);
-function wc_billing_ua_titles($translated_text, $text, $domain)
-{
-    switch ($translated_text) {
-        case 'Billing & Shipping':
-        case 'Оплата та доставка' :
-            $translated_text = __('Контактні дані', 'woocommerce');
-            break;
-        case 'Your order':
-        case 'Ваше замовлення' :
-            $translated_text = __('Оберіть спосіб оплати', 'woocommerce');
-            break;
-    }
-    return $translated_text;
-}
+// move coupon form to total section
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form');
+add_action( 'woocommerce_review_order_before_submit', 'woocommerce_checkout_coupon_form' );
 
 // change checkout fields
 add_filter('woocommerce_checkout_fields', 'brinpl_change_fields', 25);

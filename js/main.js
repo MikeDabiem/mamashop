@@ -639,7 +639,7 @@ jQuery(function($) {
           $('.checkout-page__confirm').fadeIn(300);
           const checkedRadioId = $('.payment_method:checked').attr('id');
           $('.ready__item--payment').html($(`.payment__item-label[for=${checkedRadioId}]`).html());
-          $('.comment-title').text('Згорунти');
+          $('.comment-title').text('Згорунти').siblings('.comment__body').slideDown(300).parent().addClass('active');
         }
         $(this).parent().slideUp(300);
         $(this).parent().siblings('.checkout-page__section__ready').slideDown(300);
@@ -735,25 +735,26 @@ jQuery(function($) {
         countryInput.val('UA');
       }
     });
-  }
 
-  // coupon using
-  const couponBody = $('.coupon__body');
-  if (couponBody.length) {
-    const couponHeadButton = $('.coupon__head-button');
+    // coupon using
     function showCouponBody() {
+      const couponBody = $('.coupon__body');
+
       if (couponBody.hasClass('active')) {
         couponBody.removeClass('active').slideUp(200);
-        couponHeadButton.text('Додати');
+        $(this).text('Додати');
       } else {
         couponBody.addClass('active').slideDown(200);
-        couponHeadButton.text('Закрити');
+        $(this).text('Закрити');
       }
     }
-    couponHeadButton.on('click', showCouponBody);
-    const couponSubmitButton = $('.coupon-button');
-    const couponInput = $('.coupon-input');
-    couponSubmitButton.on('click', function(e) {
+
+    body.on('click', '.coupon__head-button', showCouponBody);
+
+
+    body.on('click', '.coupon-button', function() {
+      const couponInput = $('.coupon-input');
+
       if (!couponInput.val()) {
         showInputError(couponInput);
       } else {
@@ -769,12 +770,13 @@ jQuery(function($) {
             showCouponBody();
           } else {
             showInputError(couponInput);
-            couponSubmitButton.siblings('.input__wrapper').find('.input--error-text').text(resp.error);
+            $('.coupon-button').siblings('.input__wrapper').find('.input--error-text').text(resp.error);
           }
         });
       }
     });
   }
+
 
   // checkout select
   const checkoutSelect = $('.checkout-select');

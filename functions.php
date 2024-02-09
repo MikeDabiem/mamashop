@@ -1,24 +1,25 @@
 <?php
 /*Load styles and scripts*/
-function load_style_script()
-{
+function load_style_script() {
+    $timestamp = time();
+
     // CSS PLUGINS
     wp_enqueue_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css');
     wp_enqueue_style('slick', get_template_directory_uri() . '/css/slick.css');
 
     // CSS CUSTOM
-    wp_enqueue_style('styleMain', get_template_directory_uri() . '/css/compiled-css/style.css');
+    wp_enqueue_style('styleMain', get_template_directory_uri() . '/css/compiled-css/style.css', [], $timestamp);
     wp_enqueue_style('style', get_template_directory_uri() . '/style.css');
 
     // JS PLUGINS
     wp_enqueue_script('jquery');
     wp_enqueue_script('bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js');
     wp_enqueue_script('slick', get_template_directory_uri() . '/js/slick.js');
-    wp_enqueue_script('slick-js', get_template_directory_uri() . '/js/slick-main.js');
-    wp_enqueue_script('nova-poshta', get_template_directory_uri() . '/js/nova-poshta.js');
+    wp_enqueue_script('slick-js', get_template_directory_uri() . '/js/slick-main.js', ['slick'], $timestamp);
 
     // JS CUSTOM HEADER
-    wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js');
+    wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js', ['jquery'], $timestamp);
+    wp_enqueue_script('nova-poshta', get_template_directory_uri() . '/js/nova-poshta.js', [], $timestamp);
 
     wp_localize_script('nova-poshta', 'ajaxurl', ['url' => admin_url('admin-ajax.php')]);
 
