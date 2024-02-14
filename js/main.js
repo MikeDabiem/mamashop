@@ -1098,14 +1098,14 @@ jQuery(function($) {
   }
 
   function sendAJAX(ajaxData) {
-    searchResults.animate({opacity: .5}, 300);
+    searchResults.children('.shop4ik-spinner').addClass('active');
     productFilterParent.animate({opacity: .5}, 300);
     const data = {...defaultData, ...ajaxData};
     const getParams = new URLSearchParams(ajaxData);
     const search = searchString.s ? `s=${searchString.s}` : '';
     window.history.pushState(null, '', `?${search}&${decodeURIComponent(getParams.toString())}`);
     $.get(ajaxURL, data, function(response) {
-      searchResults.empty().append(response).animate({opacity: 1}, 300);
+      searchResults.empty().append(response);
     });
     $.get(ajaxURL, {...data, action: 'hide_filters'}, function(response) {
       productFilter.empty().append(response);
@@ -1202,7 +1202,9 @@ jQuery(function($) {
   }
 
   // AJAX for cart items
+  const cartSpinner = $('.cart-menu').children('.shop4ik-spinner');
   function cartItemsAJAX(idArr) {
+    cartSpinner.addClass('active');
     const data = {
       action: 'handle_cart_item',
       id: idArr
@@ -1219,11 +1221,15 @@ jQuery(function($) {
         `);
       });
       $('.cart-menu__body').empty().html(response);
+
+      cartSpinner.removeClass('active');
     });
   }
 
   // delete cart item button
   body.on('click', '.delete-cart-item', function() {
+    cartSpinner.addClass('active');
+
     const id = $(this).data('id');
     const data = {
       action: 'handle_cart_item',
@@ -1234,6 +1240,8 @@ jQuery(function($) {
       $(`button[data-id="${id}"]`).replaceWith(
         `<button data-id="${id}" class="buy-button buy-button--buy std-btn purple-btn font-16-22 fw-600 transition-default d-block">Купити</button>`
       );
+
+      cartSpinner.removeClass('active');
     });
   });
 
@@ -1260,6 +1268,8 @@ jQuery(function($) {
     qtyTimer = setTimeout(changeQty, 1000);
 
     function changeQty() {
+      cartSpinner.addClass('active');
+
       const data = {
         action: 'change_qty',
         key: input.data('key'),
@@ -1284,6 +1294,8 @@ jQuery(function($) {
         if (cartTotal >= 250) {
           $('.error-free').addClass('show');
         }
+
+        cartSpinner.removeClass('active');
       });
     }
   });

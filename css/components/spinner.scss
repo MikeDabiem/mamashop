@@ -1,0 +1,60 @@
+.shop4ik-spinner {
+  display: none;
+  place-items: center;
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.3);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+
+  &.active {
+    display: grid;
+  }
+
+  &__animation {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    position: relative;
+    border: 3px solid;
+    border-color: $main-blue $main-blue transparent transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+
+    &::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      border: 3px solid;
+      border-color: transparent transparent $main-purple $main-purple;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      animation: rotationBack 0.5s linear infinite;
+      transform-origin: center center;
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}

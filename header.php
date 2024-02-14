@@ -148,6 +148,7 @@
             <div class="cart-menu__body d-flex flex-column flex-grow-1">
                 <?php require 'components/cart-menu.php'; ?>
             </div>
+            <?php get_template_part('components/spinner'); ?>
         </div>
     </div>
     <div class="header-menu-bg blur-bg transition-default d-flex justify-content-center align-items-center">

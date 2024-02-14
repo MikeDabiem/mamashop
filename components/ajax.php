@@ -6,30 +6,35 @@
     function products_filter() {
         if ($_GET) {
             $query = fetch_data(16);
-            if ($query->have_posts()): ?>
+            if ($query->have_posts()) { ?>
                 <div class="search-page__results__items">
                     <?php while ($query->have_posts()): $query->the_post();
                         get_template_part('components/product-item');
                     endwhile;
                     wp_reset_postdata(); ?>
                 </div>
-                <div class="pagination">
-                    <?php $pagArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="8" fill="none"><path stroke-width="2" d="m11.3 1.1-5 5-5-5"/></svg>';
-                    echo paginate_links([
-                        'base' => site_url() . '%_%',
-                        'format' => '?page=%#%',
-                        'prev_text' => $pagArrow,
-                        'next_text' => $pagArrow,
-                        'total' => $query->max_num_pages,
-                        'current' => $_GET['page'] ?: 1
-                    ]); ?>
-                </div>
-            <?php else: ?>
+                <?php
+                $pagArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="8" fill="none"><path stroke-width="2" d="m11.3 1.1-5 5-5-5"/></svg>';
+                $pagination = paginate_links([
+                    'base' => site_url() . '%_%',
+                    'format' => '?page=%#%',
+                    'prev_text' => $pagArrow,
+                    'next_text' => $pagArrow,
+                    'total' => $query->max_num_pages,
+                    'current' => $_GET['page'] ?: 1
+                ]);
+                if ($pagination) { ?>
+                    <div class="pagination">
+                        <?= $pagination ?>
+                    </div>
+                <?php }
+            } else { ?>
                 <div class="d-flex justify-content-center p-5">
                     <h2>За заданими фільтрами нічого не знайдено</h2>
                 </div>
-            <?php endif;
+            <?php }
             wp_reset_postdata();
+            get_template_part('components/spinner');
         }
         wp_die();
     }
