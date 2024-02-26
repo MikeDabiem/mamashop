@@ -1,15 +1,28 @@
-<?php if (isset($args['user_id'])) {
-    $user_id = $args['user_id'];
-} ?>
+<?php
+if (isset($args['user_id'])) $user_id = $args['user_id'];
+
+$favorites = get_user_meta($user_id, 'favorites');
+$refresh = false;
+
+foreach ($favorites as $favorite) {
+    if (get_post_status($favorite) !== 'publish') {
+        delete_user_meta($user_id, 'favorites', $favorite);
+        $refresh = true;
+    }
+}
+
+if ($refresh) $favorites = get_user_meta($user_id, 'favorites');
+
+$total = 0;
+$fav_count = count($favorites);
+?>
 <section class="account-page__favorites">
     <h2 class="account-page-title font-28-36 fw-600">Улюблене</h2>
-    <?php $favorites = get_user_meta($user_id, 'favorites');
-    $fav_count = count($favorites);
-    if (!empty($favorites)) { ?>
+    <?php if (!empty($favorites)) { ?>
         <p class="favorites-count font-14-20 fw-500"><?= $fav_count . ' ' . true_wordform($fav_count, 'товар', 'товари', 'товарів') ?></p>
         <div class="favorites__items d-flex flex-wrap">
-            <?php $total = 0;
-            foreach ($favorites as $favorite) {
+            <?php
+            foreach ( $favorites as $favorite ) {
                 require 'favorites-item.php';
             } ?>
         </div>

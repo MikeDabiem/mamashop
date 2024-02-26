@@ -10,11 +10,7 @@ $brands_count = count($brands); ?>
     <section class="brands">
         <div class="brands__items d-flex flex-wrap">
             <?php foreach ($brands as $brand) {
-                foreach ($brands_logos as $logo) {
-                    if ($logo['brand_name'] === $brand->name) {
-                        require "components/brands-item.php";
-                    }
-                }
+                get_template_part('components/brands-item', null, ['brand' => $brand]);
             } ?>
         </div>
     </section>

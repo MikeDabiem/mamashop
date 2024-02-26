@@ -1,10 +1,10 @@
 <?php $id = $favorite ?? get_the_ID();
-$total = $total ?? 0;
+$total = intval($total) ?? 0;
 $title = get_the_title($id);
 $link = get_permalink($id);
 $product = wc_get_product($id);
 $brand = $product->get_attribute('pa_brand');
-$brand_slug = wc_get_product_terms($id, 'pa_brand')[0]->slug;
+$brand_slug = wc_get_product_terms($id, 'pa_brand')[0]->slug ?? '';
 $price = $product->get_regular_price();
 $salePrice = $product->get_sale_price();
 $thumb = get_the_post_thumbnail_url($id, "medium");
@@ -24,10 +24,10 @@ $alt = get_post_meta($thumbID, '_wp_attachment_image_alt', true); ?>
         <div class="favorites__item__price d-flex align-items-center">
             <p class="favorites__item__price-value font-15-24 fw-500"><?= $salePrice ?: $price; ?> грн</p>
             <?php if ($salePrice) {
-                $total += $salePrice; ?>
+                $total += intval($salePrice); ?>
                 <p class="favorites__item__price-disc font-12-16 fw-500 text-decoration-line-through"><?= $price; ?> грн</p>
             <?php } else {
-                $total += $price;
+                $total += intval($price);
             } ?>
         </div>
         <button data-id="fav-<?= $id ?>" class="favorites__item-delete std-btn transition-default">

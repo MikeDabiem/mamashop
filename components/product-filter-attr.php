@@ -7,6 +7,8 @@ if (isset($filters)):
         foreach ($attributes as $attribute) {
             $attr_id = $attribute->get_id();
 
+            if (!$attr_id) continue;
+
             if (!isset($attributes_arr[$attr_id])) {
                 $attributes_arr[$attr_id] = [
                     'name' => wc_get_attribute($attr_id)->name,

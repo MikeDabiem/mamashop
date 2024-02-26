@@ -119,7 +119,7 @@ function fetch_data($posts_per_page) {
     $args = [
         'post_type' => 'product',
         'posts_per_page' => $posts_per_page,
-        'paged' => isset($_GET['page']) ?? 1
+        'paged' => $_GET['page'] ?? 1
     ];
     if (isset($_GET['s'])) {
         $args['s'] = $_GET['s'];
@@ -396,3 +396,6 @@ function categories_from_query(WP_Query $categories): array {
     endwhile;
     return $categories_arr;
 }
+
+// disable adding "-scaled" to images filename
+add_filter( 'big_image_size_threshold', '__return_false' );

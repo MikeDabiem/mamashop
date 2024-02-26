@@ -70,16 +70,20 @@ get_header(); ?>
     <section class="brands">
         <h2 class="section-title">Бренди</h2>
         <div class="brands__items d-flex flex-wrap">
-            <?php $brands_page_link = get_field('brands_page', 'options');
+            <?php
+            $brands_page_link = get_field('brands_page', 'options');
             $brands = get_terms(['taxonomy' => 'pa_brand']);
-            $brands_logos = get_field('brands', 'options');
-            for ($b = 0; $b < 11; $b++) {
-                $brand = $brands[$b];
-                foreach ($brands_logos as $logo) {
-                    if ($logo['brand_name'] === $brand->name) {
-                        require "components/brands-item.php";
-                    }
+            $brands_count = 0;
+            foreach ($brands as $brand) {
+                $brand_logo = get_field('logo', $brand);
+
+                if (isset($brand_logo)) {
+                    get_template_part('components/brands-item', null, ['brand' => $brand]);
+
+                    $brands_count++;
                 }
+                
+                if ($brands_count === 11) break;
             } ?>
             <a href="<?= $brands_page_link; ?>" class="brands-item brands__link transition-default d-flex justify-content-center align-items-center">
                 <p class="brands__link-all font-15-24 fw-600">Усі бренди</p>
