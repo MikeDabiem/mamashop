@@ -27,7 +27,7 @@
       }
     }
   }
-  .top {
+  .cat-products.section-title {
     margin-top: 40px;
   }
   .banner {
@@ -60,16 +60,17 @@
         padding: 7px 20px;
       }
     }
-    .top {
-      .section-title {
-        margin-top: 0;
-      }
+    .cat-products.section-title {
+      margin-top: 0;
     }
   }
   @media screen and (max-width: 480px) {
     .subcategory {
       &-title {
         order: -1;
+        &~.products-count {
+          order: -1;
+        }
       }
       &__items {
         order: -1;
@@ -78,7 +79,7 @@
     .header__catalog--body {
       margin-top: 22px;
     }
-    .top {
+    .cat-products.section-title {
       margin-top: 55px;
     }
   }
