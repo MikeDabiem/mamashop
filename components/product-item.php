@@ -22,6 +22,7 @@
         <?php } ?>
     </a>
     <a href="<?= $link; ?>" class="product-item__title font-14-20 fw-500 two-str" title="<?= $title; ?>" aria-label="<?= $title; ?>"><?= $title; ?></a>
+    <?php if (false) { ?>
     <div class="rating d-flex align-items-center">
         <div class="rating__stars">
             <div class="rating__stars-bg"></div>
@@ -30,6 +31,7 @@
         </div>
         <span class="rating__value font-13-16 fw-500"><?= $rev_count ?></span>
     </div>
+    <?php } ?>
     <div class="product-item__price d-flex">
         <p class="product-item__price-value font-15-24 fw-500"><?= $salePrice ?: $price; ?> грн</p>
         <?php if ($salePrice) { ?>
