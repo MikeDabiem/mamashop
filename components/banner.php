@@ -10,7 +10,7 @@ if ($promos->have_posts()): ?>
                 <a href="<?= $link ?>" class="banner__item img-wrapper-cover" aria-hidden="true">
                     <picture>
                         <source srcset="<?= $small_banner ?>" media="(max-width: 480px)" />
-                        <img data-lazy="<?= $big_banner ?>" alt="<?= get_the_title() ?>">
+                        <img src="<?= $big_banner ?>" alt="<?= get_the_title() ?>" loading="lazy">
                     </picture>
                 </a>
             <?php endwhile;

@@ -11,7 +11,8 @@
     </div>
     <div class="catalog__content">
         <div class="catalog__categories transition-default">
-            <?php $categories = get_terms('product_cat', ['parent' => 0, 'hide_empty' => false, 'exclude' => 15, 'orderby' => 'id']);
+            <?php
+            $categories = get_terms('product_cat', ['parent' => 0, 'hide_empty' => false, 'exclude' => 15, 'orderby' => 'id']);
             foreach ($categories as $cat) {
                 $catName = $cat->name;
                 $catLink = get_term_link($cat);
@@ -28,19 +29,22 @@
             <?php } ?>
         </div>
         <div class="catalog__categories__children transition-default">
-            <?php foreach ($categories as $cat) {
-                $childrenID = get_term_children($cat->term_id, 'product_cat'); ?>
-                <div class="catalog__categories__child" data-cat-child="<?= $cat->term_id; ?>">
-                    <?php foreach ($childrenID as $childID) {
-                        $child = get_term_by('id', $childID, 'product_cat');
-                        $childName = $child->name;
-                        $childLink = get_term_link($child); ?>
-                        <a href="<?= $childLink; ?>" class="catalog__category catalog__category__child-item transition-default d-flex align-items-center">
-                            <p class="catalog__category-title font-14-20 fw-500 transition-default"><?= $childName; ?></p>
-                        </a>
-                    <?php } ?>
-                </div>
-            <?php } ?>
+            <?php
+            foreach ($categories as $cat) {
+                $childrenID = get_term_children($cat->term_id, 'product_cat');
+                if (!empty($childrenID)) { ?>
+                    <div class="catalog__categories__child" data-cat-child="<?= $cat->term_id; ?>">
+                        <?php foreach ($childrenID as $childID) {
+                            $child = get_term_by('id', $childID, 'product_cat');
+                            $childName = $child->name;
+                            $childLink = get_term_link($child); ?>
+                            <a href="<?= $childLink; ?>" class="catalog__category catalog__category__child-item transition-default d-flex align-items-center">
+                                <p class="catalog__category-title font-14-20 fw-500 transition-default"><?= $childName; ?></p>
+                            </a>
+                        <?php } ?>
+                    </div>
+                <?php }
+            } ?>
         </div>
     </div>
 </div>

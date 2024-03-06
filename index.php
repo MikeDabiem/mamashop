@@ -52,7 +52,7 @@ get_header(); ?>
     </section>
     <?php $promos = new WP_Query(['post_type' => 'promo', 'posts_per_page' => 3]);
     $promos_link = get_field('promos_page', 'options');
-    if ($promos->have_posts()): ?>
+    if ($promos->have_posts() && $promos->found_posts > 2): ?>
         <section class="promo">
             <h2 class="section-title">Акції</h2>
             <div class="promo__items">

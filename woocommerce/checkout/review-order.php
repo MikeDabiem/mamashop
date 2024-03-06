@@ -143,42 +143,48 @@ do_action( 'woocommerce_checkout_before_order_review' ); ?>
                             printf( '<label for="shipping_method_%1$s_%2$s" class="font-14-20 fw-500">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) );
                             ?>
                         </div>
-                        <div class="item__select">
-                            <?php $delivery_item = match($method->method_id) {
-                                'nova_poshta_depart' => ['title' => 'Оберіть відділення', 'select' => 'Оберіть відділення'],
-                                'nova_poshta_postomat' => ['title' => 'Поштомат', 'select' => 'Оберіть поштомат'],
-                                'nova_poshta_courier' => ['title' => 'Вулиця', 'select' => 'Оберіть вулицю'],
-                            }; ?>
-                            <h5 class="item__select-title font-13-16 fw-500"><?= $delivery_item['title'] ?></h5>
-                            <?php $address = $checkout->get_value('billing_address_1');
-                            if ($method->id === $chosen_method && $address) {
-                                $chosen_option = [$address => ''];
-                                $selected_delivery = $method->method_id;
-                            } else {
-                                $chosen_option = [$delivery_item['select'] => ''];
-                            }
-                            get_template_part('components/checkout/checkout-select', null, ['chosen_option' => $chosen_option, 'input_id' => 'delivery_type-input', 'select_type' => $method->method_id]);
-                            if ($method->method_id === 'nova_poshta_courier') {
-                                $address_street = $checkout->get_value('billing_address_1');
-                                $address_arr = explode(', ', $checkout->get_value('billing_address_2'));
-                                $building_num = '';
-                                $apartment_num = '';
-                                if ($selected_delivery === 'nova_poshta_courier') {
-                                    $building_num = !empty($address_arr[0]) ? str_replace('буд. ', '', $address_arr[0]) : '';
-                                    $apartment_num = !empty($address_arr[1]) ? str_replace('кв. ', '', $address_arr[1]) : '';
-                                } ?>
-                                <div class="item__select__address d-flex justify-content-between">
-                                    <div class="item__select__address__item input__wrapper">
-                                        <label for="building-number" class="font-13-16 fw-500">Будинок</label>
-                                        <input type="text" name="building-number" id="building-number" class="checkout__input-item font-13-16 fw-400" value="<?= $building_num ?>" placeholder="Номер будинку">
+                        <?php if ($method->method_id === 'nova_poshta_depart' ||
+                                  $method->method_id === 'nova_poshta_postomat' ||
+                                  $method->method_id === 'nova_poshta_courier') { ?>
+                            <div class="item__select">
+                                <?php $delivery_item = match($method->method_id) {
+                                    'nova_poshta_depart' => ['title' => 'Оберіть відділення', 'select' => 'Оберіть відділення'],
+                                    'nova_poshta_postomat' => ['title' => 'Поштомат', 'select' => 'Оберіть поштомат'],
+                                    'nova_poshta_courier' => ['title' => 'Вулиця', 'select' => 'Оберіть вулицю'],
+                                }; ?>
+                                <h5 class="item__select-title font-13-16 fw-500"><?= $delivery_item['title'] ?></h5>
+                                <?php $address = $checkout->get_value('billing_address_1');
+                                if ($method->id === $chosen_method && $address) {
+                                    $chosen_option = [$address => ''];
+                                    $selected_delivery = $method->method_id;
+                                } else {
+                                    $chosen_option = [$delivery_item['select'] => ''];
+                                }
+                                get_template_part('components/checkout/checkout-select', null, ['chosen_option' => $chosen_option, 'input_id' => 'delivery_type-input', 'select_type' => $method->method_id]);
+                                if ($method->method_id === 'nova_poshta_courier') {
+                                    $address_street = $checkout->get_value('billing_address_1');
+                                    $address_arr = explode(', ', $checkout->get_value('billing_address_2'));
+                                    $building_num = '';
+                                    $apartment_num = '';
+                                    if ($selected_delivery === 'nova_poshta_courier') {
+                                        $building_num = !empty($address_arr[0]) ? str_replace('буд. ', '', $address_arr[0]) : '';
+                                        $apartment_num = !empty($address_arr[1]) ? str_replace('кв. ', '', $address_arr[1]) : '';
+                                    } ?>
+                                    <div class="item__select__address d-flex justify-content-between">
+                                        <div class="item__select__address__item input__wrapper">
+                                            <label for="building-number" class="font-13-16 fw-500">Будинок</label>
+                                            <input type="text" name="building-number" id="building-number" class="checkout__input-item font-13-16 fw-400" value="<?= $building_num ?>" placeholder="Номер будинку">
+                                        </div>
+                                        <div class="item__select__address__item input__wrapper">
+                                            <label for="apartment-number" class="font-13-16 fw-500">Квартира</label>
+                                            <input type="text" name="apartment-number" id="apartment-number" class="checkout__input-item font-13-16 fw-400" value="<?= $apartment_num ?>" placeholder="Номер квартири">
+                                        </div>
                                     </div>
-                                    <div class="item__select__address__item input__wrapper">
-                                        <label for="apartment-number" class="font-13-16 fw-500">Квартира</label>
-                                        <input type="text" name="apartment-number" id="apartment-number" class="checkout__input-item font-13-16 fw-400" value="<?= $apartment_num ?>" placeholder="Номер квартири">
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
+                                <?php } ?>
+                            </div>
+                        <?php } elseif ($method->method_id === 'local_pickup') { ?>
+                            <p class="item__select font-14-20 fw-400">Точка видачі знаходиться за адресою:<br><?= get_field('shop_address', 'options') ?></p>
+                        <?php } ?>
                     </div>
                 <?php }
             } ?>
