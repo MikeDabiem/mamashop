@@ -236,7 +236,7 @@ do_action( 'woocommerce_checkout_before_order_review' ); ?>
         <?php $available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
         if (!empty($available_gateways)) {
             foreach ($available_gateways as $gateway) { ?>
-                <div class="payment__item wc_payment_method payment_method_<?= esc_attr($gateway->id); ?> d-flex flex-wrap align-items-center">
+                <div class="payment__item wc_payment_method payment_method_<?= esc_attr($gateway->id); ?> flex-wrap align-items-center">
                     <input id="payment_method_<?= esc_attr($gateway->id); ?>" type="radio" class="payment_method input-radio" name="payment_method" value="<?= esc_attr($gateway->id); ?>" <?php checked($gateway->chosen, true); ?> data-order_button_text="<?= esc_attr($gateway->order_button_text); ?>" />
                     <label for="payment_method_<?= esc_attr($gateway->id); ?>" class="payment__item-label font-14-20 fw-400">
                         <?= $gateway->get_title(); ?> <?= $gateway->get_icon(); ?>

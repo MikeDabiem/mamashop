@@ -248,6 +248,7 @@
   }
   &__payment {
     .payment__item {
+      display: flex;
       gap: 12px;
       &:not(:first-child) {
         margin-top: 20px;

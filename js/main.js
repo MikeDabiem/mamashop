@@ -576,6 +576,17 @@ jQuery(function($) {
       }
     });
 
+    // disable next button in payment section if no one method is checked
+    function payNextDisabler() {
+      const payNextBtn = $('.payment__body .checkout-next-button');
+      if (!$('.payment_method:checked').length) {
+        payNextBtn.prop('disabled', true);
+        $('.checkout-page__confirm').hide();
+      } else {
+        payNextBtn.removeAttr('disabled');
+      }
+    }
+
     // click "Продовжити" button
     checkoutNextButton.on('click', function() {
       // errors check
@@ -613,16 +624,17 @@ jQuery(function($) {
           $('.ready__item--phone').text($('#billing_phone').val());
           $('.ready__item--email').text($('#billing_email').val());
         }
+
         if ($(this).parent().hasClass('delivery__body')) {
           const delRegionInput = $('#delivery_region-input');
           const delCityInput = $('#delivery_city-input');
           const billingAddress = $('#billing_address_1');
           const billingApartment = $('#billing_address_2');
-          const parent = $('.shipping_method:checked').closest('.delivery__type__item');
+          const shipMethParent = $('.shipping_method:checked').closest('.delivery__type__item');
           $('.ready__delivery__logo-image').hide();
           billingCityInput.val(delRegionInput.val() + ', ' + delCityInput.val());
-          billingAddress.val(parent.find('.checkout-select-input').val());
-          if (parent.has('#building-number').length && parent.has('#apartment-number').length && buildingNum.val()) {
+          billingAddress.val(shipMethParent.find('.checkout-select-input').val());
+          if (shipMethParent.has('#building-number').length && shipMethParent.has('#apartment-number').length && buildingNum.val()) {
             if (apartmentNum.val()) {
               billingApartment.val(`буд. ${buildingNum.val()}, кв. ${apartmentNum.val()}`);
             } else {
@@ -631,18 +643,37 @@ jQuery(function($) {
           } else {
             billingApartment.val('');
           }
-          if (parent.attr('id').indexOf('nova_poshta') >= 0) {
+          if (shipMethParent.attr('id').indexOf('nova_poshta') >= 0) {
             $('#np-logo').show();
           }
-          $('.ready__item--city').text(`${delRegionInput.val()} область, м. ${delCityInput.val()}`);
-          $('.ready__item--address').text(billingAddress.val() + (billingApartment.val() ? ', ' + billingApartment.val() : ''));
+
+          const readyCity = $('.ready__item--city');
+          const readyAddress = $('.ready__item--address');
+          const payMethOnGetRadio = $('#payment_method_cod');
+          if (shipMethParent.attr('id') === 'local_pickup' || shipMethParent.attr('id') === 'nova_poshta_courier') {
+            if (shipMethParent.attr('id') === 'local_pickup') {
+              billingCityInput.val('Київська, Київ');
+              readyCity.text('Самовивіз');
+              readyAddress.text(phpData.shopAddress);
+            }
+            payMethOnGetRadio.prop('checked', false);
+            payMethOnGetRadio.parent().hide();
+          } else {
+            readyCity.text(`${delRegionInput.val()} область, м. ${delCityInput.val()}`);
+            readyAddress.text(billingAddress.val() + (billingApartment.val() ? ', ' + billingApartment.val() : ''));
+            payMethOnGetRadio.parent().show();
+          }
+
+          payNextDisabler();
         }
+
         if ($(this).parent().hasClass('payment__body')) {
           $('.checkout-page__confirm').fadeIn(300);
           const checkedRadioId = $('.payment_method:checked').attr('id');
           $('.ready__item--payment').html($(`.payment__item-label[for=${checkedRadioId}]`).html());
           $('.comment-title').text('Згорунти').siblings('.comment__body').slideDown(300).parent().addClass('active');
         }
+
         $(this).parent().slideUp(300);
         $(this).parent().siblings('.checkout-page__section__ready').slideDown(300);
         $(this).closest('.checkout-page__section').next().find('.checkout-change-button').hide();
@@ -666,6 +697,11 @@ jQuery(function($) {
       $(this).parent().siblings('.checkout-page__section__body').slideDown(300);
       $(this).parent().siblings('.checkout-page__section__ready').slideUp(300);
       $(this).fadeOut(300);
+    });
+
+    // check is one of payment method checked after change it
+    $('.payment_method').on('change', function() {
+      payNextDisabler();
     });
 
     // activate delivery next button
@@ -801,6 +837,7 @@ jQuery(function($) {
         }
       }
     });
+
     body.on('click', '.checkout-select__menu__item', function() {
       const billingCityInput = $('#billing_city');
       $(this).siblings().removeClass('active');
@@ -815,7 +852,7 @@ jQuery(function($) {
         billingCityInput.val($(this).children('.checkout-select__menu__item-title').text() + ', ');
         $('#delivery_city').find('.checkout-select__chosen-title').text('Оберіть населений пункт');
       } else if ($(this).closest('.delivery__place__item').attr('id') === 'delivery_city') {
-        billingCityInput.val(billingCityInput.val() + $(this).children('.checkout-select__menu__item-title').text());
+        billingCityInput.val($('#delivery_region-input').val() + ', ' + $(this).children('.checkout-select__menu__item-title').text());
       }
 
       activateNextButton();
@@ -1285,7 +1322,7 @@ jQuery(function($) {
         $('.cart-menu__order-price > p').html(response.total);
 
         const cartTotal = response.total.replace(/\D/g, '');
-        if (cartTotal < 250) {
+        if (cartTotal < phpData.minOrderPrice) {
           $('.cart-menu__order').addClass('disabled-check');
           $('.error-min').addClass('show');
           $('.error-free').removeClass('show');
@@ -1293,7 +1330,7 @@ jQuery(function($) {
           $('.cart-menu__order').removeClass('disabled-check');
           $('.error-min').removeClass('show');
         }
-        if (cartTotal >= 250) {
+        if (cartTotal >= phpData.minOrderPrice) {
           $('.error-free').addClass('show');
         }
 

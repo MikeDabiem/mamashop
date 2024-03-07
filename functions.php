@@ -34,7 +34,9 @@ function load_style_script() {
     wp_localize_script('main', 'phpData', [
         'ajaxurl' => admin_url('admin-ajax.php'),
         'searchHelpArr' => $searchHelpArr,
-        'category'  => $category
+        'category'  => $category,
+	    'minOrderPrice' => get_field('min_price', 'options'),
+	    'shopAddress' => get_field('shop_address', 'options')
     ]);
 }
 add_action("wp_enqueue_scripts", "load_style_script");
