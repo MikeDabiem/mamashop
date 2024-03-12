@@ -48,54 +48,71 @@ add_theme_support('widgets');
 
 // get products
 function fetch_data($posts_per_page) {
-    $sort_args = [];
-    if (isset($_GET['sort'])) {
-        $orderby_value = wc_clean($_GET['sort']);
-        $sort_args = match ($orderby_value) {
-            'new' => [
-                'orderby' => 'date',
-                'order' => 'DESC',
-            ],
-            'price-asc' => [
-                'orderby' => 'meta_value_num',
-                'order' => 'ASC',
-                'meta_key' => '_price',
-            ],
-            'price-desc' => [
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
-                'meta_key' => '_price',
-            ],
-            'rating' => [
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
-                'meta_key' => '_wc_average_rating',
-            ],
-            'price-disc' => [
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
-                'meta_key' => '_discount_value',
-            ],
-            default => [
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
-                'meta_key' => '_total_views_count',
-            ],
-        };
-    }
+    $sort_options = [];
+    $orderby_value = isset($_GET['sort']) ? wc_clean($_GET['sort']) : '';
+    $sort_options = match ($orderby_value) {
+        'new' => [
+            'meta_key' => '_date',
+            'type'     => 'DATE',
+            'order'    => 'DESC',
+        ],
+        'price-asc' => [
+            'meta_key' => '_price',
+            'type'  => 'NUMERIC',
+            'order'    => 'ASC',
+        ],
+        'price-desc' => [
+            'meta_key' => '_price',
+            'type'  => 'NUMERIC',
+            'order'    => 'DESC',
+        ],
+        'rating' => [
+            'meta_key' => '_wc_average_rating',
+            'type'  => 'NUMERIC',
+            'order'    => 'DESC',
+        ],
+        'price-disc' => [
+            'meta_key' => '_discount_value',
+            'type'  => 'NUMERIC',
+            'order'    => 'DESC',
+        ],
+        default => [
+            'meta_key' => '_total_views_count',
+            'type'  => 'NUMERIC',
+            'order'    => 'DESC',
+        ],
+    };
+	$sort_args = [
+		'meta_query' => [
+			'relation' => 'AND',
+			'sort_options' => [
+				'key'  => $sort_options['meta_key'],
+				'type' => $sort_options['type']
+			],
+			'stock_status' => [
+				'key' => '_stock_status',
+			]
+		],
+		'orderby'  => [
+			'stock_status' => 'ASC',
+			'sort_options' => $sort_options['order']
+		]
+	];
+
     $price_args = [];
     if (isset($_GET['price'])) {
         $price_args = [
             'meta_query' => [
                 [
-                    'key' => '_price',
-                    'value' => wc_clean(explode('-', $_GET['price'])),
-                    'type' => 'numeric',
+                    'key'     => '_price',
+                    'value'   => wc_clean(explode('-', $_GET['price'])),
+                    'type'    => 'numeric',
                     'compare' => 'BETWEEN'
                 ]
             ]
         ];
     }
+
     $filter_args = [
         'tax_query' => [
             'relation' => 'AND',
@@ -105,38 +122,44 @@ function fetch_data($posts_per_page) {
         if (str_contains($key, 'pa_')) {
             $filter_args['tax_query'][] = [
                 'taxonomy' => $key,
-                'field' => 'slug',
-                'terms' => explode(',', $_GET[$key])
+                'field'    => 'slug',
+                'terms'    => explode(',', $_GET[$key])
             ];
         };
     }
+
     if (get_query_var('product_cat') || !empty($_GET['category'])) {
         $terms = get_query_var('product_cat') ?: $_GET['category'];
         $filter_args['tax_query'][] = [
             'taxonomy' => 'product_cat',
-            'field' => 'slug',
-            'terms' => $terms
+            'field'    => 'slug',
+            'terms'    => $terms
         ];
     }
+
     $args = [
-        'post_type' => 'product',
+        'post_type'      => 'product',
         'posts_per_page' => $posts_per_page,
-        'paged' => $_GET['page'] ?? 1
+        'paged'          => $_GET['page'] ?? 1
     ];
     if (isset($_GET['s'])) {
         $args['s'] = $_GET['s'];
     }
-    return new WP_Query(array_merge($args, $sort_args, $price_args, $filter_args));
+
+    return new WP_Query(array_merge_recursive($args, $sort_args, $price_args, $filter_args));
 }
 
 require 'components/ajax.php';
 require 'components/checkout/checkout-settings.php';
 
 //add views count meta to new products
-add_action('woocommerce_new_product', 'initialize_total_views_count');
-function initialize_total_views_count($product_id) {
-    add_post_meta($product_id, '_total_views_count', 0, true);
-    add_post_meta($product_id, '_discount_value', get_product_discount($product_id), true);
+add_action('save_post', 'brinpl_add_product_meta');
+function brinpl_add_product_meta($product_id, $product, $update) {
+	if (!$update) {
+		add_post_meta($product_id, '_date', date('Y/m/d', time()), true);
+	    add_post_meta($product_id, '_total_views_count', 0, true);
+	    add_post_meta($product_id, '_discount_value', get_product_discount($product_id), true);
+	}
 }
 
 // update views product counter
@@ -155,7 +178,8 @@ function update_product_discount_meta_value($id) {
 
 // calc product discount
 function get_product_discount($id) {
-    $product = wc_get_product($id);
+	$_pf = new WC_Product_Factory();
+	$product = $_pf->get_product( $id );
     $price = $product->get_regular_price();
     $salePrice = $product->get_sale_price();
     if ($price && $salePrice) {

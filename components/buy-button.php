@@ -12,5 +12,5 @@
         <button class="buy-button buy-button--buy std-btn purple-btn font-16-22 fw-600 transition-default d-block" data-id="<?= $product->get_id(); ?>">Купити</button>
     <?php }
 } else { ?>
-    <button class="buy-button buy-button--msg std-btn purple-btn font-16-22 fw-600 transition-default disabled-link d-block">Повідомити про появу</button>
+    <button class="buy-button buy-button--msg std-btn purple-btn font-16-22 fw-600 transition-default disabled-link d-block">Очікується</button>
 <?php }
