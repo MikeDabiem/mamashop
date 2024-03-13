@@ -153,7 +153,7 @@ require 'components/ajax.php';
 require 'components/checkout/checkout-settings.php';
 
 //add views count meta to new products
-add_action('save_post', 'brinpl_add_product_meta');
+add_action('save_post_product', 'brinpl_add_product_meta', 10, 3);
 function brinpl_add_product_meta($product_id, $product, $update) {
 	if (!$update) {
 		add_post_meta($product_id, '_date', date('Y/m/d', time()), true);
