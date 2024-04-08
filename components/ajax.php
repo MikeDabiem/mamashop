@@ -15,8 +15,9 @@
                 </div>
                 <?php
                 $pagArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="8" fill="none"><path stroke-width="2" d="m11.3 1.1-5 5-5-5"/></svg>';
+                $current_url = parse_url( wp_get_referer() );
                 $pagination = paginate_links([
-                    'base' => site_url() . '%_%',
+                    'base' => home_url() . $current_url['path'] . '%_%',
                     'format' => '?page=%#%',
                     'prev_text' => $pagArrow,
                     'next_text' => $pagArrow,

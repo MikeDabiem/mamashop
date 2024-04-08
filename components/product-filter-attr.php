@@ -23,7 +23,6 @@ if (isset($filters)):
         }
     endwhile;
 endif;
-ksort($attributes_arr, SORT_NATURAL);
 
 $attributes_arr_filtered = [];
 
@@ -90,13 +89,20 @@ foreach ($attributes_arr as $attr_id => $attr) {
                 'name' => wc_get_attribute($attr_id)->name,
                 'slug' => wc_get_attribute($attr_id)->slug,
                 'options' => [],
+                'options_count' => []
             ];
         }
 
         foreach ($attribute['options'] as $option_id) {
-            $attributes_arr_filtered[$attr_id]['options'][] = $option_id;
+            if (isset($attributes_arr_filtered[$attr_id]['options'][$option_id])) {
+                $attributes_arr_filtered[$attr_id]['options_count'][$option_id] += 1;
+            } else {
+                $attributes_arr_filtered[$attr_id]['options_count'][$option_id] = 1;
+            }
+            $attributes_arr_filtered[$attr_id]['options'][$option_id] = get_term($option_id)->name;
         }
     }
+    asort($attributes_arr_filtered[$attr_id]['options'], SORT_NATURAL);
 }
 ksort($attributes_arr_filtered, SORT_NATURAL);
 
@@ -121,7 +127,7 @@ foreach ($attributes_arr_filtered as $attr_id => $attr) { ?>
                 $filter_ids_arr[] = $attr['slug'] . '_' . $GET_filter;
             }
         }
-        foreach (array_unique($attr['options']) as $option_id) {
+        foreach (array_unique($attr['options']) as $option_id => $value) {
             $term_name = get_term($option_id)->name;
             $term_slug = get_term($option_id)->slug;
             $term_tax = get_term($option_id)->taxonomy; ?>
@@ -136,7 +142,7 @@ foreach ($attributes_arr_filtered as $attr_id => $attr) { ?>
                 >
                 <label for="<?= $term_tax . '_' . $term_slug; ?>" class="product-filter__check-label option-label font-14-20 fw-400">
                     <span class="product-filter__check-label-title"><?= $term_name; ?></span>
-                    <span class="product-filter__check-label-quant"><?= $count[$option_id]; ?></span>
+                    <span class="product-filter__check-label-quant"><?= $attr['options_count'][$option_id]; ?></span>
                 </label>
             </div>
         <?php }
