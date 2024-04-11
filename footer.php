@@ -40,7 +40,7 @@
                         <?php }
                     } ?>
                     <p class="footer__contacts-phone-subtitle font-11-13 fw-500">Дзвінки згідно тарифів вашого оператора</p>
-                    <p class="footer__contacts-schedule font-11-13 fw-500">Пн-Нд: <time>9:00</time>-<time>21:00</time></p>
+                    <p class="footer__contacts-schedule font-11-13 fw-500">Пн-Пт: <time>11:00</time>-<time>19:00</time></p>
                     <?php if ($email) { ?>
                         <p class="footer__contacts-email font-13-16 fw-500">Email: <a href="mailto:<?= $email; ?>" class="transition-default"><?= $email; ?></a></p>
                     <?php } ?>
