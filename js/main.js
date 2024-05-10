@@ -676,8 +676,11 @@ jQuery(function($) {
 
         $(this).parent().slideUp(300);
         $(this).parent().siblings('.checkout-page__section__ready').slideDown(300);
-        $(this).closest('.checkout-page__section').next().find('.checkout-change-button').hide();
-        $(this).closest('.checkout-page__section').next().addClass('active').children('.checkout-page__section__body').slideDown(300);
+
+        const nextSection = $(this).closest('.checkout-page__section').nextAll('.checkout-page__section').first();
+        nextSection.find('.checkout-change-button').hide();
+        nextSection.addClass('active').children('.checkout-page__section__body').slideDown(300);
+
         $(this).parent().siblings('.checkout-page__section__head').children('.checkout-change-button').fadeIn(300);
         $(this).parent().siblings('.checkout-page__section__head').children('.checkout-page__section-title').children('span')
           .fadeOut(200)
@@ -1321,8 +1324,9 @@ jQuery(function($) {
         input.val(+response.itemCount);
         $('.cart-menu__order-price > p').html(response.total);
 
-        const cartTotal = response.total.replace(/\D/g, '');
-        if (cartTotal < phpData.minOrderPrice) {
+        const cartTotal = +response.total.replace(/\D/g, '');
+        const minOrderPrice =  +phpData.minOrderPrice;
+        if (cartTotal < minOrderPrice) {
           $('.cart-menu__order').addClass('disabled-check');
           $('.error-min').addClass('show');
           $('.error-free').removeClass('show');
@@ -1330,7 +1334,7 @@ jQuery(function($) {
           $('.cart-menu__order').removeClass('disabled-check');
           $('.error-min').removeClass('show');
         }
-        if (cartTotal >= phpData.minOrderPrice) {
+        if (cartTotal >= minOrderPrice) {
           $('.error-free').addClass('show');
         }
 
