@@ -650,17 +650,19 @@ jQuery(function($) {
           const readyCity = $('.ready__item--city');
           const readyAddress = $('.ready__item--address');
           const payMethOnGetRadio = $('#payment_method_cod');
-          if (shipMethParent.attr('id') === 'local_pickup' || shipMethParent.attr('id') === 'nova_poshta_courier') {
+
+          if (shipMethParent.attr('id') === 'nova_poshta_courier') {
+            payMethOnGetRadio.prop('checked', false);
+            payMethOnGetRadio.parent().hide();
+          } else {
             if (shipMethParent.attr('id') === 'local_pickup') {
               billingCityInput.val('Київська, Київ');
               readyCity.text('Самовивіз');
               readyAddress.text(phpData.shopAddress);
+            } else {
+              readyCity.text(`${delRegionInput.val()} область, м. ${delCityInput.val()}`);
+              readyAddress.text(billingAddress.val() + (billingApartment.val() ? ', ' + billingApartment.val() : ''));
             }
-            payMethOnGetRadio.prop('checked', false);
-            payMethOnGetRadio.parent().hide();
-          } else {
-            readyCity.text(`${delRegionInput.val()} область, м. ${delCityInput.val()}`);
-            readyAddress.text(billingAddress.val() + (billingApartment.val() ? ', ' + billingApartment.val() : ''));
             payMethOnGetRadio.parent().show();
           }
 

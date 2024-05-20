@@ -6,71 +6,105 @@ get_header(); ?>
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"><path stroke-width="2" d="M3.53 7.458c0-1.22 0-1.83.2-2.31A2.617 2.617 0 0 1 5.146 3.73c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.265 1.15.775 1.417 1.416.199.481.199 1.09.199 2.31s0 1.83-.2 2.311a2.618 2.618 0 0 1-1.416 1.416c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2A2.617 2.617 0 0 1 3.73 9.768c-.2-.481-.2-1.09-.2-2.31ZM16.618 7.458c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.416c.2.481.2 1.09.2 2.31s0 1.83-.2 2.311a2.617 2.617 0 0 1-1.416 1.416c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.481-.2-1.09-.2-2.31ZM3.53 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.481-.2 1.09-.2 2.31-.2s1.83 0 2.311.2c.641.266 1.15.775 1.417 1.417.199.48.199 1.09.199 2.31s0 1.83-.2 2.31a2.618 2.618 0 0 1-1.416 1.417c-.481.2-1.09.2-2.31.2s-1.83 0-2.31-.2a2.618 2.618 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31ZM16.618 20.545c0-1.22 0-1.83.2-2.31a2.617 2.617 0 0 1 1.416-1.417c.48-.2 1.09-.2 2.31-.2s1.83 0 2.31.2a2.617 2.617 0 0 1 1.417 1.417c.2.48.2 1.09.2 2.31s0 1.83-.2 2.31a2.617 2.617 0 0 1-1.416 1.417c-.482.2-1.091.2-2.31.2-1.22 0-1.83 0-2.311-.2a2.617 2.617 0 0 1-1.417-1.416c-.2-.482-.2-1.091-.2-2.31Z"/></svg>
         Каталог
     </button>
-    <section class="top products-slider">
-        <h2 class="section-title">Топ товари</h2>
-        <div class="top__items products-slider__items">
-            <?php $topProducts = new WP_Query([
-                'post_type' => 'product',
-                'posts_per_page' => 10,
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
-                'meta_key' => '_wc_average_rating',
-                'meta_query' => [
-                    [
-                        'key' => '_stock_status',
-                        'value' => 'instock',
-                        'compare' => 'IN'
-                    ]
-                ]
-            ]);
-            if ($topProducts->have_posts()): while ($topProducts->have_posts()): $topProducts->the_post();
-                require "components/product-item.php";
-            endwhile; endif;
-            wp_reset_postdata(); ?>
-        </div>
-        <button type="button" class="top__prev products-slider__prev slider-arrow transition-default" aria-label="Попередні товари">
-            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="M8 13 2 7l6-6"/></svg>
-        </button>
-        <button type="button" class="top__next products-slider__next slider-arrow transition-default" aria-label="Ще товари">
-            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
-        </button>
-    </section>
-    <?php require 'components/categories.php'; ?>
-    <section class="hits products-slider">
-        <h2 class="section-title">Хіти продажів</h2>
-        <div class="hits__items products-slider__items">
-            <?php $hits = new WP_Query([
-                'post_type' => 'product',
-                'posts_per_page' => 10,
-                'meta_query' => [
-                    'relation' => 'AND',
-	                'stock_status' => [
-		                'key' => '_stock_status',
-		                'value' => 'instock',
-		                'compare' => 'IN'
-	                ],
-                    'total_sales' => [
-                        'key' => 'total_sales',
-                        'type' => 'NUMERIC'
-                    ]
-                ],
-                'orderby' => [
-                    'total_sales' => 'DESC'
-                ]
-            ]);
-            if ($hits->have_posts()): while ($hits->have_posts()): $hits->the_post();
-                require "components/product-item.php";
-            endwhile; endif;
-            wp_reset_postdata(); ?>
-        </div>
-        <button type="button" class="hits__prev products-slider__prev slider-arrow transition-default" aria-label="Попередні товари">
-            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="M8 13 2 7l6-6"/></svg>
-        </button>
-        <button type="button" class="hits__next products-slider__next slider-arrow transition-default" aria-label="Ще товари">
-            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
-        </button>
-    </section>
-    <?php $promos = new WP_Query(['post_type' => 'promo', 'posts_per_page' => 3]);
+    <?php
+    // products with max rating
+//    $top_products = new WP_Query([
+//        'post_type' => 'product',
+//        'posts_per_page' => 10,
+//        'orderby' => 'meta_value_num',
+//        'order' => 'DESC',
+//        'meta_key' => '_wc_average_rating',
+//        'meta_query' => [
+//            [
+//                'key' => '_stock_status',
+//                'value' => 'instock',
+//                'compare' => 'IN'
+//            ]
+//        ]
+//    ]);
+
+    // top products from admin selection
+    $top_products_ids = get_field('top_products');
+    $top_products = new WP_Query([
+        'post_type' => 'product',
+        'posts_per_page' => -1,
+        'post__in' => $top_products_ids ?: array(0)
+    ]);
+    if ($top_products->have_posts()):
+    ?>
+        <section class="top products-slider">
+            <h2 class="section-title">Топ товари</h2>
+            <div class="top__items products-slider__items">
+                <?php
+                while ($top_products->have_posts()): $top_products->the_post();
+                    get_template_part("components/product-item");
+                endwhile;
+                wp_reset_postdata();
+                ?>
+            </div>
+            <button type="button" class="top__prev products-slider__prev slider-arrow transition-default" aria-label="Попередні товари">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="M8 13 2 7l6-6"/></svg>
+            </button>
+            <button type="button" class="top__next products-slider__next slider-arrow transition-default" aria-label="Ще товари">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
+            </button>
+        </section>
+    <?php
+    endif;
+
+    require 'components/categories.php';
+
+    // products with max sales rating
+    //            $hit_products = new WP_Query([
+    //                'post_type' => 'product',
+    //                'posts_per_page' => 10,
+    //                'meta_query' => [
+    //                    'relation' => 'AND',
+    //	                'stock_status' => [
+    //		                'key' => '_stock_status',
+    //		                'value' => 'instock',
+    //		                'compare' => 'IN'
+    //	                ],
+    //                    'total_sales' => [
+    //                        'key' => 'total_sales',
+    //                        'type' => 'NUMERIC'
+    //                    ]
+    //                ],
+    //                'orderby' => [
+    //                    'total_sales' => 'DESC'
+    //                ]
+    //            ]);
+
+    // hits products from admin selection
+    $hit_products_ids = get_field('hit_products');
+    $hit_products = new WP_Query([
+	    'post_type' => 'product',
+	    'posts_per_page' => -1,
+	    'post__in' => $hit_products_ids ?: array(0)
+    ]);
+
+    if ($hit_products->have_posts()):
+    ?>
+        <section class="hits products-slider">
+            <h2 class="section-title">Хіти продажів</h2>
+            <div class="hits__items products-slider__items">
+                <?php
+                 while ($hit_products->have_posts()): $hit_products->the_post();
+                    get_template_part("components/product-item");
+                endwhile;
+                wp_reset_postdata();
+                ?>
+            </div>
+            <button type="button" class="hits__prev products-slider__prev slider-arrow transition-default" aria-label="Попередні товари">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="M8 13 2 7l6-6"/></svg>
+            </button>
+            <button type="button" class="hits__next products-slider__next slider-arrow transition-default" aria-label="Ще товари">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" fill="none"><path stroke="#363D44" stroke-linecap="round" stroke-width="2" d="m1 1 6 6-6 6"/></svg>
+            </button>
+        </section>
+    <?php
+    endif;
+    $promos = new WP_Query(['post_type' => 'promo', 'posts_per_page' => 3]);
     $promos_link = get_field('promos_page', 'options');
     if ($promos->have_posts() && $promos->found_posts > 2): ?>
         <section class="promo">
