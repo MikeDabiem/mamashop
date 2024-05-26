@@ -425,3 +425,41 @@ function categories_from_query(WP_Query $categories): array {
 
 // disable adding "-scaled" to images filename
 add_filter( 'big_image_size_threshold', '__return_false' );
+
+// woocommerce order statuses
+function brinpl_order_statuses_filter( $order_statuses ) {
+	$order_statuses['wc-processing'] = 'Новый заказ';
+	$order_statuses['wc-on-hold'] = 'Форс мажор';
+
+	$order_statuses_keys_order = array(
+		'wc-pending',
+		'wc-pay-wait-self',
+		'wc-processing',
+		'wc-on-hold',
+		'wc-ready-to-shipping',
+		'wc-on-delivery',
+		'wc-delivered',
+		'wc-completed',
+		'wc-cancelled',
+		'wc-refunded',
+		'wc-failed'
+	);
+
+	$new_order_statuses = array();
+	foreach ( $order_statuses_keys_order as $key ) {
+		if ( isset( $order_statuses[ $key ] ) ) {
+			$new_order_statuses[ $key ] = $order_statuses[ $key ];
+		}
+	}
+
+    return $new_order_statuses;
+}
+add_filter( 'wc_order_statuses', 'brinpl_order_statuses_filter' );
+
+add_action( 'woocommerce_sections_email', 'custom_content_before_email_settings' );
+
+function custom_content_before_email_settings() {
+	$mailer = WC()->mailer()->get_emails();
+	$mailer['WC_Email_Customer_On_Hold_Order']->title = 'Форс мажор';
+	$mailer['WC_Email_Customer_Processing_Order']->title = 'Новый заказ (оплачен)';
+}
