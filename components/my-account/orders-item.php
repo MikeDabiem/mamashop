@@ -1,4 +1,5 @@
-<?php if (isset($args['customer_orders'])) {
+<?php
+if (isset($args['customer_orders'])) {
     $customer_orders = $args['customer_orders'];
 }
 foreach ($customer_orders as $customer_order) {
@@ -6,7 +7,7 @@ foreach ($customer_orders as $customer_order) {
     $order_items = $order->get_items();
     $items_count = count($order_items);
     $order_status = match ($order->get_status()) {
-        'processing' => [
+        'processing', 'ready-to-shipping', 'on-delivery' => [
             'title' => 'У процесі',
             'class' => 'purple'
         ],
@@ -14,18 +15,28 @@ foreach ($customer_orders as $customer_order) {
             'title' => 'Виконано',
             'class' => 'green'
         ],
-        'pending' => [
+        'pending', 'pay-wait-self' => [
             'title' => 'Очікує оплати',
             'class' => 'red'
         ],
-        'cancelled' => [
+        'cancelled', 'refunded', 'failed' => [
             'title' => 'Скасовано',
             'class' => 'red'
         ],
-        default => ['title' => $order->get_status(),
+        'on-hold' => [
+            'title' => 'Форс мажор',
             'class' => 'purple'
         ],
-    }; ?>
+        'delivered' => [
+            'title' => 'В пункті видачі',
+            'class' => 'purple'
+        ],
+        default => [
+            'title' => wc_get_order_status_name($order->get_status()),
+            'class' => 'purple'
+        ],
+    };
+    ?>
     <div class="account-page__orders__item transition-default">
         <div class="account-page__orders__item__head">
             <p class="item__info__row1 item__info__number font-13-16 fw-400">Замовлення

@@ -1,6 +1,7 @@
 <section class="account-page__orders">
     <h2 class="account-page-title font-28-36 fw-600">Мої замовлення</h2>
-    <?php $customer_orders = get_posts(
+    <?php
+    $customer_orders = get_posts(
         apply_filters(
             'woocommerce_my_account_my_orders_query',
             [
@@ -25,5 +26,6 @@
         </div>
     <?php else:
         get_template_part('components/my-account/empty');
-    endif; ?>
+    endif;
+    ?>
 </section>
