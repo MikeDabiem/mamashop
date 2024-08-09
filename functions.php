@@ -464,3 +464,11 @@ function rename_posts_menu_label() {
 	$menu[5][0] = 'Блог';
 }
 add_action('admin_menu', 'rename_posts_menu_label');
+
+// turn off ACF pro updates
+add_filter('site_transient_update_plugins', function ($value) {
+	if (isset($value) && is_object($value)) {
+		unset($value->response['advanced-custom-fields-pro/acf.php']);
+	}
+	return $value;
+});
