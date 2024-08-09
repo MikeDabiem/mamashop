@@ -540,4 +540,37 @@
         }
         wp_die();
     }
+
+    // handle like blog posts
+	add_action('wp_ajax_nopriv_blog_like', 'blog_like');
+	add_action('wp_ajax_blog_like', 'blog_like');
+	function blog_like() {
+		$post_id = intval($_POST['post_id']);
+        if (isset($_COOKIE['session_id'])) {
+            $user_id = sanitize_text_field($_COOKIE['session_id']);
+        } else {
+            $user_id = uniqid();
+            setcookie('session_id', $user_id, strtotime('+365 days'), '/');
+        }
+
+        if ($user_id && $post_id) {
+	        $likes = get_post_meta( $post_id, 'likes', true );
+	        if ( ! $likes ) {
+		        $likes = array();
+	        }
+
+	        if ( ! in_array( $user_id, $likes ) ) {
+		        $likes[] = $user_id;
+		        update_post_meta( $post_id, 'likes', $likes );
+		        wp_send_json_success('like, ' . count($likes));
+	        } else {
+		        $filtered_likes = array_filter($likes, function($session_id) use ($user_id) {
+			        return $session_id !== $user_id;
+		        });
+		        update_post_meta($post_id, 'likes', $filtered_likes);
+		        wp_send_json_success('dislike, ' . count($filtered_likes));
+	        }
+        }
+		wp_die();
+	}
 }

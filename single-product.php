@@ -1,4 +1,10 @@
-<?php get_header();
+<?php
+/**
+ * @see     https://docs.woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 9.1.4
+ */
+get_header();
 the_post();
 $product_id = get_the_ID();
 $product = wc_get_product();
@@ -183,7 +189,7 @@ $rev_count = get_count_of_reviews($product_id);
                 </div>
             </div>
             <div class="info__advanced__col2 info__rating">
-                <h2 class="info__rating-title font-36-44 fw-500"><?= number_format($rating, 2); ?></h2>
+                <h2 class="info__rating-title fw-500"><?= number_format($rating, 2); ?></h2>
                 <p class="info__rating-subtitle font-16-22 fw-400"><?= $reviews ? 'Рейтинг товару' : 'Немає оцінок'; ?></p>
                 <div class="rating__stars">
                     <div class="rating__stars-bg"></div>

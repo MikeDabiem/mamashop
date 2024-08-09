@@ -1,0 +1,149 @@
+.single-post-page {
+  .post {
+    &__header {
+      display: flex;
+      background: $light-grey;
+      margin-top: 40px;
+      border-radius: 6px;
+      &__col1 {
+        width: 50%;
+        padding: 50px;
+      }
+      &__col2 {
+        width: 50%;
+      }
+    }
+    &__categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    &__title {
+      margin-top: 100px;
+      word-wrap: break-word;
+    }
+    &__actions {
+      margin-top: 40px;
+    }
+    &__like {
+      button {
+        position: relative;
+        border: none;
+        background: none;
+        svg {
+          stroke: $grey;
+        }
+        &::after {
+          content: url("../../images/heart-fill.svg");
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+        }
+        @media (hover: hover) {
+          &:not(.active):hover {
+            svg {
+              stroke: $main-purple;
+            }
+          }
+        }
+        &.active {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+      &__count {
+        vertical-align: middle;
+        color: $grey;
+      }
+    }
+    &__body {
+      margin-top: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid $pale-grey;
+      &.wysiwyg-styles {
+        p {
+          font-size: 16px;
+          &:has(.aligncenter) {
+            text-align: center;
+          }
+        }
+        blockquote {
+          margin: 20px 0;
+          padding: 20px;
+          background: $button-grey;
+          border-radius: 10px;
+        }
+      }
+    }
+    &__products {
+      margin-top: 40px;
+      &__slider {
+        position: relative;
+      }
+      &__items {
+        margin-top: 30px;
+      }
+    }
+  }
+  .more__posts {
+    margin-top: 40px;
+    &__slider {
+      position: relative;
+    }
+    &__items {
+      margin-top: 30px;
+      .slick-track {
+        gap: 20px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .post {
+      &__title {
+        margin-top: 50px;
+      }
+      &__actions {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 814px) {
+    .more__posts {
+      &__items {
+        .slick-track {
+          gap: 12px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .post {
+      &__header {
+        flex-direction: column;
+        &__col1 {
+          width: 100%;
+          order: 1;
+        }
+        &__col2 {
+          width: 100%;
+          @include flex-height(100);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .post {
+      &__header__col1 {
+        padding: 24px;
+      }
+      &__title {
+        margin-top: 20px;
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ if (is_user_logged_in()) {
     $fav_id = "fav-$id";
 } else {
     $fav_id = 'login';
+    $class_active = '';
 }
 ?>
 <button data-id="<?= $fav_id ?>" class="add-to-fav <?= $fav_btn_classes ?> <?= $class_active ?>" aria-label="Додати до улюбленого">

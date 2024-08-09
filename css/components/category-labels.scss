@@ -1,0 +1,24 @@
+.blog-cat-label {
+  padding: 4px 16px;
+  background: $white;
+  border: 1px solid $button-grey;
+  border-radius: 30px;
+  font-size: 14px;
+  color: $black;
+  text-decoration: none;
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 0 8px -2px -6px;
+    background: $main-purple;
+    border-radius: 100%;
+  }
+  &:hover {
+    color: $main-purple;
+    &::before {
+      background: $main-blue;
+    }
+  }
+}

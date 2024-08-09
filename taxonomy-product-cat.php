@@ -1,4 +1,11 @@
-<?php get_header(); ?>
+<?php
+/**
+ * @see     https://docs.woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 9.1.4
+ */
+get_header();
+?>
 <section class="category-page wrapper filler">
     <?php
     woocommerce_breadcrumb();

@@ -34,6 +34,7 @@
       }
     }
     &-line {
+      display: block;
       width: 24px;
       height: 2px;
       background: $black;
@@ -146,6 +147,9 @@
       .main-menu,
       .catalog-menu {
         left: -100%;
+      }
+      .main-menu .header__catalog {
+        margin-top: 30px;
       }
       .cart-menu {
         right: -100%;

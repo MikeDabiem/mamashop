@@ -6,10 +6,12 @@
 @import 'components/login';
 @import "components/banner";
 @import 'components/product-item';
+@import 'components/blog-item';
 @import 'components/buy-button';
 @import 'components/link-arrow';
 @import "components/brands";
 @import "components/categories";
+@import "components/category-labels";
 @import "components/product-filter";
 @import "components/product-filter-head";
 @import "components/promo-item";
@@ -22,6 +24,7 @@
 @import 'pages/home';
 @import 'pages/search';
 @import 'pages/search-mobile';
+@import 'pages/single';
 @import 'pages/single-product';
 @import 'pages/taxonomy-product-cat';
 @import 'pages/brands';
@@ -30,3 +33,4 @@
 @import 'pages/checkout';
 @import 'pages/my-account';
 @import 'pages/lost-password';
+@import 'pages/blog';

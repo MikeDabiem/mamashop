@@ -1,4 +1,9 @@
 <?php
+/**
+ * @see     https://docs.woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 9.1.4
+ */
 defined( 'ABSPATH' ) || exit;
 ?>
 <section class="checkout-page__section checkout-page__contacts active">

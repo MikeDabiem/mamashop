@@ -34,8 +34,12 @@ jQuery(function($) {
     body.addClass('overflow-hidden');
   }
 
-  $('.header__catalog').on('click', () => {
+  $('.header__catalog').on('click', function() {
     showMenu($('.catalog-menu'));
+
+    if ($(this).hasClass('main-menu__catalog')) {
+      $('.main-menu').parent().removeClass('active');
+    }
   });
 
   $('.header__btn').on('click', function(e) {
@@ -1085,25 +1089,35 @@ jQuery(function($) {
     });
   }
 
-  // show menu on info page
-  const infoPageMenuSelect = $('.info-page__menu__select');
-  if (infoPageMenuSelect.length) {
-    const infoPageMenu = $('.info-page__menu');
+  function showSelectMenu(menu, media) {
+    const infoPageMenuSelect = $('.info-page__menu__select');
+
     infoPageMenuSelect.on('click', function() {
       if ($(this).hasClass('active')) {
         $(this).removeClass('active');
-        infoPageMenu.slideUp(300);
+        menu.slideUp(300);
       } else {
         $(this).addClass('active');
-        infoPageMenu.slideDown(300);
+        menu.slideDown(300);
       }
     });
     $(window).on('resize', function() {
-      if ($(window).width() > 900 && infoPageMenu[0].hasAttribute('style')) {
+      if ($(window).width() > media && menu[0].hasAttribute('style')) {
         infoPageMenuSelect.removeClass('active');
-        infoPageMenu.removeAttr('style');
+        menu.removeAttr('style');
       }
     });
+  }
+
+  // show menu on info page
+  const infoPageMenu = $('.info-page__menu');
+  if (infoPageMenu.length) {
+    showSelectMenu(infoPageMenu, 900);
+  }
+
+  const blogCategories = $('.blog__categories');
+  if (blogCategories.length) {
+    showSelectMenu(blogCategories, 768);
   }
 
 
@@ -1719,5 +1733,34 @@ jQuery(function($) {
     body.animate({opacity: 1}, 1000);
   } else {
     body.css({opacity: 1});
+  }
+
+  // add/remove like on blog post
+  const postLikeBtn = $('.post__like__button');
+  if (postLikeBtn.length) {
+    postLikeBtn.on('click', function() {
+      const postLikeCount = $('.post__like__count');
+
+      postLikeBtn.attr('disabled', 'disabled');
+
+      const likeData = {
+        action: 'blog_like',
+        post_id: $(this).data('post-id')
+      }
+      $.post(ajaxURL, likeData, function(response) {
+        const respArr = response.data.split(',')
+        if (respArr[0] === 'like') {
+          const text = 'Більше не подобається';
+          postLikeBtn.addClass('active').attr('aria-label', text).attr('title', text);
+        } else {
+          const text = 'Мені подобається';
+          postLikeBtn.removeClass('active').attr('aria-label', text).attr('title', text);
+        }
+        postLikeCount.each(function() {
+          $(this).text(respArr[1]);
+        });
+        postLikeBtn.removeAttr('disabled');
+      });
+    })
   }
 });

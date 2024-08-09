@@ -243,10 +243,11 @@ h1, h2, h3, h4, h5, h6, p {
   z-index: 1;
 }
 
-.no-image {
+img.no-image {
   padding: 10%;
   opacity: .2;
   filter: grayscale(.3);
+  object-fit: contain;
 }
 
 .breadcrumbs {
@@ -499,7 +500,8 @@ h1, h2, h3, h4, h5, h6, p {
   & > *:last-child {
     margin-bottom: 0 !important;
   }
-  a {
+  a,
+  a * {
     color: $main-purple;
     &:hover {
       color: $hover-purple;

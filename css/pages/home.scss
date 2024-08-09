@@ -1,13 +1,15 @@
 .homepage {
-  @import "../components/home/promo";
   .top,
   .categories,
   .hits,
   .promo,
-  .brands {
+  .brands,
+  .blog {
     margin-top: 40px;
     @media screen and (min-width: 481px) and (max-width: 1024px) {
       margin-top: 20px;
     }
   }
+  @import "../components/home/promo";
+  @import "../components/home/blog";
 }

@@ -63,4 +63,45 @@ jQuery(function($) {
     nextArrow: $('.hits__next'),
     responsive: productsCardsResponsive
   });
+
+  $('.post__products__items').each(function() {
+    $(this).slick({
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 5000,
+      infinite: true,
+      swipeToSlide: true,
+      prevArrow: $(this).siblings('.post__products__prev'),
+      nextArrow: $(this).siblings('.post__products__next'),
+      responsive: productsCardsResponsive
+    });
+  });
+
+  $('.more__posts__items').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    infinite: true,
+    swipeToSlide: true,
+    prevArrow: $('.more__posts__prev'),
+    nextArrow: $('.more__posts__next'),
+    responsive: [
+      {
+        breakpoint: 555,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 420,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
 });

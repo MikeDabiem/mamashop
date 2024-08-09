@@ -149,8 +149,9 @@ function fetch_data($posts_per_page) {
     return new WP_Query(array_merge_recursive($args, $sort_args, $price_args, $filter_args));
 }
 
-require 'components/ajax.php';
-require 'components/checkout/checkout-settings.php';
+require_once 'components/ajax.php';
+require_once 'components/shortcodes.php';
+require_once 'components/checkout/checkout-settings.php';
 
 //add views count meta to new products
 add_action('save_post_product', 'brinpl_add_product_meta', 10, 3);
@@ -209,14 +210,6 @@ function true_wordform($num, $form_for_1, $form_for_2, $form_for_5) {
         return $form_for_1;
     return $form_for_5;
 }
-
-// Hide/remove content editor
-function hide_editor() {
-    $template_file = basename(get_page_template());
-    $templatesArray = ['brands.php'];
-    if (in_array($template_file, $templatesArray)) remove_post_type_support('page', 'editor');
-}
-add_action('admin_head', 'hide_editor');
 
 // Make ACF Options
 if (function_exists('acf_add_options_page')) {
@@ -456,10 +449,18 @@ function brinpl_order_statuses_filter( $order_statuses ) {
 }
 add_filter( 'wc_order_statuses', 'brinpl_order_statuses_filter' );
 
-add_action( 'woocommerce_sections_email', 'custom_content_before_email_settings' );
-
+// change emails titles
 function custom_content_before_email_settings() {
 	$mailer = WC()->mailer()->get_emails();
 	$mailer['WC_Email_Customer_On_Hold_Order']->title = 'Форс мажор';
 	$mailer['WC_Email_Customer_Processing_Order']->title = 'Новый заказ (оплачен)';
 }
+add_action( 'woocommerce_sections_email', 'custom_content_before_email_settings' );
+
+// rename "Записи" to "Блог"
+function rename_posts_menu_label() {
+	global $menu;
+
+	$menu[5][0] = 'Блог';
+}
+add_action('admin_menu', 'rename_posts_menu_label');
